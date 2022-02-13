@@ -1,0 +1,794 @@
+.main-body {
+  .App {
+    text-align: center;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  .fixed-table thead,
+  .fixed-table tbody,
+  .fixed-table tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .fixed-table tbody {
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+    table-layout: fixed;
+  }
+
+  th {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    color: #dd6d1f;
+    text-align: center;
+  }
+
+  td {
+    text-align: center;
+    font-weight: 600;
+    min-height: 30px;
+  }
+
+  .squads-table th {
+    padding: 8px 0;
+  }
+
+  .squads-table td {
+    height: 40px;
+    padding: 0 4px;
+  }
+
+  .no-underline:hover {
+    text-decoration-color: #dd6d1f;
+  }
+
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+  }
+
+  .align-items-start {
+    align-items: flex-start;
+  }
+
+  .flex-start {
+    justify-content: flex-start;
+  }
+
+  .space-evenly {
+    justify-content: space-evenly;
+  }
+
+  .align-items-end {
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .align-items-bottom {
+    align-items: flex-end;
+  }
+
+  .space-between {
+    justify-content: space-between;
+  }
+
+  .standard-width-container {
+    width: 80%;
+    margin: auto;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  .component-nav-container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .navbar-container {
+    margin: 10px;
+    width: 100%;
+  }
+
+  .navbar-title {
+    font-family: "Oswald", sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: black;
+    text-transform: uppercase;
+  }
+
+  .component-header {
+    position: sticky;
+    top: 0px;
+    background-color: #fff;
+  }
+
+  .loading-screen {
+    position: absolute;
+    height: 100vh;
+    top: 30%;
+    text-align: center;
+    width: 100%;
+    font-family: "Oswald", sans-serif;
+    font-weight: 500;
+    font-size: 36px;
+  }
+
+  .nav-panel {
+    margin: 30px 0;
+  }
+
+  .nav-panel-icon {
+    max-width: 120px;
+    height: auto;
+    margin: 0px 45px;
+    max-height: 130px;
+  }
+
+  .icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 140px;
+  }
+
+  .icon-label {
+    width: 100%;
+    text-align: center;
+    font-family: "Oswald", sans-serif;
+    color: #dd6d1f;
+    font-size: 1.4em;
+    margin: 10px 0;
+  }
+
+  .logout-icon {
+    width: 30px;
+    height: auto;
+    margin-right: 20px;
+  }
+
+  .logout-icon:hover,
+  .icon-label:hover,
+  .nav-panel-icon:hover {
+    cursor: pointer;
+  }
+
+  .component-nav-icon {
+    max-width: 60px;
+    max-height: 75px;
+    height: auto;
+    margin: 10px 15px;
+  }
+
+  .title-container {
+    width: 80%;
+    margin: auto;
+    border-top: 2px solid #fabc91;
+    border-bottom: 2px solid #fabc91;
+    margin-bottom: 15px;
+  }
+
+  .page-title {
+    text-align: center;
+    font-family: "Oswald", sans-serif;
+    font-size: 36px;
+    margin: 3px 0;
+  }
+
+  .fixed-bottom {
+    position: sticky;
+    bottom: 0px;
+    background-color: #fff;
+  }
+
+  .modal-title {
+    font-family: "Oswald", sans-serif;
+    font-size: 28px;
+    color: #dd6d1f;
+  }
+
+  .modal-button {
+    font-family: "Oswald", sans-serif;
+    font-size: 20px;
+  }
+
+  .modal-table {
+    th {
+      text-align: right;
+    }
+  }  
+
+  .modal-table {
+    td {
+      text-align: left;
+      padding-left: 30px;
+    }
+  }
+
+  .modal-container {
+    width: 99%;
+    margin: auto;
+    padding: 20px 0;
+  }
+
+  .table-row {
+    min-height: 60px;
+  }
+
+  .manager-name {
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .table-headers {
+    min-height: 60px;
+  }
+
+  .table-footers {
+    min-height: 50px;
+  }
+
+  .player-search {
+    font-family: "Oswald", sans-serif;
+    font-size: 18px;
+    border-radius: 7px;
+    padding: 8px 10px;
+    margin-left: 5px;
+    border: 0;
+    box-shadow: 0 0 3px 2px #fabc91;
+  }
+
+  .player-search:focus {
+    outline: none;
+    box-shadow: 0 0 5px 4px #fabc91;
+  }
+  .player-search:hover {
+    outline: none;
+    box-shadow: 0 0 5px 4px #fabc91;
+  }
+
+  .players-title-container-end {
+    width: 40%;
+    margin: auto;
+    padding: 5px 0;
+  }
+
+  .players-title-container-middle {
+    width: 20%;
+    margin: auto;
+    padding: 5px 0;
+  }
+
+  .draft-title-container {
+    width: 33%;
+    margin: auto;
+    padding: 5px 0;
+  }
+
+  .include-button {
+    font-family: "Oswald", sans-serif;
+    font-size: 18px;
+    border: 1px solid #fff;
+    background-color: #fff;
+    margin-left: 5px;
+    color: #dd6d1f;
+  }
+
+  .include-button:focus {
+    border: 1px solid #fabc91;
+    border-radius: 7px;
+  }
+
+  .fixture-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    min-height: 50px;
+  }
+
+  .fixture-render {
+    margin-top: 10px;
+  }
+
+  .fixture-date {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    color: #dd6d1f;
+    text-align: center;
+  }
+
+  .fixture-team-left {
+    font-weight: 600;
+    padding: 10px 15px 10px 0;
+    width: 40%;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .fixture-team-right {
+    font-weight: 600;
+    padding: 10px 0 10px 15px;
+    width: 40%;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .scores-table:last-child {
+    border-bottom: 2px solid #fabc91;
+  }
+
+  .no-scores {
+    text-align: center;
+    font-family: "Oswald", sans-serif;
+    font-size: 28px;
+    margin: 10px 0;
+  }
+
+  .fixture-link {
+    color: black;
+  }
+
+  .fixture-link:hover {
+    color: #dd6d1f;
+  }
+
+  .select-icon {
+    width: 30px;
+    height: auto;
+    margin: 10px 5px;
+  }
+
+  .draft-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 100px;
+  }
+
+  .draft-container::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  .draft-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .draft-container::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  .draft-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .draft-footer {
+    width: 80%;
+    height: 100px;
+    border-top: 2px solid #fabc91;
+    background-color: #fff;
+    position: fixed;
+    left: 10%;
+    bottom: 0;
+  }
+
+  .draft-team-icon {
+    height: 40px;
+    width: auto;
+    margin-right: 10px;
+  }
+
+  .draft-arrow-icon {
+    height: 25px;
+    width: auto;
+    margin-right: 10px;
+  }
+
+  .pick-info {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    color: #dd6d1f;
+    margin-right: 10px;
+  }
+
+  .next-pick {
+    font-size: 1em;
+    font-weight: 400;
+    font-style: italic;
+    color: #dd6d1f;
+    margin-top: 3px;
+  }
+
+  .vidiprinter-big {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    height: 80px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    text-align: center;
+  }
+
+  .vidiprinter-small {
+    width: 95%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .vidiprinter-entry {
+    min-width: 200px;
+    border-right: 2px solid #fabc91;
+  }
+
+  .vidi-heading {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    color: #dd6d1f;
+  }
+
+  .vidi-player {
+    font-style: italic;
+  }
+
+  .one-line {
+    white-space: nowrap;
+  }
+
+  .vidi-arrow {
+    width: 15px;
+    height: auto;
+  }
+
+  .vidi-info-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .title-container-small {
+    width: 50%;
+  }
+
+  .players-title {
+    text-align: right;
+    font-family: "Oswald", sans-serif;
+    font-size: 36px;
+    margin: 3px 20px 3px 0;
+  }
+
+  .players-header,
+  .draft-header {
+    margin: 10px 0;
+  }
+
+  .stage-heading {
+    font-family: "Oswald", sans-serif;
+    font-size: 30px;
+    font-weight: 300;
+    color: #dd6d1f;
+  }
+
+  .squads-container {
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+    border-bottom: 1px dashed black;
+  }
+
+  .finals-team-name {
+    font-family: "Oswald", sans-serif;
+    font-size: 26px;
+  }
+
+  .finals-manager-name {
+    font-style: italic;
+  }
+
+  .finals-team-left {
+    min-width: 40%;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .finals-team-right {
+    min-width: 40%;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .finals-score {
+    padding: 0 50px;
+    text-align: center;
+    white-space: nowrap;
+    font-family: "Oswald", sans-serif;
+    font-size: 24px;
+  }
+
+  .finals-container {
+    margin: 15px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .my-team-removal:nth-child(11) {
+    border-bottom: dashed 2px #dd6d1f;
+  }
+
+  .squads-row:nth-child(11) {
+    border-bottom: dashed 1px #dd6d1f;
+  }
+
+  .rules-heading {
+    font-family: "Oswald", sans-serif;
+    font-size: 24px;
+    padding: 8px 0;
+  }
+
+  .rules-ul {
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+
+  .rules-table {
+    max-width: 400px;
+    margin: 20px 0;
+  }
+
+  .rules-section {
+    margin-bottom: 15px;
+  }
+
+  li {
+    margin: 5px 0;
+  }
+
+  .login-container {
+    height: 70vh;
+  }
+
+  .login-icon {
+    max-width: 100px;
+    height: auto;
+  }
+
+  @media only screen and (max-width: 1023px) {
+    .squads-container {
+      padding-bottom: 0px;
+      margin-bottom: 0px;
+      border-bottom: 1px dashed black;
+    }
+    .stage-heading {
+      font-family: "Oswald", sans-serif;
+      font-size: 20px;
+      font-weight: 300;
+      color: #dd6d1f;
+      padding: 10px 0;
+    }
+    .player-search {
+      font-size: 16px;
+      max-width: 120px;
+      padding: 5px 10px;
+    }
+    .draft-footer {
+      width: 95%;
+      left: 2.5%;
+    }
+    .logout-icon {
+      margin-right: 15px;
+    }
+    .logo {
+      width: 90%;
+      max-width: 400px;
+      height: auto;
+      margin: auto;
+      padding: 5px 0 30px 0;
+    }
+    .nav-panel {
+      margin: auto;
+      max-width: 95%;
+    }
+    .nav-panel-icon {
+      max-width: 100px;
+      height: auto;
+      margin: 0px 25px;
+      max-height: 130px;
+    }
+    .icon-container {
+      min-height: 125px;
+    }
+    .icon-label {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    .title-container {
+      width: 95%;
+      margin-bottom: 0;
+    }
+    .page-title {
+      font-size: 28px;
+    }
+    .players-title {
+      font-size: 28px;
+    }
+    .mr-auto {
+      display: none;
+    }
+    .component-nav-container {
+      width: 95%;
+    }
+    .component-nav-icon {
+      max-width: 40px;
+      max-height: 43px;
+      height: auto;
+      margin: 10px 2px;
+    }
+    .mobile-nav-icon {
+      min-width: 42px;
+    }
+    .disappear-mobile {
+      display: none;
+    }
+    .standard-width-container {
+      width: 95%;
+      margin: auto;
+    }
+    .my-team-removal th:nth-child(4),
+    .my-team-removal td:nth-child(4) {
+      display: none;
+    }
+    .my-team-removal th:nth-child(5),
+    .my-team-removal td:nth-child(5) {
+      display: none;
+    }
+    .my-team-removal th:nth-child(6),
+    .my-team-removal td:nth-child(6) {
+      display: none;
+    }
+    .my-team-removal th:nth-child(7),
+    .my-team-removal td:nth-child(7) {
+      display: none;
+    }
+    .my-team-removal th:nth-child(8),
+    .my-team-removal td:nth-child(8) {
+      display: none;
+    }
+    .my-team-removal th:nth-child(9),
+    .my-team-removal td:nth-child(9) {
+      display: none;
+    }
+    .my-team-removal th:nth-child(10),
+    .my-team-removal td:nth-child(10) {
+      display: none;
+    }
+    .players-removal th:nth-child(4) {
+      display: none;
+    }
+    .players-removal th:nth-child(5) {
+      display: none;
+    }
+    .players-removal th:nth-child(6) {
+      display: none;
+    }
+    .table-headers {
+      min-height: 55px;
+    }
+  }
+
+  @media only screen and (min-width: 1024px) {
+    .disappear-desktop {
+      display: none;
+    }
+  }
+
+  @media only screen and (max-width: 650px) {
+    .finals-team-name {
+      font-size: 18px;
+    }
+    .finals-score {
+      padding: 0 15px;
+      font-size: 18px;
+    }
+    .finals-container {
+      margin: 0;
+      margin-bottom: 15px;
+    }
+    .vidi-heading {
+      margin-right: 10px;
+    }
+    .disappear-medium {
+      display: none;
+    }
+    .draft-footer {
+      height: 50px;
+    }
+    .squads-table td {
+      font-size: 14px;
+      padding: 0 2px;
+    }
+    .player-search {
+      font-size: 16px;
+      max-width: 120px;
+      padding: 5px 10px;
+    }
+    .include-button {
+      font-size: 14px;
+    }
+  }
+
+  @media only screen and (min-width: 651px) {
+    .disappear-medium2 {
+      display: none;
+    }
+  }
+
+  @media only screen and (max-width: 570px) {
+    .players-header,
+    .draft-header {
+      margin: 5px 0;
+    }
+    .draft-container {
+      padding-bottom: 50px;
+    }
+    .component-nav-container {
+      margin-bottom: 0px;
+    }
+    .next-pick {
+      margin-top: 0px;
+    }
+    .draft-team-icon {
+      height: 40px;
+      width: auto;
+      margin-right: 0;
+    }
+    .draft-title-container {
+      width: 40%;
+      padding: 0;
+    }
+    .draft-middle-container {
+      width: 20%;
+    }
+    .player-search {
+      max-width: 115px;
+      margin-left: 0;
+    }
+    .disappear-small {
+      display: none;
+    }
+    .include-button {
+      color: #dd6d1f;
+    }
+  }
+
+  @media only screen and (min-width: 571px) {
+    .disappear-big {
+      display: none;
+    }
+    .players-title {
+      margin: 10px 0;
+    }
+  }
+}
