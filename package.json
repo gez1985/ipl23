@@ -1,5 +1,5 @@
 {
-  "name": "fc-backend",
+  "name": "ipl22",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,12 +13,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gez1985/fc-backend.git"
+    "url": "git+https://github.com/gez1985/ipl23.git"
   },
   "author": "Gerard Egan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gez1985/fc-backend/issues"
+    "url": "https://github.com/gez1985/ipl23/issues"
   },
   "dependencies": {
     "concurrently": "^6.5.1",
