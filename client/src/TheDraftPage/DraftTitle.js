@@ -1,15 +1,39 @@
-import React, { useContext, useState } from "react";
-import { SearchNameContext } from "./Store";
-import myTeam from "./img/MyTeam.png";
-import MyTeamModal from "./MyTeamModal";
+import React, { useEffect, useState, useContext } from "react";
+import {
+  PlayersContext,
+  TeamsContext,
+  ManagerContext,
+  ManagersContext,
+  SortContext,
+  SearchNameContext,
+  LeagueContext,
+} from "../Store";
+import myTeam from "../img/MyTeam.png";
+import MyTeamModal from "../MyTeamModal";
 import ManagerPicking from "./ManagerPicking";
+import CountdownTimer from "./CountdownTimer";
 
-export default function DraftTitle(props) {
+export default function DraftTitle({ title, skipPick }) {
   const [searchName, setSearchName] = useContext(SearchNameContext);
+  const [manager] = useContext(ManagerContext);
+  const [managers] = useContext(ManagersContext);
+  const [league] = useContext(LeagueContext);
   const [showMyTeam, setShowMyTeam] = useState(false);
 
   function hideModals() {
     setShowMyTeam(false);
+  }
+
+  
+
+  const getTimer = () => {
+    if (league.pickNumber === manager.pickNumber) {
+      console.log(`it's my pick`);
+      return <CountdownTimer skipPick={skipPick}/>;
+    } else {
+      console.log(`it's not my pick`);
+      return title
+    }
   }
 
   return (
@@ -20,7 +44,7 @@ export default function DraftTitle(props) {
             <ManagerPicking />
           </div>
           <div className="draft-title-container">
-            <div className="page-title">{props.title}</div>
+            <div className="page-title">{getTimer()}</div>
           </div>
           <div className="flex-container draft-title-container align-items-end">
             <img
@@ -41,7 +65,7 @@ export default function DraftTitle(props) {
       </div>
       <div className="flex-container disappear-big">
         <div className="flex-container draft-title-container align-items-start">
-          <div className="page-title">{props.title}</div>
+          <div className="page-title">{getTimer()}</div>
         </div>
         <div className="flex-container draft-middle-container">
           <img

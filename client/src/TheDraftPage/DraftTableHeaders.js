@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { SortContext } from "./Store";
+import { SortContext } from "../Store";
 
 export default function DraftTableHeaders() {
   const [, setSort] = useContext(SortContext);

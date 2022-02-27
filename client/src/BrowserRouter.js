@@ -12,7 +12,7 @@ import SquadsPage from "./SquadsPage";
 import PlayersPage from "./PlayersPage";
 import RulesPage from "./RulesPage";
 import FixtureScores from "./FixtureScores";
-import DraftPage from "./DraftPage";
+import DraftPage from "./TheDraftPage/DraftPage";
 import FinalsPage from "./FinalsPage";
 import AdminLanding from "./Admin/Landing";
 import AdminFixtures from "./Admin/Fixtures";
@@ -22,6 +22,7 @@ import AdminTeams from "./Admin/Teams";
 import AdminLeague from "./Admin/League";
 import AdminAllLeagues from "./Admin/AllLeagues";
 import AdminFixtureScores from "./Admin/FixtureScores";
+import CountdownTimer from  "./TheDraftPage/CountdownTimer";
 
 export default function BrowserRouter() {
   const { isLoading, user, isAuthenticated } = useAuth0();
@@ -97,6 +98,11 @@ export default function BrowserRouter() {
         <Route exact path="/finals">
           <div className="main-body">
             <FinalsPage />
+          </div>
+        </Route>
+        <Route exact path="/test-component">
+          <div className="main-body">
+            <CountdownTimer />
           </div>
         </Route>
         <Route exact path="/admin">

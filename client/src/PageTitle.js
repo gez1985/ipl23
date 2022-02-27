@@ -1,5 +1,5 @@
 import React from "react";
-import DraftTitle from "./DraftTitle";
+import DraftTitle from "./TheDraftPage/DraftTitle";
 import PlayersTitle from "./PlayersTitle";
 
 export default function PageTitle(props) {

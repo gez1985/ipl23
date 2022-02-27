@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import Logo from "./Logo";
 import NavBar from "./Navbar";
 import NavPanel from "./NavPanel";
-import DraftNavIcon from "./DraftNavIcon";
+import DraftNavIcon from "./TheDraftPage/DraftNavIcon";
 import FinalsIcon from "./FinalsIcon";
 import { LeagueContext } from "./Store";
 import TestComponent from './TestComponent';

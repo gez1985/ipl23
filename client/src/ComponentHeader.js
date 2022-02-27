@@ -6,7 +6,7 @@ import MobileComponentNav from "./MobileComponentNav";
 import MyTeamHeaders from "./MyTeamHeaders";
 import PageTitle from "./PageTitle";
 import PlayersHeaders from "./PlayersHeaders";
-import DraftTableHeaders from "./DraftTableHeaders";
+import DraftTableHeaders from "./TheDraftPage/DraftTableHeaders";
 
 export default function ComponentHeader(props) {
   return (

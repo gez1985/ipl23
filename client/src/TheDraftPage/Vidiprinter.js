@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
-import { VidiprinterContext, ManagersContext, PlayersContext } from "./Store";
-import Helpers from "./utils/Helpers";
-import leftArrow from "./img/LeftArrow.png";
-import rightArrow from "./img/RightArrow.png";
+import { VidiprinterContext, ManagersContext, PlayersContext } from "../Store";
+import Helpers from "../utils/Helpers";
+import leftArrow from "../img/LeftArrow.png";
+import rightArrow from "../img/RightArrow.png";
 
 export default function Vidiprinter() {
   const [vidiprinter] = useContext(VidiprinterContext);

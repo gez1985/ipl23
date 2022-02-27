@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { LeagueContext, ManagersContext, ManagerContext } from "./Store";
-import Helpers from "./utils/Helpers";
-import upArrow from "./img/UpArrow.png";
-import downArrow from "./img/DownArrow.png";
+import { LeagueContext, ManagersContext, ManagerContext } from "../Store";
+import Helpers from "../utils/Helpers";
+import upArrow from "../img/UpArrow.png";
+import downArrow from "../img/DownArrow.png";
 
 export default function ManagerPicking() {
   const [league] = useContext(LeagueContext);

@@ -7,16 +7,16 @@ import {
   SortContext,
   SearchNameContext,
   LeagueContext,
-} from "./Store";
-import Helpers from "./utils/Helpers";
-import PickValidation from "./utils/PickValidation";
-import Search from "./utils/search";
+} from "../Store";
+import Helpers from "../utils/Helpers";
+import PickValidation from "../utils/PickValidation";
+import Search from "../utils/search";
 import DraftValidation from "./DraftValidation";
-import select from "./img/Select.png";
+import select from "../img/Select.png";
 import { Button, Modal } from "react-bootstrap";
 const sortObjectsArray = require("sort-objects-array");
 
-export default function DraftTable() {
+export default function DraftTable({ updateLeague }) {
   const [players] = useContext(PlayersContext);
   const [teams] = useContext(TeamsContext);
   const [manager, setManager] = useContext(ManagerContext);
@@ -231,49 +231,6 @@ export default function DraftTable() {
     return "pass";
   }
 
-  async function updateLeague() {
-    const stage2Managers = league.stage2Managers.flat();
-    const leagueCopy = JSON.parse(JSON.stringify(league));
-    let maxPickNumber = 0;
-    if (league.draft1Live) {
-      maxPickNumber = league.managerIds.length;
-    }
-    if (league.draft2Live) {
-      maxPickNumber = stage2Managers.length;
-    }
-    if (league.draft1Live || league.draft2Live) {
-      if (leagueCopy.lastPick) {
-        leagueCopy.round++;
-        leagueCopy.up = !league.up;
-        leagueCopy.lastPick = false;
-      } else {
-        if (leagueCopy.up) {
-          if (leagueCopy.pickNumber === maxPickNumber - 1) {
-            leagueCopy.lastPick = true;
-            leagueCopy.pickNumber++;
-          } else {
-            leagueCopy.pickNumber++;
-          }
-        } else {
-          if (leagueCopy.pickNumber === 2) {
-            leagueCopy.lastPick = true;
-            leagueCopy.pickNumber--;
-          } else {
-            leagueCopy.pickNumber--;
-          }
-        }
-      }
-    }
-    if (league.draft3Live) {
-      if (leagueCopy.pickNumber === 1) {
-        leagueCopy.pickNumber = 2;
-      } else {
-        leagueCopy.pickNumber = 1;
-      }
-    }
-    const updatedLeague = await Search.putLeague(leagueCopy);
-    setLeague(updatedLeague);
-  }
 
   function renderErrorModal() {
     if (selectedPlayer) {

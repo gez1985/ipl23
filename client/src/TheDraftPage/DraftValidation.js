@@ -1,4 +1,4 @@
-import Helpers from "./utils/Helpers";
+import Helpers from "../utils/Helpers";
 
 const DraftValidation = {};
 

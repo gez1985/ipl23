@@ -1,17 +1,18 @@
 import React, { useEffect, useContext, useState } from "react";
-import ComponentHeader from "./ComponentHeader";
 import DraftFooter from "./DraftFooter";
 import DraftTable from "./DraftTable";
-import Search from "./utils/search";
-import Helpers from "./utils/Helpers";
-import ManagerProps from "./utils/ManagerProps";
+import DraftPageHeader from "./DraftPageHeader";
+import Search from "../utils/search";
+import Helpers from "../utils/Helpers";
+import ManagerProps from "../utils/ManagerProps";
 import {
   LeagueContext,
   ManagersContext,
   PlayersContext,
   VidiprinterContext,
   ManagerContext,
-} from "./Store";
+} from "../Store";
+import SkippedModal from "./SkippedModal";
 
 export default function DraftPage() {
   const [players] = useContext(PlayersContext);
@@ -20,7 +21,7 @@ export default function DraftPage() {
   const [league, setLeague] = useContext(LeagueContext);
   const [, setVidiprinter] = useContext(VidiprinterContext);
 
-  let dataInterval;
+  const [showSkipped, setShowSkipped] = useState(false);
 
   useEffect(() => {
     getDraftData();
@@ -28,19 +29,9 @@ export default function DraftPage() {
   }, []);
 
   useEffect(() => {
-    startUpdateIntervals();
-    return function cleanUp() {
-      clearUpdateIntervals();
-    };
+    const dataInterval = setInterval(() => getDraftData(), 10000);
+    return () => clearInterval(dataInterval);
   }, []);
-
-  function startUpdateIntervals() {
-    dataInterval = setInterval(() => getDraftData(), 10000);
-  }
-
-  function clearUpdateIntervals() {
-    clearInterval(dataInterval);
-  }
 
   async function getDraftData() {
     try {
@@ -58,13 +49,63 @@ export default function DraftPage() {
     }
   }
 
+  async function updateLeague() {
+    const stage2Managers = league.stage2Managers.flat();
+    const leagueCopy = JSON.parse(JSON.stringify(league));
+    let maxPickNumber = 0;
+    if (league.draft1Live) {
+      maxPickNumber = league.managerIds.length;
+    }
+    if (league.draft2Live) {
+      maxPickNumber = stage2Managers.length;
+    }
+    if (league.draft1Live || league.draft2Live) {
+      if (leagueCopy.lastPick) {
+        leagueCopy.round++;
+        leagueCopy.up = !league.up;
+        leagueCopy.lastPick = false;
+      } else {
+        if (leagueCopy.up) {
+          if (leagueCopy.pickNumber === maxPickNumber - 1) {
+            leagueCopy.lastPick = true;
+            leagueCopy.pickNumber++;
+          } else {
+            leagueCopy.pickNumber++;
+          }
+        } else {
+          if (leagueCopy.pickNumber === 2) {
+            leagueCopy.lastPick = true;
+            leagueCopy.pickNumber--;
+          } else {
+            leagueCopy.pickNumber--;
+          }
+        }
+      }
+    }
+    if (league.draft3Live) {
+      if (leagueCopy.pickNumber === 1) {
+        leagueCopy.pickNumber = 2;
+      } else {
+        leagueCopy.pickNumber = 1;
+      }
+    }
+    const updatedLeague = await Search.putLeague(leagueCopy);
+    setLeague(updatedLeague);
+  }
+
+  const skipPick = () => {
+    console.log("pick skipped");
+    setShowSkipped(true);
+    updateLeague();
+  };
+
   const stage2Managers = league.stage2Managers.flat();
   const stage3Managers = league.stage3Managers.flat();
 
   if (!league.draft1Live && !league.draft2Live && !league.draft3Live) {
     return (
       <>
-        <ComponentHeader from="draft" title="The Draft" />
+        <DraftPageHeader />
         <div className="flex-container standard-width-container">
           No drafts are currently live.
         </div>
@@ -75,7 +116,7 @@ export default function DraftPage() {
   if (league.draft2Live && !stage2Managers.includes(manager.id)) {
     return (
       <>
-        <ComponentHeader from="draft" title="The Draft" />
+        <DraftPageHeader />
         <div className="flex-container standard-width-container">
           You have not qualified for this draft.{" "}
         </div>
@@ -86,7 +127,7 @@ export default function DraftPage() {
   if (league.draft3Live && !stage3Managers.includes(manager.id)) {
     return (
       <>
-        <ComponentHeader from="draft" title="The Draft" />
+        <DraftPageHeader />
         <div className="flex-container standard-width-container">
           You have not qualified for this draft.{" "}
         </div>
@@ -102,7 +143,7 @@ export default function DraftPage() {
   ) {
     return (
       <>
-        <ComponentHeader from="draft" title="The Draft" />
+        <DraftPageHeader />
         <div className="flex-container standard-width-container">
           You have more than one draft stage live. Contact league admin.{" "}
         </div>
@@ -112,9 +153,10 @@ export default function DraftPage() {
 
   return (
     <>
-      <ComponentHeader from="draft" title="The Draft" />
+      {showSkipped && <SkippedModal closeModal={() => setShowSkipped(false)} />}
+      <DraftPageHeader skipPick={skipPick} />
       <div className="standard-width-container">
-        <DraftTable />
+        <DraftTable updateLeague={updateLeague} />
         <DraftFooter />
       </div>
     </>
