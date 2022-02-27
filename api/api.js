@@ -7,6 +7,8 @@ const scoresRouter = require('./scores');
 const leaguesRouter = require('./leagues');
 const vidiprinterRouter = require('./vidiprinter');
 
+//test
+
 const apiRouter = express.Router();
 
 apiRouter.use('/players', playersRouter);
