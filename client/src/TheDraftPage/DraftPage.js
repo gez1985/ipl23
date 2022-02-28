@@ -105,7 +105,7 @@ export default function DraftPage() {
   if (!league.draft1Live && !league.draft2Live && !league.draft3Live) {
     return (
       <>
-        <DraftPageHeader />
+        <DraftPageHeader live={false}/>
         <div className="flex-container standard-width-container">
           No drafts are currently live.
         </div>
@@ -116,7 +116,7 @@ export default function DraftPage() {
   if (league.draft2Live && !stage2Managers.includes(manager.id)) {
     return (
       <>
-        <DraftPageHeader />
+        <DraftPageHeader live={false}/>
         <div className="flex-container standard-width-container">
           You have not qualified for this draft.{" "}
         </div>
@@ -127,7 +127,7 @@ export default function DraftPage() {
   if (league.draft3Live && !stage3Managers.includes(manager.id)) {
     return (
       <>
-        <DraftPageHeader />
+        <DraftPageHeader live={false}/>
         <div className="flex-container standard-width-container">
           You have not qualified for this draft.{" "}
         </div>
@@ -143,7 +143,7 @@ export default function DraftPage() {
   ) {
     return (
       <>
-        <DraftPageHeader />
+        <DraftPageHeader live={false}/>
         <div className="flex-container standard-width-container">
           You have more than one draft stage live. Contact league admin.{" "}
         </div>
@@ -154,7 +154,7 @@ export default function DraftPage() {
   return (
     <>
       {showSkipped && <SkippedModal closeModal={() => setShowSkipped(false)} />}
-      <DraftPageHeader skipPick={skipPick} live/>
+      <DraftPageHeader skipPick={skipPick} live={true}/>
       <div className="standard-width-container">
         <DraftTable updateLeague={updateLeague} />
         <DraftFooter />

@@ -9,7 +9,7 @@ export default function DraftPageHeader({ skipPick, live }) {
       <ComponentNav />
       <MobileComponentNav />
       <div className="title-container">
-        <DraftTitle title="The Draft" skipPick={skipPick} live/>
+        <DraftTitle title="The Draft" skipPick={skipPick} live={live}/>
       </div>
       <DraftTableHeaders />
     </>
