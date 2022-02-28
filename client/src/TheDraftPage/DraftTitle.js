@@ -13,7 +13,7 @@ import MyTeamModal from "../MyTeamModal";
 import ManagerPicking from "./ManagerPicking";
 import CountdownTimer from "./CountdownTimer";
 
-export default function DraftTitle({ title, skipPick }) {
+export default function DraftTitle({ title, skipPick, live }) {
   const [searchName, setSearchName] = useContext(SearchNameContext);
   const [manager] = useContext(ManagerContext);
   const [managers] = useContext(ManagersContext);
@@ -27,9 +27,9 @@ export default function DraftTitle({ title, skipPick }) {
   
 
   const getTimer = () => {
-    if (league.pickNumber === manager.pickNumber) {
+    if (live && league.pickNumber === manager.pickNumber) {
       console.log(`it's my pick`);
-      return <CountdownTimer skipPick={skipPick}/>;
+      return <CountdownTimer skipPick={skipPick} />;
     } else {
       console.log(`it's not my pick`);
       return title

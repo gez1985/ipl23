@@ -154,7 +154,7 @@ export default function DraftPage() {
   return (
     <>
       {showSkipped && <SkippedModal closeModal={() => setShowSkipped(false)} />}
-      <DraftPageHeader skipPick={skipPick} />
+      <DraftPageHeader skipPick={skipPick} live/>
       <div className="standard-width-container">
         <DraftTable updateLeague={updateLeague} />
         <DraftFooter />
