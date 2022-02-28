@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ComponentNav from "./ComponentNav";
 import PageTitle from "./PageTitle";
 import MobileComponentNav from "./MobileComponentNav";
 
 export default function RulesPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <MobileComponentNav />

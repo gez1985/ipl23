@@ -30,7 +30,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://t20wc.herokuapp.com",
+  "proxy": "https://ipl23.herokuapp.com",
   "eslintConfig": {
     "extends": [
       "react-app",

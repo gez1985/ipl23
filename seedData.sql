@@ -1,14 +1,14 @@
 -- Seed Teams:
 
-INSERT INTO teams (name) VALUES ('England');
-INSERT INTO teams (name) VALUES ('India');
-INSERT INTO teams (name) VALUES ('Australia');
-INSERT INTO teams (name) VALUES ('New Zealand');
+INSERT INTO teams (name) VALUES ('CSK');
+INSERT INTO teams (name) VALUES ('RCB');
+INSERT INTO teams (name) VALUES ('MI');
+INSERT INTO teams (name) VALUES ('KKR');
 
 -- Seed Players:
 
-INSERT INTO players (name, team_id, role) VALUES ('Jos Buttler', 1, 'WK');
-INSERT INTO players (name, team_id, role) VALUES ('Jason Roy', 1, 'BT');
+INSERT INTO players (name, team_id, role) VALUES ('Moeen Ali', 1, 'AR');
+INSERT INTO players (name, team_id, role) VALUES ('MS Dhoni', 1, 'WK');
 INSERT INTO players (name, team_id, role) VALUES ('Dawid Malan', 1, 'BT');
 INSERT INTO players (name, team_id, role) VALUES ('Adil Rashid', 1, 'BW');
 INSERT INTO players (name, team_id, role) VALUES ('Virat Kohli', 2, 'BT');
@@ -39,10 +39,10 @@ INSERT INTO fixtures (home_team_id, away_team_id, date) VALUES (4, 2, '2025-10-1
 
 -- Seed managers:
 
-INSERT INTO managers (name, team_name, admin_level) VALUES ('Gerard Egan', 'Gerard fc', 3);
-INSERT INTO managers (name, team_name, admin_level) VALUES ('Katie Egan', 'Katie fc', 2);
-INSERT INTO managers (name, team_name, admin_level) VALUES ('Charlotte Egan', 'Charlotte fc', 1);
-INSERT INTO managers (name, team_name, admin_level) VALUES ('Moira Egan', 'Moira fc', 1);
+INSERT INTO managers (name, team_name, admin_level) VALUES ('Gerard Egan', 'Gerard fc', 4);
+INSERT INTO managers (name, team_name, admin_level) VALUES ('Katie Egan', 'Katie fc', 4);
+INSERT INTO managers (name, team_name, admin_level) VALUES ('Charlotte Egan', 'Charlotte fc', 4);
+INSERT INTO managers (name, team_name, admin_level) VALUES ('Moira Egan', 'Moira fc', 4);
 
 
 -- Seed scores: 

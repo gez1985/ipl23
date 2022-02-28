@@ -5,7 +5,6 @@ import NavPanel from "./NavPanel";
 import DraftNavIcon from "./TheDraftPage/DraftNavIcon";
 import FinalsIcon from "./FinalsIcon";
 import { LeagueContext } from "./Store";
-import TestComponent from './TestComponent';
 
 export default function Landing() {
   const [league] = useContext(LeagueContext);
