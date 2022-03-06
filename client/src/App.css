@@ -1019,4 +1019,69 @@
   }
 }
 
+.landing-champions-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 50px;
+  padding-top: 20px;
+}
+
+.competition-champs-container {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-width: 280px;
+  margin: 30px;
+}
+
+.competition-champs-title {
+  width: 100%;
+  font-family: "Oswald", sans-serif;
+  font-weight: 500;
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.competition-champs-entry-container {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 280px;
+  margin-bottom: 20px;
+}
+
+.competition-entry-names-container {
+  flex-grow: 2;
+}
+
+.competition-champs-name {
+  font-family: "Oswald", sans-serif;
+  font-size: 20px;
+}
+
+.competition-champs-icon-container {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.competition-champs-year {
+  font-family: "Oswald", sans-serif;
+  font-weight: 500;
+  font-size: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #dd6d1f;
+  margin-right: 20px;
+}
+
+.competition-champs-name-entry {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
 /*# sourceMappingURL=App.css.map */

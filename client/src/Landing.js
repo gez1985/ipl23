@@ -5,6 +5,7 @@ import NavPanel from "./NavPanel";
 import DraftNavIcon from "./TheDraftPage/DraftNavIcon";
 import FinalsIcon from "./FinalsIcon";
 import { LeagueContext } from "./Store";
+import Champions from "./ChampionsComponent/Champions";
 
 export default function Landing() {
   const [league] = useContext(LeagueContext);
@@ -28,6 +29,7 @@ export default function Landing() {
         {dateNow > league.stage2Date && <FinalsIcon />}
       </div>
       <NavPanel />
+      <Champions />
     </>
   );
 }

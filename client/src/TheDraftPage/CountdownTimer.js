@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { LeagueContext, ManagerContext } from "../Store";
 
-export default function CountdownTimer({ skipPick }) {
+export default function CountdownTimer({ skipPick, live }) {
   const [counter, setCounter] = useState(60);
+  const [manager] = useContext(ManagerContext);
+  const [league] = useContext(LeagueContext);
 
   useEffect(() => {
     let timer;
@@ -9,6 +12,11 @@ export default function CountdownTimer({ skipPick }) {
       timer = setInterval(() => setCounter(counter - 1), 1000);
     } else {
       skipPick();
+      setTimeout(() => {
+        if (live && league.pickNumber === manager.pickNumber) {
+          setCounter(60);
+        }
+      }, 15000);
     }
 
     return () => clearInterval(timer);

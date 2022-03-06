@@ -1,13 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import {
-  PlayersContext,
-  TeamsContext,
-  ManagerContext,
-  ManagersContext,
-  SortContext,
-  SearchNameContext,
-  LeagueContext,
-} from "../Store";
+import React, { useState, useContext } from "react";
+import { ManagerContext, SearchNameContext, LeagueContext } from "../Store";
 import myTeam from "../img/MyTeam.png";
 import MyTeamModal from "../MyTeamModal";
 import ManagerPicking from "./ManagerPicking";
@@ -16,7 +8,6 @@ import CountdownTimer from "./CountdownTimer";
 export default function DraftTitle({ title, skipPick, live }) {
   const [searchName, setSearchName] = useContext(SearchNameContext);
   const [manager] = useContext(ManagerContext);
-  const [managers] = useContext(ManagersContext);
   const [league] = useContext(LeagueContext);
   const [showMyTeam, setShowMyTeam] = useState(false);
 
@@ -24,17 +15,13 @@ export default function DraftTitle({ title, skipPick, live }) {
     setShowMyTeam(false);
   }
 
-  
-
   const getTimer = () => {
     if (live && league.pickNumber === manager.pickNumber) {
-      console.log(`it's my pick`);
-      return <CountdownTimer skipPick={skipPick} />;
+      return <CountdownTimer skipPick={skipPick} live={live}/>;
     } else {
-      console.log(`it's not my pick`);
-      return title
+      return title;
     }
-  }
+  };
 
   return (
     <div className="draft-header">

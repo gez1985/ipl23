@@ -50,23 +50,27 @@ export default function DraftPage() {
   }
 
   async function updateLeague() {
+    console.log('league updated');
     const stage2Managers = league.stage2Managers.flat();
     const leagueCopy = JSON.parse(JSON.stringify(league));
     let maxPickNumber = 0;
     if (league.draft1Live) {
       maxPickNumber = league.managerIds.length;
+      console.log(`maxPickNumber = ${maxPickNumber}`);
     }
     if (league.draft2Live) {
       maxPickNumber = stage2Managers.length;
     }
     if (league.draft1Live || league.draft2Live) {
       if (leagueCopy.lastPick) {
+        console.log(`lastPick = true`);
         leagueCopy.round++;
         leagueCopy.up = !league.up;
         leagueCopy.lastPick = false;
       } else {
         if (leagueCopy.up) {
           if (leagueCopy.pickNumber === maxPickNumber - 1) {
+            console.log('penultimate pick');
             leagueCopy.lastPick = true;
             leagueCopy.pickNumber++;
           } else {
@@ -74,6 +78,7 @@ export default function DraftPage() {
           }
         } else {
           if (leagueCopy.pickNumber === 2) {
+            console.log('penultimate pick');
             leagueCopy.lastPick = true;
             leagueCopy.pickNumber--;
           } else {
@@ -94,7 +99,6 @@ export default function DraftPage() {
   }
 
   const skipPick = () => {
-    console.log("pick skipped");
     setShowSkipped(true);
     updateLeague();
   };
