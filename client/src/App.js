@@ -13,6 +13,7 @@ import {
   TeamsContext,
   LoadingContext,
   LeaguesContext,
+  LeagueManagersContext,
 } from "./Store";
 import Scores from "./utils/Scores";
 import ManagerProps from "./utils/ManagerProps";
@@ -23,6 +24,7 @@ function App() {
   const [, setIsLoadingData] = useContext(LoadingContext);
   const [managers, setManagers] = useContext(ManagersContext);
   const [manager, setManager] = useContext(ManagerContext);
+  const [leagueManagers, setLeagueManagers] = useContext(LeagueManagersContext);
   const [league, setLeague] = useContext(LeagueContext);
   const [players, setPlayers] = useContext(PlayersContext);
   const [scores, setScores] = useContext(ScoresContext);
@@ -65,16 +67,8 @@ function App() {
     if (!previousLeague && league) {
       Scores.getStagePoints(players, scores, fixtures, league);
       ManagerProps.getStagePoints(managers, players);
-      setManagers(Helpers.setManagersByLeague(league, managers));
+      setLeagueManagers(Helpers.setManagersByLeague(league, managers));
       setIsLoadingData(false);
-      console.log(players);
-      console.log(teams);
-      console.log(managers);
-      console.log(fixtures);
-      console.log(scores);
-      console.log(manager);
-      console.log(leagues);
-      console.log(league);
     }
   });
 

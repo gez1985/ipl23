@@ -7,7 +7,7 @@ import Helpers from "../utils/Helpers";
 import ManagerProps from "../utils/ManagerProps";
 import {
   LeagueContext,
-  ManagersContext,
+  LeagueManagersContext as ManagersContext,
   PlayersContext,
   VidiprinterContext,
   ManagerContext,

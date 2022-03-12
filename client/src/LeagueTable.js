@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import TeamModal from "./TeamModal";
-import { ManagersContext } from "./Store";
+import { LeagueManagersContext as ManagersContext } from "./Store";
 const sortObjectsArray = require("sort-objects-array");
 
 export default function LeagueTable() {

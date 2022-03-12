@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { SortContext } from "./Store";
+import { SortContext } from "../Store";
 
 export default function PlayersHeaders() {
 
@@ -19,6 +19,7 @@ export default function PlayersHeaders() {
               <th scope="col" className="cursor-pointer disappear-mobile" onClick={() => setSort('wickets')}>Wickets</th>
               <th scope="col" className="cursor-pointer disappear-mobile" onClick={() => setSort('catches')}>Catches</th>
               <th scope="col" className="cursor-pointer" onClick={() => setSort('totalPoints')}>Total Points</th>
+              <th scope="col" className="cursor-pointer disappear-mobile"></th>
             </tr>
           </thead>
         </table>

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import ComponentHeader from "./ComponentHeader";
 import SquadDisplay from "./SquadDisplay";
-import { ManagersContext, LeagueContext } from "./Store";
+import { LeagueManagersContext as ManagersContext, LeagueContext } from "./Store";
 import Helpers from "./utils/Helpers";
 const sortObjectsArray = require("sort-objects-array");
 

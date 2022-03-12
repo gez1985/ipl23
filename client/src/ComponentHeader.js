@@ -5,7 +5,6 @@ import LeagueTableHeaders from "./LeagueTableHeaders";
 import MobileComponentNav from "./MobileComponentNav";
 import MyTeamHeaders from "./MyTeamHeaders";
 import PageTitle from "./PageTitle";
-import PlayersHeaders from "./PlayersHeaders";
 import DraftTableHeaders from "./TheDraftPage/DraftTableHeaders";
 
 export default function ComponentHeader(props) {
@@ -17,7 +16,6 @@ export default function ComponentHeader(props) {
         <PageTitle title={props.title} from={props.from} />
         {props.from === "myTeam" && <MyTeamHeaders />}
         {props.from === "leagueTable" && <LeagueTableHeaders />}
-        {props.from === "players" && <PlayersHeaders />}
         {props.from === "fixture-score" && <FixtureScoresHeaders />}
         {props.from === "draft" && <DraftTableHeaders />}
       </div>

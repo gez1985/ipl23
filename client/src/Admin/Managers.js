@@ -30,6 +30,8 @@ export default function Managers() {
     window.scrollTo(0, 0);
   }, []);
 
+  const getAllManagers = () => {}
+
   if (!managers || !league || !manager) {
     return (
       <>
@@ -441,36 +443,38 @@ export default function Managers() {
       </div>
       <div className="tables-container">
         <table className="managers-table">
-          <tr>
-            <th>id</th>
-            <th className="sort-heading" onClick={() => setSortBy("name")}>
-              Name
-            </th>
-            <th>Team Name</th>
-            {manager.adminLevel === 4 && <th>User ID</th>}
-            <th
-              className="sort-heading"
-              onClick={() => setSortBy("adminLevel")}
-            >
-              Admin Level
-            </th>
-            <th
-              className="sort-heading"
-              onClick={() => setSortBy("pickNumber")}
-            >
-              Pick Number
-            </th>
-            <th>Stage 1 Squad</th>
-            <th>Stage 2 Squad</th>
-            <th>Stage 3 Squad</th>
-            {manager.adminLevel === 4 && (
-              <>
-                <th>Edit Manager</th>
-                <th>Delete Manager</th>
-              </>
-            )}
-          </tr>
-          {managersList.map((manager) => renderTableRows(manager))}
+          <tbody>
+            <tr>
+              <th>id</th>
+              <th className="sort-heading" onClick={() => setSortBy("name")}>
+                Name
+              </th>
+              <th>Team Name</th>
+              {manager.adminLevel === 4 && <th>User ID</th>}
+              <th
+                className="sort-heading"
+                onClick={() => setSortBy("adminLevel")}
+              >
+                Admin Level
+              </th>
+              <th
+                className="sort-heading"
+                onClick={() => setSortBy("pickNumber")}
+              >
+                Pick Number
+              </th>
+              <th>Stage 1 Squad</th>
+              <th>Stage 2 Squad</th>
+              <th>Stage 3 Squad</th>
+              {manager.adminLevel === 4 && (
+                <>
+                  <th>Edit Manager</th>
+                  <th>Delete Manager</th>
+                </>
+              )}
+            </tr>
+            {managersList.map((manager) => renderTableRows(manager))}
+          </tbody>
         </table>
       </div>
       {showSquad && (

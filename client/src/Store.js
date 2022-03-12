@@ -13,12 +13,14 @@ export const LoadingContext = React.createContext();
 export const SortContext = React.createContext();
 export const IncludeContext = React.createContext();
 export const SearchNameContext = React.createContext();
+export const LeagueManagersContext = React.createContext(); 
 
 const Store = ({ children }) => {
   const [leagues, setLeagues] = useState();
   const [league, setLeague] = useState();
   const [managers, setManagers] = useState();
   const [manager, setManager] = useState();
+  const [leagueManagers, setLeagueManagers] = useState();
   const [players, setPlayers] = useState();
   const [teams, setTeams] = useState();
   const [scores, setScores] = useState();
@@ -43,7 +45,9 @@ const Store = ({ children }) => {
                         <SortContext.Provider value={[sort, setSort]}>
                           <IncludeContext.Provider value={[include, setInclude]}>
                             <SearchNameContext.Provider value={[searchName, setSearchName]}>
-                              {children}
+                              <LeagueManagersContext.Provider value={[leagueManagers, setLeagueManagers]}>
+                                {children}
+                              </LeagueManagersContext.Provider>
                             </SearchNameContext.Provider>
                           </IncludeContext.Provider>
                         </SortContext.Provider>

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import ComponentHeader from "./ComponentHeader";
+import PlayersPageHeaders from "./PlayersPageHeaders";
 import Players from "./Players";
 
 export default function PlayersPage() {
@@ -9,7 +9,7 @@ export default function PlayersPage() {
 
   return (
     <>
-      <ComponentHeader from="players" title="Players" />
+      <PlayersPageHeaders />
       <Players />
     </>
   );

@@ -3,7 +3,7 @@ import {
   PlayersContext,
   TeamsContext,
   ManagerContext,
-  ManagersContext,
+  LeagueManagersContext as ManagersContext,
   SortContext,
   SearchNameContext,
   LeagueContext,

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { VidiprinterContext, ManagersContext, PlayersContext } from "../Store";
+import { VidiprinterContext, LeagueManagersContext as ManagersContext, PlayersContext } from "../Store";
 import Helpers from "../utils/Helpers";
 import leftArrow from "../img/LeftArrow.png";
 import rightArrow from "../img/RightArrow.png";

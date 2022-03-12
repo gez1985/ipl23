@@ -5,9 +5,9 @@ import {
   SortContext,
   SearchNameContext,
   IncludeContext,
-} from "./Store";
-import PlayerModal from "./PlayerModal";
-import Helpers from "./utils/Helpers";
+} from "../Store";
+import PlayerModal from "../PlayerModal";
+import Helpers from "../utils/Helpers";
 const sortObjectsArray = require("sort-objects-array");
 
 export default function Players(props) {
@@ -88,6 +88,7 @@ export default function Players(props) {
         <td className="disappear-mobile">{player.wickets}</td>
         <td className="disappear-mobile">{player.catches}</td>
         <td>{player.totalPoints}</td>
+        <td className="disappear-mobile">sho</td>
       </tr>
     );
   }

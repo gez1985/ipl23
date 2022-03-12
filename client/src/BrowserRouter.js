@@ -9,7 +9,7 @@ import MyTeamPage from "./MyTeamPage";
 import LeagueTablePage from "./LeagueTablePage";
 import FixturesPage from "./FixturesPage";
 import SquadsPage from "./SquadsPage";
-import PlayersPage from "./PlayersPage";
+import PlayersPage from "./PlayersPage/PlayersPage";
 import RulesPage from "./RulesPage";
 import FixtureScores from "./FixtureScores";
 import DraftPage from "./TheDraftPage/DraftPage";
@@ -23,6 +23,7 @@ import AdminLeague from "./Admin/League";
 import AdminAllLeagues from "./Admin/AllLeagues";
 import AdminFixtureScores from "./Admin/FixtureScores";
 import CountdownTimer from  "./TheDraftPage/CountdownTimer";
+import LogoutButton from "./LogOut";
 
 export default function BrowserRouter() {
   const { isLoading, user, isAuthenticated } = useAuth0();
@@ -43,6 +44,7 @@ export default function BrowserRouter() {
     return (
       <div className="main-body">
         <LoadingSpinner loading={user} />
+        <LogoutButton />
       </div>
     );
   }

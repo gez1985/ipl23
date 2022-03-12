@@ -10,7 +10,7 @@ import BrowserRouter from "./BrowserRouter";
 ReactDOM.render(
   <Auth0Provider
     domain="dev-euzk-z0t.eu.auth0.com"
-    clientId="9aHiZqaDB8W5SuedRkw6GievMW52Ohvg"
+    clientId="4sKG6M8kxdFZMiK0NBrpUSzoQ3UX2ctC"
     redirectUri={window.location.origin}
   >
     <Store>

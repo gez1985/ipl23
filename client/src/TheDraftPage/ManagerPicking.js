@@ -1,5 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { LeagueContext, ManagersContext, ManagerContext } from "../Store";
+import {
+  LeagueContext,
+  LeagueManagersContext as ManagersContext,
+  ManagerContext,
+} from "../Store";
 import Helpers from "../utils/Helpers";
 import upArrow from "../img/UpArrow.png";
 import downArrow from "../img/DownArrow.png";
@@ -23,11 +27,10 @@ export default function ManagerPicking() {
       }
     }
   }
-  
+
   if (league.draft3Live) {
     nextPickNumber = league.pickNumber === 1 ? 2 : 1;
   }
-
 
   useEffect(() => {
     if (league.up) {

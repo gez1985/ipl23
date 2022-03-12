@@ -1,44 +1,9 @@
 import React, { useContext } from "react";
-import { IncludeContext, SearchNameContext } from "./Store";
+import { IncludeContext, SearchNameContext } from "../Store";
 
 export default function PlayersTitle(props) {
   const [, setInclude] = useContext(IncludeContext);
   const [searchName, setSearchName] = useContext(SearchNameContext);
-
-  // return (
-  //   <div>
-  //     <div className="players-title flex-container space-between">
-  //       <input
-  //         type="text"
-  //         placeholder="Search by name:"
-  //         className="player-search"
-  //         onChange={(e) => setSearchName(e.target.value)}
-  //         defaultValue={searchName}
-  //       ></input>
-  //       <div className="page-title">{props.title}</div>
-  //       <div className="align-items-end">
-  //         <button
-  //           className="include-button"
-  //           onClick={() => setInclude("allPlayers")}
-  //         >
-  //           All Players
-  //         </button>
-  //         <button
-  //           className="include-button"
-  //           onClick={() => setInclude("drafted")}
-  //         >
-  //           Drafted
-  //         </button>
-  //         <button
-  //           className="include-button"
-  //           onClick={() => setInclude("notSelected")}
-  //         >
-  //           Not Selected
-  //         </button>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 
   return (
     <div className="players-header">
