@@ -19,7 +19,7 @@ export default function PlayersHeaders() {
               <th scope="col" className="cursor-pointer disappear-mobile" onClick={() => setSort('wickets')}>Wickets</th>
               <th scope="col" className="cursor-pointer disappear-mobile" onClick={() => setSort('catches')}>Catches</th>
               <th scope="col" className="cursor-pointer" onClick={() => setSort('totalPoints')}>Total Points</th>
-              <th scope="col" className="cursor-pointer disappear-mobile"></th>
+              <th scope="col" className="cursor-pointer disappear-mobile">Shortlist</th>
             </tr>
           </thead>
         </table>

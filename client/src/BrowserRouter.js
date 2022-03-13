@@ -44,7 +44,7 @@ export default function BrowserRouter() {
     return (
       <div className="main-body">
         <LoadingSpinner loading={user} />
-        <LogoutButton />
+        {/* <LogoutButton /> */}
       </div>
     );
   }

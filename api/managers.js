@@ -32,9 +32,9 @@ managersRouter.post('/', async(req, res) => {
 
 managersRouter.put('/', async(req, res) => {
   try {
-    const { id, name, teamName, userId, adminLevel, stage1Squad, stage2Squad, stage3Squad } = req.body;
-    const sql = 'UPDATE managers SET name = $1, team_name = $2, user_id = $3, admin_level = $4, stage_1_squad = $5, stage_2_squad = $6, stage_3_squad = $7 WHERE id = $8 RETURNING *';
-    const values = [name, teamName, userId, adminLevel, stage1Squad, stage2Squad, stage3Squad, id];
+    const { id, name, teamName, userId, adminLevel, stage1Squad, stage2Squad, stage3Squad, autoPick, shortlist } = req.body;
+    const sql = 'UPDATE managers SET name = $1, team_name = $2, user_id = $3, admin_level = $4, stage_1_squad = $5, stage_2_squad = $6, stage_3_squad = $7, auto_pick = $8, shortlist = $9 WHERE id = $10 RETURNING *';
+    const values = [name, teamName, userId, adminLevel, stage1Squad, stage2Squad, stage3Squad, autoPick, shortlist, id];
     const updateManager = await pool.query(sql, values);
     res.status(200).json(updateManager.rows[0]);
   } catch (error) {

@@ -55,27 +55,3 @@ CREATE TABLE vidiprinter (
   manager_id SMALLINT NOT NULL,
   player_id SMALLINT NOT NULL
 );
-
-CREATE TABLE leagues (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(50) NOT NULL UNIQUE,
-  admin_manager_id SMALLINT NOT NULL,
-  manager_ids SMALLINT[] DEFAULT '{}',
-  draft_1_live BOOLEAN NOT NULL DEFAULT false,
-  draft_2_live BOOLEAN NOT NULL DEFAULT false,
-  draft_3_live BOOLEAN NOT NULL DEFAULT false,
-  round SMALLINT NOT NULL DEFAULT 1,
-  pick_number SMALLINT NOT NULL DEFAULT 1,
-  up BOOLEAN NOT NULL DEFAULT true,
-  last_pick BOOLEAN NOT NULL DEFAULT false,
-  timer BOOLEAN NOT NULL DEFAULT false,
-  stage_2_date TEXT,
-  stage_3_date TEXT,
-  stage_4_date TEXT,
-  stage_2_managers SMALLINT[][2] DEFAULT '{}',
-  stage_2_teams SMALLINT[] DEFAULT '{}',
-  stage_3_managers SMALLINT[][2] DEFAULT '{}',
-  stage_3_teams SMALLINT[] DEFAULT '{}',
-  stage_4_managers SMALLINT[][2] DEFAULT '{}',
-  stage_4_teams SMALLINT[] DEFAULT '{}'
-);

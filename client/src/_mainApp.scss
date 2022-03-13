@@ -92,6 +92,12 @@
     cursor: pointer;
   }
 
+  .shortlist-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .component-nav-container {
     display: flex;
     justify-content: space-between;

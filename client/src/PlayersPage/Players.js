@@ -8,9 +8,11 @@ import {
 } from "../Store";
 import PlayerModal from "../PlayerModal";
 import Helpers from "../utils/Helpers";
+import { IoPersonAdd } from "react-icons/io5";
+import { IconContext } from "react-icons";
 const sortObjectsArray = require("sort-objects-array");
 
-export default function Players(props) {
+export default function Players({ handleShortlistClick }) {
   const [players] = useContext(PlayersContext);
   const [managers] = useContext(ManagersContext);
   const [sort] = useContext(SortContext);
@@ -88,7 +90,22 @@ export default function Players(props) {
         <td className="disappear-mobile">{player.wickets}</td>
         <td className="disappear-mobile">{player.catches}</td>
         <td>{player.totalPoints}</td>
-        <td className="disappear-mobile">sho</td>
+        <td className="disappear-mobile">
+          <div className="shortlist-icon-container">
+            <IconContext.Provider
+              value={{ size: "1.3rem", color: "#666", cursor: "pointer" }}
+            >
+              <div
+                style={{ cursor: "pointer" }}
+                onClick={() =>
+                  handleShortlistClick(player)
+                }
+              >
+                <IoPersonAdd />
+              </div>
+            </IconContext.Provider>
+          </div>
+        </td>
       </tr>
     );
   }

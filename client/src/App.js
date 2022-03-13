@@ -72,6 +72,8 @@ function App() {
     }
   });
 
+  console.log(leagueManagers);
+
   async function getData() {
     try {
       const scoresData = await Search.getAllScores();

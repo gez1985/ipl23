@@ -1,0 +1,47 @@
+.shortlist-body-container {
+  margin-bottom: 30px;
+}
+
+.shortlist-modal-footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shortlist-auto-pick-checkbox {
+  margin-right: 15px;
+}
+
+.shortlist-auto-pick-label {
+  font-family: "Oswald", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.shortlist-close-button {
+  width: 150px;
+  text-align: center;
+  padding: 10px 15px;
+  margin: 0 10px;
+  font-weight: 500;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #999;
+  cursor: pointer;
+}
+
+.shortlist-save-auto-pick-button {
+  width: 150px;
+  text-align: center;
+  padding: 10px 15px;
+  margin: 0 10px;
+  font-weight: 500;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  background-color: green;
+  cursor: pointer;
+}
