@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import { ManagerContext } from "../Store";
+import React, { useState, useEffect } from "react";
 import PlayersPageHeaders from "./PlayersPageHeaders";
 import Players from "./Players";
 import ShortlistModal from "./ShortlistModal";
@@ -7,7 +6,7 @@ import ShortlistModal from "./ShortlistModal";
 export default function PlayersPage() {
   const [showShortlist, setShowShortlist] = useState(false);
   const [shortlistPlayer, setShortlistPlayer] = useState();
-  const [manager, setManager] = useContext(ManagerContext);
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -20,7 +19,7 @@ export default function PlayersPage() {
   };
 
   return (
-    <>
+    <div className={showShortlist ? "overflow-hidden" : ""}>
       {showShortlist && shortlistPlayer && (
         <ShortlistModal
           closeModal={() => setShowShortlist(false)}
@@ -28,7 +27,10 @@ export default function PlayersPage() {
         />
       )}
       <PlayersPageHeaders />
-      <Players handleShortlistClick={handleShortlistClick} />
-    </>
+      <Players
+        handleShortlistClick={handleShortlistClick}
+        showShortlist={showShortlist}
+      />
+    </div>
   );
 }

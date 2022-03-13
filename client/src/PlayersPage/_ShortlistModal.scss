@@ -1,7 +1,101 @@
+.shortlist-error {
+  margin-bottom: 20px;
+  color: red;
+  font-weight: 500;
+}
+
 .shortlist-add-player-container {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
+}
+
+.shortlist-add-player-caption {
+  font-weight: 500;
+  margin-right: 15px;
+  font-size: 18px;
+}
+
+.shortlist-number-input {
+  width: 50px;
+  height: 40px;
+  margin-right: 15px;
+  font-weight: 500;
+  padding-left: 10px;
+  font-size: 18px;
+}
+
+.shortlist-add-player-button {
+  height: 40px;
+  width: 160px;
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 10px;
+  font-weight: 500;
+  font-size: 18px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  background-color: green;
+  cursor: pointer;
+}
+
+.shortlist-add-player-button-disabled {
+  height: 40px;
+  width: 160px;
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 10px;
+  font-weight: 500;
+  font-size: 18px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #999;
+}
+
+.shortlist-player-list-container {
+  height: 300px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.shortlist-table-headers-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Oswald", sans-serif;
+  font-size: 18px;
+  color: #dd6d1f;
+  padding: 10px 20px;
+}
+
+.shortlist-table-row-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  padding: 5px 20px;
+}
+
+.shortlist-render-players-container {
+  max-height: 253px;
+  overflow-y: auto;
+}
+
+.shortlist-table-detail {
+  width: 140px;
+  text-align: center;
+}
+
+.shortlist-players-table-headers {
+  width: 150px;
+}
+
+.shortlist-player-row {
+  height: 30px;
 }
 
 .shortlist-modal-footer-container {
@@ -50,4 +144,25 @@
   color: #fff;
   background-color: green;
   cursor: pointer;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #999;
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #777;
 }

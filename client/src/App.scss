@@ -3,3 +3,8 @@
 @use './ChampionsComponent/Champions';
 @use './ModalTemplate';
 @use './PlayersPage/ShortlistModal';
+
+.overflow-hidden {
+  height: 100vh;
+  overflow: hidden;
+}

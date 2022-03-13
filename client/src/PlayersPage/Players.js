@@ -97,9 +97,7 @@ export default function Players({ handleShortlistClick }) {
             >
               <div
                 style={{ cursor: "pointer" }}
-                onClick={() =>
-                  handleShortlistClick(player)
-                }
+                onClick={() => handleShortlistClick(player)}
               >
                 <IoPersonAdd />
               </div>
