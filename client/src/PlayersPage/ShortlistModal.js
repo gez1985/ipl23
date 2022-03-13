@@ -19,10 +19,8 @@ export default function ShortlistModal({ player, closeModal }) {
     try {
       const managerCopy = JSON.parse(JSON.stringify(manager));
       managerCopy.autoPick = autoPick;
-      console.log(managerCopy);
-      const newManager = await Search.putManager(managerCopy);
-      console.log(newManager);
-      setManager(newManager);
+      await Search.putManager(managerCopy);
+      setManager(managerCopy);
     } catch (err) {
       console.log(err.message);
     }
