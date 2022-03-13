@@ -1,5 +1,7 @@
-.shortlist-body-container {
+.shortlist-add-player-container {
   margin-bottom: 30px;
+  display: flex;
+  align-items: center;
 }
 
 .shortlist-modal-footer-container {
@@ -19,6 +21,8 @@
 }
 
 .shortlist-close-button {
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
   width: 150px;
   text-align: center;
   padding: 10px 15px;
@@ -33,6 +37,8 @@
 }
 
 .shortlist-save-auto-pick-button {
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
   width: 150px;
   text-align: center;
   padding: 10px 15px;
