@@ -109,7 +109,7 @@ async function updateLeague(league) {
 async function autoPick(managers, league) {
   console.log('auto pick reached');
   const nextManager = managers.find((manager) => manager.pickNumber === league.pick_number);
-  console.log(`the next manager is ${manager.name} with pick number ${manager.pickNumber}`);
+  console.log(`the next manager is ${nextManager.name} with pick number ${nextManager.pickNumber}`);
   if (nextManager.autoPick) {
     console.log('auto pick required');
     autoPickPlayer(nextManager);
