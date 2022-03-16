@@ -1,6 +1,7 @@
 const express = require("express");
 const pool = require("../db");
 const camelcaseKeys = require("camelcase-keys");
+const { LeagueManagersContext } = require("../client/src/Store");
 
 const draftRouter = express.Router();
 
@@ -117,7 +118,14 @@ async function autoPick(managers, league, players) {
   } 
 }
 
+async function getUpdatedManagers(leagueId) {
+  const leagueManagers = await pool.query(`SELECT * FROM managers WHERE league_id = ${leagueId}`);
+  return leagueManagersContext.rows;
+}
+
 async function autoPickPlayer(league, manager, managers, players) {
+  const updatedManagers = getUpdatedManagers(league.id);
+  console.log(updatedManagers);
   const managerCopy = JSON.parse(JSON.stringify(manager));
   const unpickedPlayers = getUnpickedPlayers(managers, players, league);
   const unpickedPlayerIds = unpickedPlayers.map((player) => player.id);
