@@ -144,6 +144,7 @@ export default function DraftTable({ updateLeague }) {
         playerId: selectedPlayer.id,
         manager: managerCopy,
         league: league,
+        managers: managers,
       });
       console.log(response);
     } catch (err) {

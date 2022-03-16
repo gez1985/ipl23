@@ -7,7 +7,7 @@ const draftRouter = express.Router();
 
 draftRouter.put("/pick", async (req, res) => {
   try {
-    const { playerId, manager, league } = req.body;
+    const { playerId, manager, league, managers } = req.body;
 
     //  update manager database with managerCopy stage squad:
 
@@ -34,7 +34,17 @@ draftRouter.put("/pick", async (req, res) => {
 
     //  update league pick number, direction, last pick:
 
-    await updateLeague(league);
+    const updatedLeague = await updateLeague(league);
+
+    //  get next manager to see if autoPick:
+
+    const nextManager = managers.find((manager) => manager.pickNumber === updateLeague.pickNumber);
+    console.log(nextManager);
+    if (nextManager.autoPick) {
+      console.log('auto pick required');
+    } else {
+      console.log('auto pick not required');
+    }
 
     res.json({ msg: "player pick reached" });
   } catch (error) {
@@ -97,7 +107,8 @@ async function updateLeague(league) {
     leagueCopy.lastPick,
     leagueCopy.name,
   ];
-  await pool.query(leagueSql, leagueValues);
+  const updatedLeague = await pool.query(leagueSql, leagueValues);
+  return (updatedLeague.rows[0]);
 }
 
 module.exports = draftRouter;
