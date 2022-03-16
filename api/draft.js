@@ -125,7 +125,7 @@ async function getUpdatedManagers(managerIds) {
 
 async function autoPickPlayer(league, manager, managers, players) {
   console.log(league);
-  const updatedManagers = getUpdatedManagers(league.managerIds);
+  const updatedManagers = await getUpdatedManagers(league.managerIds);
   console.log(updatedManagers);
   const managerCopy = JSON.parse(JSON.stringify(manager));
   const unpickedPlayers = getUnpickedPlayers(managers, players, league);
