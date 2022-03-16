@@ -27,7 +27,8 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "pg": "^8.5.1",
-    "sass": "^1.43.2"
+    "sass": "^1.43.2",
+    "sort-objects-array": "^1.7.1"
   },
   "_id": "fc-backend@1.0.0",
   "devDependencies": {

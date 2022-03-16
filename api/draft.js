@@ -1,6 +1,7 @@
 const express = require("express");
 const pool = require("../db");
 const camelcaseKeys = require("camelcase-keys");
+const DraftValidation = require("./utils/draftValidation");
 
 const draftRouter = express.Router();
 
@@ -12,22 +13,7 @@ draftRouter.put("/pick", async (req, res) => {
 
     //  update manager database with managerCopy stage squad:
 
-    if (league.draft1Live) {
-      const sql =
-        "UPDATE managers SET stage_1_squad = $1 WHERE id = $2 RETURNING *";
-      const values = [manager.stage1Squad, manager.id];
-      await pool.query(sql, values);
-    } else if (league.draft2Live) {
-      const sql =
-        "UPDATE managers SET stage_3_squad = $1 WHERE id = $2 RETURNING *";
-      const values = [manager.stage2Squad, manager.id];
-      await pool.query(sql, values);
-    } else if (league.draft3Live) {
-      const sql =
-        "UPDATE managers SET stage_3_squad = $1 WHERE id = $2 RETURNING *";
-      const values = [manager.stage3Squad, manager.id];
-      await pool.query(sql, values);
-    }
+    await updateManagers(manager);
 
     //  update vidiprinter with details:
 
@@ -46,6 +32,12 @@ draftRouter.put("/pick", async (req, res) => {
     res.json({ success: false, msg: "server error" });
   }
 });
+
+async function updateManagers(manager) {
+  const sql = "UPDATE managers SET stage_1_squad = $1, stage_2_squad = $2, stage_3_squad = $3 WHERE id = $4 RETURNING *";
+  const values = [manager.stage1Squad, manager.stage2Squad, manager.stage3Squad, manager.id];
+  await pool.query(sql, values);
+}
 
 async function vidiEntry(leagueId, managerId, playerId) {
   const vidiSql =
@@ -114,116 +106,111 @@ async function autoPick(managers, league, players) {
     await autoPickPlayer(league, nextManager, players);
     const updatedLeague = await updateLeague(league);
     await autoPick(managers, updatedLeague, players);
-  } 
+  }
 }
 
 async function autoPickPlayer(league, manager, players) {
-  const updatedManagers = await getUpdatedManagers(league.managerIds);
-  const managerCopy = JSON.parse(JSON.stringify(manager));
-  console.log('manager copy');
-  console.log(managerCopy);
-  const unpickedPlayers = getUnpickedPlayers(updatedManagers, players, league);
-  const unpickedPlayerIds = unpickedPlayers.map((player) => player.id);
-  let chosenPlayerId;
-  for (let i = 0; i < manager.shortlist.length; i++) {
-    if (unpickedPlayerIds.includes(manager.shortlist[i])) {
-      const player = players.find((player) => manager.shortlist[i] === player.id);
-      console.log('player');
-      console.log(player);
-      console.log(`${player.name} with id = ${manager.shortlist[i]} is available`);
-      if (!chosenPlayerId) {
-        chosenPlayerId = manager.shortlist[i];
+  const squadSpace = checkSquadSpace(manager, league);
+  if (squadSpace) {
+    const updatedManagers = await getUpdatedManagers(league.managerIds);
+    const managerCopy = JSON.parse(JSON.stringify(manager));
+    const unpickedPlayers = getUnpickedPlayers(
+      updatedManagers,
+      players,
+      league
+    );
+    const unpickedPlayerIds = unpickedPlayers.map((player) => player.id);
+    let chosenPlayer;
+    for (let i = 0; i < manager.shortlist.length; i++) {
+      if (unpickedPlayerIds.includes(manager.shortlist[i])) {
+        const player = players.find((player) => manager.shortlist[i] === player.id);
+        const playerValid = checkPlayerValid(league, manager, players, player);
+        if (playerValid) {
+          if (!chosenPlayer) {
+            chosenPlayer = player;
+            const managerCopyIndex = managerCopy.shortlist.indexOf(manager.shortlist[i]);
+            if (managerCopyIndex > -1) {
+              managerCopy.shortlist.splice(managerCopyIndex, 1);
+            }
+          }
+        } else {
+          const managerCopyIndex = managerCopy.shortlist.indexOf(manager.shortlist[i]);
+          if (managerCopyIndex > -1) {
+            managerCopy.shortlist.splice(managerCopyIndex, 1);
+          }
+        }
+      } else {
+        const managerCopyIndex = managerCopy.shortlist.indexOf(manager.shortlist[i]);
+        if (managerCopyIndex > -1) {
+          managerCopy.shortlist.splice(managerCopyIndex, 1);
+        }
       }
-    } else {
-      console.log(`player with id = ${manager.shortlist[i]} has already been selected`);
-      const managerCopyIndex = managerCopy.shortlist.indexOf(manager.shortlist[i]);
-      if (managerCopyIndex > -1) {
-        managerCopy.shortlist.splice(managerCopyIndex, 1);
-      }
+      console.log(chosenPlayer);
     }
-    console.log(chosenPlayerId);
+    if (!chosenPlayer) {
+      chosenPlayer = getRandomPlayer(league, manager, unpickedPlayers);
+    }
+    updateAutoManager(league, managerCopy, chosenPlayer.id);
+    await updateManagers(managerCopy);
   }
-  console.log('new manager copy');
-  console.log(managerCopy);
 }
 
-function pickValidation(league, manager, players, player) {
-  let full = "eleven";
-    let max = "three";
-    if (league.draft1Live) {
-      full = "fifteen";
-    }
-    if (league.draft2Live) {
-      max = "four";
-    } else if (league.draft3Live) {
-      max = "eleven";
-    }
-    const minTeamRequirements = DraftValidation.minTeamRequirements(
-      league,
-      manager,
-      players,
-      player
-    );
-    const myPick = DraftValidation.myPick(manager, league);
-    const fullTeam = DraftValidation.fullTeam(league, manager);
-    const maxPerTeam = DraftValidation.maxFromEachTeam(
-      league,
-      manager,
-      players,
-      player
-    );
-    const roleValidation = DraftValidation.roleValidation(
-      league,
-      manager,
-      players,
-      player
-    );
-    let batBowMax = "five";
-    let arMax = "three";
-    let wkMax = "one";
+function updateAutoManager(league, manager, playerId) {
+  if (league.draft1Live) {
+    manager.stage1Squad.push(playerId)
+  } else if (league.draft2Live) {
+    manager.stage2Squad.push(playerId);
+  } else if (league.draft3Live) {
+    manager.stage3Squad.push(playerId);
+  } else {
+    return;
+  }
+}
 
-    //check this bit
-    if (league.draft1Live) {
-      batBowMax = "six";
-      arMax = "four";
-      wkMax = "two";
+function checkSquadSpace(manager, league) {
+  if (league.draft1Live && manager.stage1Squad.length >= 15) {
+    return false;
+  } else if (league.draft2Live && manager.stage2Squad >= 11) {
+    return false;
+  } else if (league.draft3Live && manager.stage3Squad >= 11) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function getRandomPlayer(league, manager, players) {
+  let foundPlayer = false;
+  let playerToReturn;
+  do {
+    const randomIndex = Math.floor(Math.random() * unpickedPlayerIds.length);
+    const selectedPlayer = players[randomIndex];
+    const playerValid = checkPlayerValid(league, manager, players, selectedPlayer);
+    if (playerValid) {
+      playerToReturn = selectedPlayer;
+      foundPlayer = true;
     }
-    if (!fullTeam) {
-      return `You already have ${full} players`;
-    }
-    if (!myPick) {
-      return "Sorry, it is not your pick";
-    }
-    if (!roleValidation) {
-      switch (player.role) {
-        case "WK":
-          return `You can only have a maximum ${wkMax} wicketkeepers.`;
-        case "BT":
-          return `You can only have a maximum ${batBowMax} batters`;
-        case "BW":
-          return `You can only have a maximum ${batBowMax} bowlers`;
-        case "AR":
-          return `You can only have a maximum ${arMax} all rounders`;
-        default:
-          return;
-      }
-    }
-    if (!minTeamRequirements) {
-      if (league.draft1Live) {
-        return "You must pick a minimum of 4 batters, 4 bowlers, 2 all-rounders and 1 wicketkeeper";
-      } else {
-        return "You must pick a minimum of 3 batters, 3 bowlers, 1 all-rounders and 1 wicketkeeper";
-      }
-    }
-    if (!maxPerTeam) {
-      return `You can only pick ${max} players from each team`;
-    }
-    return "pass";
+  } while (!foundPlayer)
+  return playerToReturn;
+}
+
+function checkPlayerValid(league, manager, players, player) {
+  if (!DraftValidation.minTeamRequirements(league, manager, players, player)) {
+    return false;
+  } else if (!DraftValidation.maxFromEachTeam(league, manager, players, player)) {
+    return false;
+  } else if (!DraftValidation.roleValidation(league, manager, players, player)) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 async function getUpdatedManagers(managerIds) {
-  const allManagers = await pool.query('SELECT * FROM managers');
-  const leagueManagers = allManagers.rows.filter((manager)=> managerIds.includes(manager.id));
+  const allManagers = await pool.query("SELECT * FROM managers");
+  const leagueManagers = allManagers.rows.filter((manager) =>
+    managerIds.includes(manager.id)
+  );
   return camelcaseKeys(leagueManagers);
 }
 
@@ -273,7 +260,5 @@ function getUnpickedPlayers(managers, players, league) {
     return availablePlayers;
   }
 }
-
-
 
 module.exports = draftRouter;

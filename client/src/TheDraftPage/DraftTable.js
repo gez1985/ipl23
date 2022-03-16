@@ -11,12 +11,12 @@ import {
 import Helpers from "../utils/Helpers";
 import PickValidation from "../utils/PickValidation";
 import Search from "../utils/search";
-
 import select from "../img/Select.png";
 import { Button, Modal } from "react-bootstrap";
 import axios from "axios";
+import DraftValidation from "./DraftValidation";
 const sortObjectsArray = require("sort-objects-array");
-const DraftValidation = require("./DraftValidation");
+
 
 export default function DraftTable({ updateLeague }) {
   const [players] = useContext(PlayersContext);
