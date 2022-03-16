@@ -41,6 +41,7 @@ draftRouter.put("/pick", async (req, res) => {
     //  get next managers to see if autoPick (recursive function):
 
     await autoPick(managers, updatedLeague);
+    res.json({ success: true, msg: "player picking completed" });
           
   } catch (error) {
     console.error(error.message);
@@ -119,7 +120,6 @@ async function autoPick(managers, league) {
     autoPick(managers, updatedLeague);
   } else {
     console.log('auto pick not required');
-    res.json({ success: true, msg: "player picking completed" });
   }
 }
 
