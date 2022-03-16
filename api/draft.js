@@ -35,7 +35,7 @@ draftRouter.put("/pick", async (req, res) => {
 
     //  update league pick number, direction, last pick:
 
-    await updateLeague(league);
+    // await updateLeague(league);
 
     res.json({ msg: "player pick reached" });
   } catch (error) {
