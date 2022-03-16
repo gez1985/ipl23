@@ -1,7 +1,6 @@
 const express = require("express");
 const pool = require("../db");
 const camelcaseKeys = require("camelcase-keys");
-const { LeagueManagersContext } = require("../client/src/Store");
 
 const draftRouter = express.Router();
 
