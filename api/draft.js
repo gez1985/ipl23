@@ -120,12 +120,15 @@ async function autoPick(managers, league, players) {
 async function autoPickPlayer(league, manager, players) {
   const updatedManagers = await getUpdatedManagers(league.managerIds);
   const managerCopy = JSON.parse(JSON.stringify(manager));
+  console.log('manager copy');
+  console.log(managerCopy);
   const unpickedPlayers = getUnpickedPlayers(updatedManagers, players, league);
   const unpickedPlayerIds = unpickedPlayers.map((player) => player.id);
   let chosenPlayerId;
   for (let i = 0; i < manager.shortlist.length; i++) {
     if (unpickedPlayerIds.includes(manager.shortlist[i])) {
       const player = players.find((player) => manager.shortlist[i] === player.id);
+      console.log('player');
       console.log(player);
       console.log(`${player.name} with id = ${manager.shortlist[i]} is available`);
       if (!chosenPlayerId) {
@@ -133,9 +136,15 @@ async function autoPickPlayer(league, manager, players) {
       }
     } else {
       console.log(`player with id = ${manager.shortlist[i]} has already been selected`);
+      const managerCopyIndex = managerCopy.shortlist.indexOf(manager.shortlist[i]);
+      if (managerCopyIndex > -1) {
+        managerCopy.shortlist.splice(managerCopyIndex, 1);
+      }
     }
     console.log(chosenPlayerId);
   }
+  console.log('new manager copy');
+  console.log(managerCopy);
 }
 
 function pickValidation(league, manager, players, player) {
