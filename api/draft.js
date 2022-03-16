@@ -36,21 +36,14 @@ draftRouter.put("/pick", async (req, res) => {
 
     const updatedLeague = await updateLeague(league);
 
-    //  get next manager to see if autoPick:
+    //  get next managers to see if autoPick (recursive function):
 
-    console.log(managers);
-    console.log(updatedLeague);
-    const nextManager = managers.find((manager) => manager.pickNumber === updatedLeague.pick_number);
-    console.log(nextManager);
-    if (nextManager.autoPick) {
-      console.log('auto pick required');
-    } else {
-      console.log('auto pick not required');
-    }
+    await autoPick(managers, updatedLeague);
+          
 
-    res.json({ msg: "player pick reached" });
   } catch (error) {
     console.error(error.message);
+    res.json({ success: false, msg: "server error" });
   }
 });
 
@@ -110,8 +103,24 @@ async function updateLeague(league) {
     leagueCopy.name,
   ];
   const updatedLeague = await pool.query(leagueSql, leagueValues);
-  console.log(updatedLeague);
   return (updatedLeague.rows[0]);
+}
+
+async function autoPick(managers, league) {
+  const nextManager = managers.find((manager) => manager.pickNumber === league.pick_number);
+  if (nextManager.autoPick) {
+    console.log('auto pick required');
+    autoPickPlayer(nextManager);
+    const updatedLeague = updateLeague(league);
+    autoPick(managers, updatedLeague);
+  } else {
+    console.log('auto pick not required');
+    res.json({ success: true, msg: "player picking completed" });
+  }
+}
+
+async function autoPickPlayer(manager) {
+  console.log(`${manager.name} will have player with id = ${manager.shortlist[0]}`);
 }
 
 module.exports = draftRouter;
