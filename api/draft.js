@@ -1,6 +1,7 @@
 const express = require("express");
 const pool = require("../db");
 const camelcaseKeys = require("camelcase-keys");
+const DraftValidation = require("../client/src/TheDraftPage/DraftValidation");
 
 const draftRouter = express.Router();
 
@@ -111,29 +112,23 @@ async function autoPick(managers, league, players) {
     (manager) => manager.pickNumber === league.pickNumber
   );
   if (nextManager.autoPick) {
-    await autoPickPlayer(league, nextManager, managers, players);
+    await autoPickPlayer(league, nextManager, players);
     const updatedLeague = await updateLeague(league);
     await autoPick(managers, updatedLeague, players);
   } 
 }
 
-async function getUpdatedManagers(managerIds) {
-  const allManagers = await pool.query('SELECT * FROM managers');
-  const leagueManagers = allManagers.rows.filter((manager)=> managerIds.includes(manager.id));
-  return camelcaseKeys(leagueManagers);
-}
-
-async function autoPickPlayer(league, manager, managers, players) {
-  console.log(league);
+async function autoPickPlayer(league, manager, players) {
   const updatedManagers = await getUpdatedManagers(league.managerIds);
-  console.log(updatedManagers);
   const managerCopy = JSON.parse(JSON.stringify(manager));
-  const unpickedPlayers = getUnpickedPlayers(managers, players, league);
+  const unpickedPlayers = getUnpickedPlayers(updatedManagers, players, league);
   const unpickedPlayerIds = unpickedPlayers.map((player) => player.id);
   let chosenPlayerId;
   for (let i = 0; i < manager.shortlist.length; i++) {
     if (unpickedPlayerIds.includes(manager.shortlist[i])) {
-      console.log(`player with id = ${manager.shortlist[i]} is available`);
+      const player = players.find((player) => manager.shortlist[i] === player.id);
+      console.log(player);
+      console.log(`${player.name} with id = ${manager.shortlist[i]} is available`);
       if (!chosenPlayerId) {
         chosenPlayerId = manager.shortlist[i];
       }
@@ -142,6 +137,86 @@ async function autoPickPlayer(league, manager, managers, players) {
     }
     console.log(chosenPlayerId);
   }
+}
+
+function pickValidation(league, manager, players, player) {
+  let full = "eleven";
+    let max = "three";
+    if (league.draft1Live) {
+      full = "fifteen";
+    }
+    if (league.draft2Live) {
+      max = "four";
+    } else if (league.draft3Live) {
+      max = "eleven";
+    }
+    const minTeamRequirements = DraftValidation.minTeamRequirements(
+      league,
+      manager,
+      players,
+      player
+    );
+    const myPick = DraftValidation.myPick(manager, league);
+    const fullTeam = DraftValidation.fullTeam(league, manager);
+    const maxPerTeam = DraftValidation.maxFromEachTeam(
+      league,
+      manager,
+      players,
+      player
+    );
+    const roleValidation = DraftValidation.roleValidation(
+      league,
+      manager,
+      players,
+      player
+    );
+    let batBowMax = "five";
+    let arMax = "three";
+    let wkMax = "one";
+
+    //check this bit
+    if (league.draft1Live) {
+      batBowMax = "six";
+      arMax = "four";
+      wkMax = "two";
+    }
+    if (!fullTeam) {
+      return `You already have ${full} players`;
+    }
+    if (!myPick) {
+      return "Sorry, it is not your pick";
+    }
+    if (!roleValidation) {
+      switch (player.role) {
+        case "WK":
+          return `You can only have a maximum ${wkMax} wicketkeepers.`;
+        case "BT":
+          return `You can only have a maximum ${batBowMax} batters`;
+        case "BW":
+          return `You can only have a maximum ${batBowMax} bowlers`;
+        case "AR":
+          return `You can only have a maximum ${arMax} all rounders`;
+        default:
+          return;
+      }
+    }
+    if (!minTeamRequirements) {
+      if (league.draft1Live) {
+        return "You must pick a minimum of 4 batters, 4 bowlers, 2 all-rounders and 1 wicketkeeper";
+      } else {
+        return "You must pick a minimum of 3 batters, 3 bowlers, 1 all-rounders and 1 wicketkeeper";
+      }
+    }
+    if (!maxPerTeam) {
+      return `You can only pick ${max} players from each team`;
+    }
+    return "pass";
+}
+
+async function getUpdatedManagers(managerIds) {
+  const allManagers = await pool.query('SELECT * FROM managers');
+  const leagueManagers = allManagers.rows.filter((manager)=> managerIds.includes(manager.id));
+  return camelcaseKeys(leagueManagers);
 }
 
 function getUnpickedPlayers(managers, players, league) {
