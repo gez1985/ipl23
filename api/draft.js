@@ -36,7 +36,6 @@ draftRouter.put("/pick", async (req, res) => {
     //  update league pick number, direction, last pick:
 
     const updatedLeague = await updateLeague(league);
-    console.log(updatedLeague);
 
     //  get next managers to see if autoPick (recursive function):
 
@@ -56,7 +55,6 @@ async function vidiEntry(leagueId, managerId, playerId) {
 }
 
 async function updateLeague(league) {
-  console.log(league);
   const leagueCopy = JSON.parse(JSON.stringify(league));
   let maxPickNumber = 0;
   if (league.draft1Live) {
@@ -109,36 +107,31 @@ async function updateLeague(league) {
 }
 
 async function autoPick(managers, league, players) {
-  console.log("auto pick reached");
   const nextManager = managers.find(
     (manager) => manager.pickNumber === league.pickNumber
   );
-  console.log(
-    `the next manager is ${nextManager.name} with pick number ${nextManager.pickNumber}`
-  );
   if (nextManager.autoPick) {
-    console.log("auto pick required");
     await autoPickPlayer(league, nextManager, managers, players);
     const updatedLeague = await updateLeague(league);
     await autoPick(managers, updatedLeague, players);
-  } else {
-    console.log("auto pick not required");
-  }
+  } 
 }
 
 async function autoPickPlayer(league, manager, managers, players) {
-  console.log(
-    `${manager.name} will have player with id = ${manager.shortlist[0]}`
-  );
+  const managerCopy = JSON.parse(JSON.stringify(manager));
   const unpickedPlayers = getUnpickedPlayers(managers, players, league);
   const unpickedPlayerIds = unpickedPlayers.map((player) => player.id);
-  console.log(unpickedPlayerIds);
+  let chosenPlayerId;
   for (let i = 0; i < manager.shortlist.length; i++) {
     if (unpickedPlayerIds.includes(manager.shortlist[i])) {
-      console.log(`player id id = ${manager.shortlist[i]} is available`);
+      console.log(`player with id = ${manager.shortlist[i]} is available`);
+      if (!chosenPlayerId) {
+        chosenPlayerId = manager.shortlist[i];
+      }
     } else {
-      console.log('player has already been selected');
+      console.log(`player with id = ${manager.shortlist[i]} has already been selected`);
     }
+    console.log(chosenPlayerId);
   }
 }
 
