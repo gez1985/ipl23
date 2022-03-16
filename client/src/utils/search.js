@@ -129,17 +129,4 @@ Search.getVidiprinterById = async (leagueId) => {
   }
 };
 
-Search.makeDraftPick = async (league, manager) => {
-  try {
-    const response = await axios.put(`/api/draft/pick`);
-    console.log(response);
-    // return response.data.map((vidiprinter) => camelCaseKeys(vidiprinter));
-  } catch (err) {
-    console.error(err.message);
-    // return new Promise((resolve) => resolve([]));
-  }
-};
-
-
-
 export default Search;
