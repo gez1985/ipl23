@@ -14,6 +14,7 @@ import Search from "../utils/search";
 import DraftValidation from "./DraftValidation";
 import select from "../img/Select.png";
 import { Button, Modal } from "react-bootstrap";
+import axios from "axios";
 const sortObjectsArray = require("sort-objects-array");
 
 export default function DraftTable({ updateLeague }) {
@@ -121,27 +122,34 @@ export default function DraftTable({ updateLeague }) {
     const validPick = PickValidation(league, manager, selectedPlayer);
     if (!validPick) {
       handleCancel();
-      alert("an error occured");
+      alert("an error occurred");
       return;
     }
-    const managerCopy = JSON.parse(JSON.stringify(manager));
-    if (league.draft1Live) {
-      managerCopy.stage1Squad.push(selectedPlayer.id);
-    } else if (league.draft2Live) {
-      managerCopy.stage2Squad.push(selectedPlayer.id);
-    } else if (league.draft3Live) {
-      managerCopy.stage3Squad.push(selectedPlayer.id);
-    } else {
-      console.log(`error no draft live found`);
+    try {
+      const response = await axios.get('localhost:5000/api/draft/pick');
+      console.log(response);
+      handleCancel();
+    } catch (err) {
+      console.log(err);
     }
-    setManager(managerCopy);
-    const newManagers = managers.filter((man) => man.id !== manager.id);
-    newManagers.push(managerCopy);
-    setManagers(newManagers);
-    await Search.putManager(managerCopy);
-    updateLeague();
-    updateVidiprinter();
-    handleCancel();
+    // const managerCopy = JSON.parse(JSON.stringify(manager));
+    // if (league.draft1Live) {
+    //   managerCopy.stage1Squad.push(selectedPlayer.id);
+    // } else if (league.draft2Live) {
+    //   managerCopy.stage2Squad.push(selectedPlayer.id);
+    // } else if (league.draft3Live) {
+    //   managerCopy.stage3Squad.push(selectedPlayer.id);
+    // } else {
+    //   console.log(`error no draft live found`);
+    // }
+    // setManager(managerCopy);
+    // const newManagers = managers.filter((man) => man.id !== manager.id);
+    // newManagers.push(managerCopy);
+    // setManagers(newManagers);
+    // await Search.putManager(managerCopy);
+    // updateLeague();
+    // updateVidiprinter();
+    // handleCancel();
   }
 
   async function updateVidiprinter() {
@@ -230,7 +238,6 @@ export default function DraftTable({ updateLeague }) {
     }
     return "pass";
   }
-
 
   function renderErrorModal() {
     if (selectedPlayer) {

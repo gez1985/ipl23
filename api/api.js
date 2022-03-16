@@ -6,6 +6,7 @@ const fixturesRouter = require('./fixtures');
 const scoresRouter = require('./scores');
 const leaguesRouter = require('./leagues');
 const vidiprinterRouter = require('./vidiprinter');
+const draftRouter = require('./draft');
 
 //test
 
@@ -18,6 +19,7 @@ apiRouter.use('/fixtures', fixturesRouter);
 apiRouter.use('/scores', scoresRouter);
 apiRouter.use('/leagues', leaguesRouter);
 apiRouter.use('/vidiprinter', vidiprinterRouter);
+apiRouter.use('/draft', draftRouter);
 
 
 module.exports = apiRouter;

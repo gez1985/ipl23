@@ -87,8 +87,8 @@ leaguesRouter.put("/", async (req, res) => {
       adminManagerId,
       name,
     ];
-    const updateFixture = await pool.query(sql, values);
-    res.status(200).json(updateFixture.rows[0]);
+    const updatedLeague = await pool.query(sql, values);
+    res.status(200).json(updatedLeague.rows[0]);
   } catch (error) {
     console.error(error.message);
   }
