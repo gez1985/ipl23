@@ -152,6 +152,7 @@ async function autoPickPlayer(league, manager, players) {
     }
     updateAutoManager(league, managerCopy, chosenPlayer.id);
     await updateManagers(managerCopy);
+    await vidiEntry(league.id, managerCopy.id, chosenPlayer.id);
   }
 }
 
