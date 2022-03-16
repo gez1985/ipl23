@@ -146,28 +146,14 @@ export default function DraftTable({ updateLeague }) {
         league: league,
       });
       console.log(response);
-      handleCancel();
     } catch (err) {
       console.log(err);
+      alert('an error occurred');
     }
-
+    handleCancel();
     // await Search.putManager(managerCopy);
     // updateLeague();
-    // updateVidiprinter();
     // handleCancel();
-  }
-
-  async function updateVidiprinter() {
-    const vidiEntry = {
-      leagueId: league.id,
-      managerId: manager.id,
-      playerId: selectedPlayer.id,
-    };
-    try {
-      await Search.postVidiprinter(vidiEntry);
-    } catch (err) {
-      console.log(err.message);
-    }
   }
 
   function pickValidation(player) {

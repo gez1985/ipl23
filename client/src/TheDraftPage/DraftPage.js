@@ -94,8 +94,7 @@ export default function DraftPage() {
         leagueCopy.pickNumber = 1;
       }
     }
-    const updatedLeague = await Search.putLeague(leagueCopy);
-    setLeague(updatedLeague);
+    setLeague(leagueCopy);
   }
 
   const skipPick = () => {

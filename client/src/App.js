@@ -72,6 +72,14 @@ function App() {
     }
   });
 
+  console.log(manager);
+  console.log(leagueManagers);
+  console.log(league);
+  console.log(players);
+  console.log(teams);
+  console.log(scores);
+  console.log(fixtures);
+
   async function getData() {
     try {
       const scoresData = await Search.getAllScores();

@@ -33,7 +33,9 @@ draftRouter.put("/pick", async (req, res) => {
 
     await vidiEntry(league.id, manager.id, playerId);
 
-    //  
+    //  update league pick number, direction, last pick:
+
+    await updateLeague(league);
 
     res.json({ msg: "player pick reached" });
   } catch (error) {
@@ -44,8 +46,53 @@ draftRouter.put("/pick", async (req, res) => {
 async function vidiEntry(leagueId, managerId, playerId) {
   const vidiSql =
     "INSERT INTO vidiprinter (league_id, manager_id, player_id) VALUES ($1, $2, $3) RETURNING *";
-  const values = [leagueId, managerId, playerId];
-  await pool.query(vidiSql, values);
+  const vidiValues = [leagueId, managerId, playerId];
+  await pool.query(vidiSql, vidiValues);
+}
+
+async function updateLeague(league) {
+  const leagueCopy = JSON.parse(JSON.stringify(league));
+  let maxPickNumber = 0;
+  if (league.draft1Live) {
+    maxPickNumber = league.managerIds.length;
+  }
+  if (league.draft2Live) {
+    maxPickNumber = stage2Managers.length;
+  }
+  if (league.draft1Live || league.draft2Live) {
+    if (leagueCopy.lastPick) {
+      leagueCopy.round++;
+      leagueCopy.up = !league.up;
+      leagueCopy.lastPick = false;
+    } else {
+      if (leagueCopy.up) {
+        if (leagueCopy.pickNumber === maxPickNumber - 1) {
+          leagueCopy.lastPick = true;
+          leagueCopy.pickNumber++;
+        } else {
+          leagueCopy.pickNumber++;
+        }
+      } else {
+        if (leagueCopy.pickNumber === 2) {
+          leagueCopy.lastPick = true;
+          leagueCopy.pickNumber--;
+        } else {
+          leagueCopy.pickNumber--;
+        }
+      }
+    }
+  }
+  if (league.draft3Live) {
+    if (leagueCopy.pickNumber === 1) {
+      leagueCopy.pickNumber = 2;
+    } else {
+      leagueCopy.pickNumber = 1;
+    }
+  }
+  const leagueSql =
+    "UPDATE leagues SET round = $1, pick_number = $2, up = $3, last_pick = $4 WHERE name = $5 RETURNING *";
+  const leagueValues = [round, pickNumber, up, lastPick, name];
+  await pool.query(leagueSql, leagueValues);
 }
 
 module.exports = draftRouter;
