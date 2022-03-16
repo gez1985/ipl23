@@ -196,4 +196,4 @@ Helpers.getStage3Managers = (league, managers) => {
   return stage3Managers;
 }
 
-module.exports = Helpers;
+export default Helpers;

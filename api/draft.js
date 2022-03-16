@@ -1,7 +1,6 @@
 const express = require("express");
 const pool = require("../db");
 const camelcaseKeys = require("camelcase-keys");
-const DraftValidation = require("../client/src/TheDraftPage/DraftValidation");
 
 const draftRouter = express.Router();
 
@@ -265,5 +264,7 @@ function getUnpickedPlayers(managers, players, league) {
     return availablePlayers;
   }
 }
+
+
 
 module.exports = draftRouter;

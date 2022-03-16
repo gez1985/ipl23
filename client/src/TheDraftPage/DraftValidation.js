@@ -1,4 +1,4 @@
-const Helpers = require("../utils/Helpers");
+import Helpers from "../utils/Helpers";
 
 const DraftValidation = {};
 
@@ -183,4 +183,4 @@ DraftValidation.myPick = (manager, league) => {
   return false;
 };
 
-module.exports = DraftValidation;
+export default DraftValidation;
