@@ -40,7 +40,6 @@ draftRouter.put("/pick", async (req, res) => {
 
     await autoPick(managers, updatedLeague);
           
-
   } catch (error) {
     console.error(error.message);
     res.json({ success: false, msg: "server error" });
@@ -107,7 +106,9 @@ async function updateLeague(league) {
 }
 
 async function autoPick(managers, league) {
+  console.log('auto pick reached');
   const nextManager = managers.find((manager) => manager.pickNumber === league.pick_number);
+  console.log(nextManager);
   if (nextManager.autoPick) {
     console.log('auto pick required');
     autoPickPlayer(nextManager);
