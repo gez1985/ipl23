@@ -145,6 +145,7 @@ export default function DraftTable({ updateLeague }) {
         manager: managerCopy,
         league: league,
         managers: managers,
+        players: players,
       });
       console.log(response);
     } catch (err) {
@@ -152,9 +153,7 @@ export default function DraftTable({ updateLeague }) {
       alert('an error occurred');
     }
     handleCancel();
-    // await Search.putManager(managerCopy);
-    // updateLeague();
-    // handleCancel();
+    updateLeague();
   }
 
   function pickValidation(player) {

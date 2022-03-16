@@ -1,6 +1,6 @@
 const express = require("express");
 const pool = require("../db");
-const camelcaseKeys = require('camelcase-keys');
+const camelcaseKeys = require("camelcase-keys");
 
 const draftRouter = express.Router();
 
@@ -8,7 +8,7 @@ const draftRouter = express.Router();
 
 draftRouter.put("/pick", async (req, res) => {
   try {
-    const { playerId, manager, league, managers } = req.body;
+    const { playerId, manager, league, managers, players } = req.body;
 
     //  update manager database with managerCopy stage squad:
 
@@ -40,9 +40,8 @@ draftRouter.put("/pick", async (req, res) => {
 
     //  get next managers to see if autoPick (recursive function):
 
-    await autoPick(managers, updatedLeague);
+    await autoPick(managers, updatedLeague, players);
     res.json({ success: true, msg: "player picking completed" });
-          
   } catch (error) {
     console.error(error.message);
     res.json({ success: false, msg: "server error" });
@@ -109,22 +108,73 @@ async function updateLeague(league) {
   return camelcaseKeys(updatedLeague.rows[0]);
 }
 
-async function autoPick(managers, league) {
-  console.log('auto pick reached');
+async function autoPick(managers, league, players) {
+  console.log("auto pick reached");
   const nextManager = managers.find((manager) => manager.pickNumber === league.pickNumber);
   console.log(`the next manager is ${nextManager.name} with pick number ${nextManager.pickNumber}`);
   if (nextManager.autoPick) {
-    console.log('auto pick required');
-    autoPickPlayer(nextManager);
+    console.log("auto pick required");
+    await autoPickPlayer(league, nextManager, managers, players);
     const updatedLeague = await updateLeague(league);
-    autoPick(managers, updatedLeague);
+    await autoPick(managers, updatedLeague, players);
   } else {
-    console.log('auto pick not required');
+    console.log("auto pick not required");
   }
 }
 
-async function autoPickPlayer(manager) {
-  console.log(`${manager.name} will have player with id = ${manager.shortlist[0]}`);
+async function autoPickPlayer(league, manager, managers, players) {
+  console.log(
+    `${manager.name} will have player with id = ${manager.shortlist[0]}`
+  );
+  const unpickedPlayers = getUnpickedPlayers(managers, players, league);
+  console.log(unpickedPlayers);
+}
+
+function getUnpickedPlayers(managers, players, league) {
+  if (league.draft1Live) {
+    const pickedPlayerIds = [];
+    managers.forEach((manager) => {
+      pickedPlayerIds.push(...manager.stage1Squad);
+    });
+    const unpickedPlayers = players.filter(
+      (player) => !pickedPlayerIds.includes(player.id)
+    );
+    return unpickedPlayers;
+  }
+  if (league.draft2Live) {
+    const pickedPlayerIds = [];
+    const stage2Managers = league.stage2Managers.flat();
+    const qualifiedPlayers = players.filter((player) =>
+      league.stage2Teams.includes(player.teamId)
+    );
+    const qualifiedManagers = managers.filter((manager) =>
+      stage2Managers.includes(manager.id)
+    );
+    qualifiedManagers.forEach((manager) => {
+      pickedPlayerIds.push(...manager.stage2Squad);
+    });
+    const availablePlayers = qualifiedPlayers.filter(
+      (player) => !pickedPlayerIds.includes(player.id)
+    );
+    return availablePlayers;
+  }
+  if (league.draft3Live) {
+    const pickedPlayerIds = [];
+    const stage3Managers = league.stage3Managers.flat();
+    const qualifiedPlayers = players.filter((player) =>
+      league.stage3Teams.includes(player.teamId)
+    );
+    const qualifiedManagers = managers.filter((manager) =>
+      stage3Managers.includes(manager.id)
+    );
+    qualifiedManagers.forEach((manager) => {
+      pickedPlayerIds.push(...manager.stage3Squad);
+    });
+    const availablePlayers = qualifiedPlayers.filter(
+      (player) => !pickedPlayerIds.includes(player.id)
+    );
+    return availablePlayers;
+  }
 }
 
 module.exports = draftRouter;
