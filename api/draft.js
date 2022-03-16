@@ -1,5 +1,6 @@
 const express = require("express");
 const pool = require("../db");
+const camelcaseKeys = require('camelcase-keys');
 
 const draftRouter = express.Router();
 
@@ -35,6 +36,7 @@ draftRouter.put("/pick", async (req, res) => {
     //  update league pick number, direction, last pick:
 
     const updatedLeague = await updateLeague(league);
+    console.log(updatedLeague);
 
     //  get next managers to see if autoPick (recursive function):
 
@@ -103,7 +105,7 @@ async function updateLeague(league) {
     leagueCopy.name,
   ];
   const updatedLeague = await pool.query(leagueSql, leagueValues);
-  return (updatedLeague.rows[0]);
+  return camelcaseKeys(updatedLeague.rows[0]);
 }
 
 async function autoPick(managers, league) {
