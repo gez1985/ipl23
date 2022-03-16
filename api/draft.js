@@ -117,14 +117,15 @@ async function autoPick(managers, league, players) {
   } 
 }
 
-async function getUpdatedManagers(leagueId) {
-  const leagueManagers = await pool.query(`SELECT * FROM managers WHERE league_id = ${leagueId}`);
+async function getUpdatedManagers(managerIds) {
+  const allManagers = await pool.query('SELECT * FROM managers');
+  const leagueManagers = allManagers.rows.filter((manager)=> managerIds.includes(manager.id));
   return leagueManagers.rows;
 }
 
 async function autoPickPlayer(league, manager, managers, players) {
   console.log(league);
-  const updatedManagers = getUpdatedManagers(league.id);
+  const updatedManagers = getUpdatedManagers(league.managerIds);
   console.log(updatedManagers);
   const managerCopy = JSON.parse(JSON.stringify(manager));
   const unpickedPlayers = getUnpickedPlayers(managers, players, league);
