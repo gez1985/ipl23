@@ -110,8 +110,12 @@ async function updateLeague(league) {
 
 async function autoPick(managers, league, players) {
   console.log("auto pick reached");
-  const nextManager = managers.find((manager) => manager.pickNumber === league.pickNumber);
-  console.log(`the next manager is ${nextManager.name} with pick number ${nextManager.pickNumber}`);
+  const nextManager = managers.find(
+    (manager) => manager.pickNumber === league.pickNumber
+  );
+  console.log(
+    `the next manager is ${nextManager.name} with pick number ${nextManager.pickNumber}`
+  );
   if (nextManager.autoPick) {
     console.log("auto pick required");
     await autoPickPlayer(league, nextManager, managers, players);
@@ -127,7 +131,15 @@ async function autoPickPlayer(league, manager, managers, players) {
     `${manager.name} will have player with id = ${manager.shortlist[0]}`
   );
   const unpickedPlayers = getUnpickedPlayers(managers, players, league);
-  console.log(unpickedPlayers);
+  const unpickedPlayerIds = unpickedPlayers.map((player) => player.id);
+  console.log(unpickedPlayerIds);
+  for (let i = 0; i < manager.shortlist.length; i++) {
+    if (unpickedPlayerIds.includes(manager.shortlist[i])) {
+      console.log(`player id id = ${manager.shortlist[i]} is available`);
+    } else {
+      console.log('player has already been selected');
+    }
+  }
 }
 
 function getUnpickedPlayers(managers, players, league) {
