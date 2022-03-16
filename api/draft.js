@@ -119,10 +119,11 @@ async function autoPick(managers, league, players) {
 
 async function getUpdatedManagers(leagueId) {
   const leagueManagers = await pool.query(`SELECT * FROM managers WHERE league_id = ${leagueId}`);
-  return leagueManagersContext.rows;
+  return leagueManagers.rows;
 }
 
 async function autoPickPlayer(league, manager, managers, players) {
+  console.log(league);
   const updatedManagers = getUpdatedManagers(league.id);
   console.log(updatedManagers);
   const managerCopy = JSON.parse(JSON.stringify(manager));
