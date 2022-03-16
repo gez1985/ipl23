@@ -120,7 +120,7 @@ async function autoPick(managers, league, players) {
 async function getUpdatedManagers(managerIds) {
   const allManagers = await pool.query('SELECT * FROM managers');
   const leagueManagers = allManagers.rows.filter((manager)=> managerIds.includes(manager.id));
-  return leagueManagers.rows;
+  return camelcaseKeys(leagueManagers);
 }
 
 async function autoPickPlayer(league, manager, managers, players) {
