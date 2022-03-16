@@ -38,13 +38,14 @@ draftRouter.put("/pick", async (req, res) => {
 
     //  get next manager to see if autoPick:
 
-    const nextManager = managers.find((manager) => manager.pickNumber === updatedLeague.pickNumber);
-    console.log(nextManager);
-    if (nextManager.autoPick) {
-      console.log('auto pick required');
-    } else {
-      console.log('auto pick not required');
-    }
+    console.log(managers);
+    // const nextManager = managers.find((manager) => manager.pickNumber === updatedLeague.pickNumber);
+    // console.log(nextManager);
+    // if (nextManager.autoPick) {
+    //   console.log('auto pick required');
+    // } else {
+    //   console.log('auto pick not required');
+    // }
 
     res.json({ msg: "player pick reached" });
   } catch (error) {
