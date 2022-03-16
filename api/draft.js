@@ -8,7 +8,6 @@ const draftRouter = express.Router();
 draftRouter.put("/pick", async (req, res) => {
   try {
     const { playerId, manager, league } = req.body;
-    console.log(playerId, manager, league);
 
     //  update manager database with managerCopy stage squad:
 
@@ -35,7 +34,7 @@ draftRouter.put("/pick", async (req, res) => {
 
     //  update league pick number, direction, last pick:
 
-    // await updateLeague(league);
+    await updateLeague(league);
 
     res.json({ msg: "player pick reached" });
   } catch (error) {
@@ -91,7 +90,13 @@ async function updateLeague(league) {
   }
   const leagueSql =
     "UPDATE leagues SET round = $1, pick_number = $2, up = $3, last_pick = $4 WHERE name = $5 RETURNING *";
-  const leagueValues = [round, pickNumber, up, lastPick, name];
+  const leagueValues = [
+    leagueCopy.round,
+    leagueCopy.pickNumber,
+    leagueCopy.up,
+    leagueCopy.lastPick,
+    leagueCopy.name,
+  ];
   await pool.query(leagueSql, leagueValues);
 }
 
