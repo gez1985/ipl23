@@ -39,6 +39,7 @@ draftRouter.put("/pick", async (req, res) => {
     //  get next manager to see if autoPick:
 
     console.log(managers);
+    console.log(updatedLeague);
     // const nextManager = managers.find((manager) => manager.pickNumber === updatedLeague.pickNumber);
     // console.log(nextManager);
     // if (nextManager.autoPick) {
@@ -109,6 +110,7 @@ async function updateLeague(league) {
     leagueCopy.name,
   ];
   const updatedLeague = await pool.query(leagueSql, leagueValues);
+  console.log(updatedLeague);
   return (updatedLeague.rows[0]);
 }
 
