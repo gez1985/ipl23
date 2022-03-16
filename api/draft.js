@@ -54,6 +54,7 @@ async function vidiEntry(leagueId, managerId, playerId) {
 }
 
 async function updateLeague(league) {
+  console.log(league);
   const leagueCopy = JSON.parse(JSON.stringify(league));
   let maxPickNumber = 0;
   if (league.draft1Live) {
