@@ -386,6 +386,22 @@
     background: #555;
   }
 
+  .vidiprinter-big::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .vidiprinter-big::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .vidiprinter-big::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  .vidiprinter-big::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
   .draft-footer {
     width: 80%;
     height: 100px;
