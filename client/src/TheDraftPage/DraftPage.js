@@ -18,7 +18,7 @@ import axios from "axios";
 export default function DraftPage() {
   const [players] = useContext(PlayersContext);
   const [manager] = useContext(ManagerContext);
-  const [, setManagers] = useContext(ManagersContext);
+  const [managers, setManagers] = useContext(ManagersContext);
   const [league, setLeague] = useContext(LeagueContext);
   const [, setVidiprinter] = useContext(VidiprinterContext);
 
@@ -97,6 +97,8 @@ export default function DraftPage() {
     try {
       const response = await axios.put("/api/draft/skip", {
         league: league,
+        managers: managers,
+        players: players,
       });
       console.log(response);
     } catch (err) {

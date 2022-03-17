@@ -8,9 +8,10 @@ const draftRouter = express.Router();
 // skip pick:
 
 draftRouter.put("/skip", async (req, res) => {
-  const { league } = req.body;
+  const { league, managers, players } = req.body;
   try {
-    await updateLeague(league);
+    const updatedLeague = await updateLeague(league);
+    await autoPick(managers, updatedLeague, players);
     res.json({ success: true, msg: "manager skipped"});
   } catch (err) {
     console.log(err);
