@@ -48,15 +48,20 @@ export default function DraftPage() {
   useEffect(() => {
     if (manager.id === league.adminManagerId) {
       console.log("You are the admin and league has updated");
-      if ((previousPickNumber !== league.pickNumber) || (previousRound !== league.round)) {
+      if (
+        previousPickNumber !== league.pickNumber ||
+        previousRound !== league.round
+      ) {
         console.log("Auto pick needs checking");
-        const pickingManager = managers.find((manager) => manager.pickNumber === league.pickNumber);
+        const pickingManager = managers.find(
+          (manager) => manager.pickNumber === league.pickNumber
+        );
         if (pickingManager.autoPick) {
           autoPick(league, pickingManager, managers, players);
         } else {
-          console.log('auto pick NOT required');
+          console.log("auto pick NOT required");
         }
-      } 
+      }
     }
   }, [league]);
 
@@ -160,6 +165,15 @@ export default function DraftPage() {
         </div>
       </>
     );
+  }
+
+  if (manager.autoPick && manager.id !== league.adminManagerId) {
+    <>
+      <DraftPageHeader live={false} />
+      <div className="flex-container standard-width-container">
+        You are auto picking you players.
+      </div>
+    </>;
   }
 
   if (league.draft2Live && !stage2Managers.includes(manager.id)) {
