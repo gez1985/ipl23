@@ -198,7 +198,7 @@ function getRandomPlayer(league, manager, players) {
   let foundPlayer = false;
   let playerToReturn;
   do {
-    const randomIndex = Math.floor(Math.random() * unpickedPlayerIds.length);
+    const randomIndex = Math.floor(Math.random() * players.length);
     const selectedPlayer = players[randomIndex];
     const playerValid = checkPlayerValid(league, manager, players, selectedPlayer);
     if (playerValid) {

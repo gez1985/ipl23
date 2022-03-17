@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import DraftFooter from "./DraftFooter";
 import DraftTable from "./DraftTable";
 import DraftPageHeader from "./DraftPageHeader";
@@ -14,6 +14,7 @@ import {
 } from "../Store";
 import SkippedModal from "./SkippedModal";
 import axios from "axios";
+import autoPick from "./AutoPick";
 
 export default function DraftPage() {
   const [players] = useContext(PlayersContext);
@@ -24,6 +25,17 @@ export default function DraftPage() {
 
   const [showSkipped, setShowSkipped] = useState(false);
 
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+
+  const previousPickNumber = usePrevious(league.pickNumber);
+  const previousRound = usePrevious(league.round);
+
   useEffect(() => {
     getDraftData();
     window.scrollTo(0, 0);
@@ -33,6 +45,21 @@ export default function DraftPage() {
     const dataInterval = setInterval(() => getDraftData(), 10000);
     return () => clearInterval(dataInterval);
   }, []);
+
+  useEffect(() => {
+    if (manager.id === league.adminManagerId) {
+      console.log("You are the admin and league has updated");
+      if ((previousPickNumber !== league.pickNumber) || (previousRound !== league.round)) {
+        console.log("Auto pick needs checking");
+        const pickingManager = managers.find((manager) => manager.pickNumber === league.pickNumber);
+        if (pickingManager.autoPick) {
+          autoPick(league, pickingManager, managers, players);
+        } else {
+          console.log('auto pick NOT required');
+        }
+      } 
+    }
+  }, [league]);
 
   async function getDraftData() {
     try {
