@@ -90,23 +90,37 @@ export default function DraftPage() {
         leagueCopy.pickNumber = 1;
       }
     }
-    setLeague(leagueCopy);
+    const updatedLeague = await Search.putLeague(leagueCopy);
+    setLeague(updatedLeague);
   }
 
   const skipPick = async () => {
-    try {
-      const response = await axios.put("/api/draft/skip", {
-        league: league,
-        managers: managers,
-        players: players,
-      });
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   const response = await axios.put("/api/draft/skip", {
+    //     league: league,
+    //     managers: managers,
+    //     players: players,
+    //   });
+    //   console.log(response);
+    // } catch (err) {
+    //   console.log(err);
+    // }
     setShowSkipped(true);
     updateLeague();
   };
+
+  async function updateVidiprinter(leagueId, managerId, playerId) {
+    const vidiEntry = {
+      leagueId: leagueId,
+      managerId: managerId,
+      playerId: playerId,
+    };
+    try {
+      await Search.postVidiprinter(vidiEntry);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
 
   const stage2Managers = league.stage2Managers.flat();
   const stage3Managers = league.stage3Managers.flat();
@@ -165,7 +179,10 @@ export default function DraftPage() {
       {showSkipped && <SkippedModal closeModal={() => setShowSkipped(false)} />}
       <DraftPageHeader skipPick={skipPick} live={true} />
       <div className="standard-width-container">
-        <DraftTable updateLeague={updateLeague} />
+        <DraftTable
+          updateLeague={updateLeague}
+          updateVidiprinter={updateVidiprinter}
+        />
         <DraftFooter />
       </div>
     </>

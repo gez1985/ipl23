@@ -17,8 +17,7 @@ import axios from "axios";
 import DraftValidation from "./DraftValidation";
 const sortObjectsArray = require("sort-objects-array");
 
-
-export default function DraftTable({ updateLeague }) {
+export default function DraftTable({ updateLeague, updateVidiprinter }) {
   const [players] = useContext(PlayersContext);
   const [teams] = useContext(TeamsContext);
   const [manager, setManager] = useContext(ManagerContext);
@@ -141,20 +140,26 @@ export default function DraftTable({ updateLeague }) {
     newManagers.push(managerCopy);
     setManagers(newManagers);
     try {
-      const response = await axios.put("/api/draft/pick", {
-        playerId: selectedPlayer.id,
-        manager: managerCopy,
-        league: league,
-        managers: managers,
-        players: players,
-      });
-      console.log(response);
+      await Search.putManager(managerCopy);
     } catch (err) {
       console.log(err);
-      alert('an error occurred');
     }
+    // try {
+    //   const response = await axios.put("/api/draft/pick", {
+    //     playerId: selectedPlayer.id,
+    //     manager: managerCopy,
+    //     league: league,
+    //     managers: managers,
+    //     players: players,
+    //   });
+    //   console.log(response);
+    // } catch (err) {
+    //   console.log(err);
+    //   alert('an error occurred');
+    // }
     handleCancel();
     updateLeague();
+    updateVidiprinter(league.id, manager.id, selectedPlayer.id);
   }
 
   function pickValidation(player) {
