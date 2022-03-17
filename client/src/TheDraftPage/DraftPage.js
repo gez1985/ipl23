@@ -13,7 +13,6 @@ import {
   ManagerContext,
 } from "../Store";
 import SkippedModal from "./SkippedModal";
-import axios from "axios";
 import autoPick from "./AutoPick";
 
 export default function DraftPage() {

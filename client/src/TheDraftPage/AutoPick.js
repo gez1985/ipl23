@@ -44,6 +44,7 @@ const autoPick = async (league, manager, managers, players) => {
     console.log(managerCopy);
     try {
       await Search.putManager(managerCopy);
+      await updateVidi(league.id, manager.id, chosenPlayer.id);
     } catch (err) {
       console.log(err);
     }
@@ -108,6 +109,19 @@ const getRandomPlayer = (league, manager, players, availablePlayers) => {
   const playerValid = checkPlayerValid(league, manager, players, selectedPlayer);
   if (playerValid) {
     return selectedPlayer;
+  }
+}
+
+const updateVidi = async (leagueId, managerId, playerId) => {
+  const vidiEntry = {
+    leagueId: leagueId,
+    managerId: managerId,
+    playerId: playerId,
+  };
+  try {
+    await Search.postVidiprinter(vidiEntry);
+  } catch (err) {
+    console.log(err.message);
   }
 }
 
