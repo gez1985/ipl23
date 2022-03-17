@@ -5,6 +5,19 @@ const DraftValidation = require("./utils/draftValidation");
 
 const draftRouter = express.Router();
 
+// skip pick:
+
+draftRouter.put("/skip", async (req, res) => {
+  const { league } = req.body;
+  try {
+    await updateLeague(league);
+    res.json({ success: true, msg: "manager skipped"});
+  } catch (err) {
+    console.log(err);
+    res.json({ success: false, msg: "server error"})
+  }
+});
+
 // Make a pick:
 
 draftRouter.put("/pick", async (req, res) => {
