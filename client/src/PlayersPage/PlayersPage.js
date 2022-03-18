@@ -7,7 +7,6 @@ export default function PlayersPage() {
   const [showShortlist, setShowShortlist] = useState(false);
   const [shortlistPlayer, setShortlistPlayer] = useState();
 
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

@@ -168,12 +168,14 @@ export default function DraftPage() {
   }
 
   if (manager.autoPick && manager.id !== league.adminManagerId) {
-    <>
-      <DraftPageHeader live={false} />
-      <div className="flex-container standard-width-container">
-        You are auto picking you players.
-      </div>
-    </>;
+    return (
+      <>
+        <DraftPageHeader live={false} />
+        <div className="flex-container standard-width-container">
+          You are auto picking your players.
+        </div>
+      </>
+    );
   }
 
   if (league.draft2Live && !stage2Managers.includes(manager.id)) {

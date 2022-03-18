@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import {
+  LeagueContext,
   PlayersContext,
   ManagersContext,
   SortContext,
@@ -13,6 +14,7 @@ import { IconContext } from "react-icons";
 const sortObjectsArray = require("sort-objects-array");
 
 export default function Players({ handleShortlistClick }) {
+  const [league] = useContext(LeagueContext);
   const [players] = useContext(PlayersContext);
   const [managers] = useContext(ManagersContext);
   const [sort] = useContext(SortContext);
@@ -74,6 +76,14 @@ export default function Players({ handleShortlistClick }) {
     setPlayer();
   }
 
+  function getDraftStatus() {
+    if (league.draft1Live || league.draft2Live || league.draft3Live) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   function renderTableRows(player) {
     return (
       <tr key={player.id} className="table-row">
@@ -90,20 +100,24 @@ export default function Players({ handleShortlistClick }) {
         <td className="disappear-mobile">{player.wickets}</td>
         <td className="disappear-mobile">{player.catches}</td>
         <td>{player.totalPoints}</td>
-        <td className="disappear-mobile">
-          <div className="shortlist-icon-container">
-            <IconContext.Provider
-              value={{ size: "1.3rem", color: "#666", cursor: "pointer" }}
-            >
-              <div
-                style={{ cursor: "pointer" }}
-                onClick={() => handleShortlistClick(player)}
-              >
-                <IoPersonAdd />
+        {getDraftStatus() && (
+          <>
+            <td className="disappear-mobile">
+              <div className="shortlist-icon-container">
+                <IconContext.Provider
+                  value={{ size: "1.3rem", color: "#666", cursor: "pointer" }}
+                >
+                  <div
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleShortlistClick(player)}
+                  >
+                    <IoPersonAdd />
+                  </div>
+                </IconContext.Provider>
               </div>
-            </IconContext.Provider>
-          </div>
-        </td>
+            </td>
+          </>
+        )}
       </tr>
     );
   }
