@@ -53,5 +53,6 @@ CREATE TABLE vidiprinter (
   id SERIAL PRIMARY KEY,
   league_id SMALLINT NOT NULL,
   manager_id SMALLINT NOT NULL,
-  player_id SMALLINT NOT NULL
+  player_id SMALLINT NOT NULL, 
+  created_at TIMESTAMP DEFAULT NOW(),
 );

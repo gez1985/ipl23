@@ -7,7 +7,7 @@ const vidiprinterRouter = express.Router();
 
 vidiprinterRouter.get("/", async (req, res) => {
   try {
-    const allEntries = await pool.query("SELECT * FROM vidiprinter");
+    const allEntries = await pool.query("SELECT * FROM vidiprinter ORDER BY created_at");
     res.status(200).json(allEntries.rows);
   } catch (error) {
     console.error(error.message);
