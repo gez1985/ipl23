@@ -1131,10 +1131,6 @@
   overflow: hidden;
 }
 
-.modal-template-content {
-  max-height: calc(80vh - 135px);
-}
-
 .modal-template-logo-container {
   display: flex;
   justify-content: space-between;
