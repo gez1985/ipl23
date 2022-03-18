@@ -3,7 +3,7 @@ import Helpers from "../utils/Helpers";
 import DraftValidation from "./DraftValidation";
 
 const autoPick = async (league, manager, managers, players) => {
-  console.log("I am the auto picking function");
+  console.log("Auto picking player...");
   if (checkSquadSpace(league, manager)) {
     const managerCopy = JSON.parse(JSON.stringify(manager));
     const availablePlayers = Helpers.getUnpickedPlayers(
@@ -11,27 +11,22 @@ const autoPick = async (league, manager, managers, players) => {
       players,
       league
     );
-    console.log(availablePlayers);
     const availablePlayerIds = availablePlayers.map((player) => player.id);
     let chosenPlayer;
     for (let i = 0; i < manager.shortlist.length; i++) {
       const player = players.find(
         (player) => manager.shortlist[i] === player.id
       );
-      console.log(`this is ${player.name} with id = ${player.id}`);
       if (!availablePlayerIds.includes(manager.shortlist[i])) {
-        console.log(`${player.name} has already been selected`);
         removePlayerIdFromShortlist(managerCopy, manager.shortlist[i]);
       } else {
         const playerValid = checkPlayerValid(league, manager, players, player);
         if (playerValid) {
-          console.log(`${player.name} is a valid pick`);
           if (!chosenPlayer) {
             chosenPlayer = player;
             removePlayerIdFromShortlist(managerCopy, manager.shortlist[i]);
           }
         } else {
-          console.log(`${player.name} is an invalid pick`);
           removePlayerIdFromShortlist(managerCopy, manager.shortlist[i]);
         }
       }
@@ -41,7 +36,6 @@ const autoPick = async (league, manager, managers, players) => {
     } 
     console.log(`the chosen player is ${chosenPlayer.name}`);
     updateAutoManager(league, managerCopy, chosenPlayer.id);
-    console.log(managerCopy);
     try {
       await Search.putManager(managerCopy);
       await updateVidi(league.id, manager.id, chosenPlayer.id);
@@ -53,10 +47,7 @@ const autoPick = async (league, manager, managers, players) => {
 };
 
 const removePlayerIdFromShortlist = (manager, playerId) => {
-  console.log(manager);
-  console.log(playerId)
   const index = manager.shortlist.indexOf(playerId);
-  console.log(index);
   if (index > -1) {
     manager.shortlist.splice(index, 1);
   }
@@ -103,7 +94,7 @@ const updateAutoManager = (league, manager, playerId) => {
 }
 
 const getRandomPlayer = (league, manager, players, availablePlayers) => {
-  console.log('random player required');
+  console.log('choosing random player...');
   const randomIndex = Math.floor(Math.random() * availablePlayers.length);
   const selectedPlayer = availablePlayers[randomIndex];
   const playerValid = checkPlayerValid(league, manager, players, selectedPlayer);

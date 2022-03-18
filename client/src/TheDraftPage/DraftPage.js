@@ -47,12 +47,11 @@ export default function DraftPage() {
 
   useEffect(() => {
     if (manager.id === league.adminManagerId) {
-      console.log("You are the admin and league has updated");
       if (
         previousPickNumber !== league.pickNumber ||
         previousRound !== league.round
       ) {
-        console.log("Auto pick needs checking");
+        console.log("Auto pick checking...");
         const pickingManager = managers.find(
           (manager) => manager.pickNumber === league.pickNumber
         );

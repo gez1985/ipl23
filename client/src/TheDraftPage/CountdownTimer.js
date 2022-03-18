@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { LeagueContext, ManagerContext } from "../Store";
 
 export default function CountdownTimer({ skipPick, live }) {
-  const [counter, setCounter] = useState(600);
+  const [counter, setCounter] = useState(60);
   const [manager] = useContext(ManagerContext);
   const [league] = useContext(LeagueContext);
 
