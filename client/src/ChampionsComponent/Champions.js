@@ -2,7 +2,7 @@ import RenderChampions from "./RenderChampions";
 
 export default function Champions() {
   const iplChampions = [
-    { year: 2022, champion: "?", runnerUp: "?", woodenSpoon: "Tom Kent" },
+    { year: 2022, champion: "?", runnerUp: "?", woodenSpoon: "?" },
     {
       year: 2021,
       champion: "Matthew Joss",
@@ -15,7 +15,7 @@ export default function Champions() {
       year: 2021,
       champion: "Can Ogan",
       runnerUp: "Kimberley Kings",
-      woodenSpoon: "Tom Kent",
+      woodenSpoon: "Matthew Joss",
     },
   ];
   return (
