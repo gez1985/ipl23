@@ -24,6 +24,8 @@ import AdminAllLeagues from "./Admin/AllLeagues";
 import AdminFixtureScores from "./Admin/FixtureScores";
 import CountdownTimer from  "./TheDraftPage/CountdownTimer";
 import LogoutButton from "./LogOut";
+import SemiShortlistPage from "./SemiShortlistPage/SemiShortlistPage";
+import FinalShortlistPage from "./FinalShortlistPage/FinalShortlistPage";
 
 export default function BrowserRouter() {
   const { isLoading, user, isAuthenticated } = useAuth0();
@@ -100,6 +102,16 @@ export default function BrowserRouter() {
         <Route exact path="/finals">
           <div className="main-body">
             <FinalsPage />
+          </div>
+        </Route>
+        <Route exact path="/semi-shortlist">
+          <div className="main-body">
+           <SemiShortlistPage />
+          </div>
+        </Route>
+        <Route exact path="/final-shortlist">
+          <div className="main-body">
+           <FinalShortlistPage />
           </div>
         </Route>
         <Route exact path="/test-component">

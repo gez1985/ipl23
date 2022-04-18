@@ -38,8 +38,8 @@ export default function RenderChampions({ title, champions }) {
     <>
       <div className="competition-champs-container">
         <div className="competition-champs-title">{title}</div>
-        {champions.map((entryObject) => (
-          <RenderEntry entryObject={entryObject} />
+        {champions.map((entryObject, itemIndex) => (
+          <RenderEntry entryObject={entryObject} key={itemIndex}/>
         ))}
       </div>
     </>

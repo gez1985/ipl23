@@ -7,7 +7,8 @@ import viewEye from "./images/viewEye.png";
 import StageManagers from "./StageManagers";
 import StageTeams from "./StageTeams";
 import LeagueManagers from "./LeagueManagers";
-import RandomisePicksModal from './RandomisePicksModal';
+import RandomisePicksModal from "./RandomisePicksModal";
+import DrawStageSquadsModal from "./DrawStageSquadsModal";
 
 export default function League() {
   const [league, setLeague] = useContext(LeagueContext);
@@ -22,6 +23,8 @@ export default function League() {
   const [showStage4Teams, setShowStage4Teams] = useState(false);
   const [showAllManagers, setShowAllManagers] = useState(false);
   const [showRandomise, setShowRandomise] = useState(false);
+  const [showDrawSemi, setShowDrawSemi] = useState(false);
+  const [showDrawFinal, setShowDrawFinal] = useState(false);
 
   const previousLeague = usePrevious(league);
 
@@ -44,6 +47,13 @@ export default function League() {
     }
   });
 
+  useEffect(() => {
+    if (previousLeague !== league) {
+      const mutableLeague = JSON.parse(JSON.stringify(league));
+      setEditedLeague(mutableLeague);
+    }
+  }, [league]);
+
   if (!league || !managers || !editedLeague) {
     return (
       <>
@@ -61,23 +71,13 @@ export default function League() {
     setShowStage4Teams(false);
     setShowAllManagers(false);
     setShowRandomise(false);
+    setShowDrawSemi(false);
+    setShowDrawFinal(false);
   }
 
   function handleDraft1LiveChange() {
     let updatedLeague = editedLeague;
     updatedLeague.draft1Live = !updatedLeague.draft1Live;
-    setEditedLeague(updatedLeague);
-  }
-
-  function handleDraft2LiveChange() {
-    let updatedLeague = editedLeague;
-    updatedLeague.draft2Live = !updatedLeague.draft2Live;
-    setEditedLeague(updatedLeague);
-  }
-
-  function handleDraft3LiveChange() {
-    let updatedLeague = editedLeague;
-    updatedLeague.draft3Live = !updatedLeague.draft3Live;
     setEditedLeague(updatedLeague);
   }
 
@@ -117,12 +117,6 @@ export default function League() {
     setEditedLeague(updatedLeague);
   }
 
-  function handleStage4DateChange(e) {
-    let updatedLeague = editedLeague;
-    updatedLeague.stage4Date = e.target.value;
-    setEditedLeague(updatedLeague);
-  }
-
   async function updateLeague() {
     const updatedLeague = await Search.putLeague(editedLeague);
     alert("changes saved");
@@ -134,9 +128,7 @@ export default function League() {
       <Header />
       <h4>League Manager Admin:</h4>
       <div className="add-search-container">
-        <button onClick={() => setShowRandomise(true)}>
-          Randomise Picks
-        </button>
+        <button onClick={() => setShowRandomise(true)}>Randomise Picks</button>
       </div>
       <div className="tables-container">
         <table>
@@ -154,12 +146,10 @@ export default function League() {
         </table>
         <table className="league-stages">
           <tr>
-            <th>Stage 2 Managers</th>
-            <th>Stage 2 Teams</th>
-            <th>Stage 3 Managers</th>
-            <th>Stage 3 Teams</th>
-            <th>Stage 4 Managers</th>
-            <th>Stage 4 Teams</th>
+            <th>Semi Managers</th>
+            <th>Semi Teams</th>
+            <th>Final Managers</th>
+            <th>Final Teams</th>
           </tr>
           <tr>
             <td
@@ -186,18 +176,6 @@ export default function League() {
             >
               <img src={viewEye} alt="view-squad" />
             </td>
-            <td
-              className="sort-heading"
-              onClick={() => setShowStage4Managers(true)}
-            >
-              <img src={viewEye} alt="view-squad" />
-            </td>
-            <td
-              className="sort-heading"
-              onClick={() => setShowStage4Teams(true)}
-            >
-              <img src={viewEye} alt="view-squad" />
-            </td>
           </tr>
         </table>
       </div>
@@ -211,8 +189,8 @@ export default function League() {
         <table>
           <tr>
             <th>Draft 1 Live</th>
-            <th>Draft 2 Live</th>
-            <th>Draft 3 Live</th>
+            <th>Draw Semi Squads</th>
+            <th>Draw Final Squads</th>
           </tr>
           <tr>
             <td>
@@ -226,29 +204,24 @@ export default function League() {
               />
             </td>
             <td>
-              <input
-                type="checkbox"
-                id="draft2Live"
-                name="draft2Live"
-                defaultChecked={editedLeague.draft2Live}
-                onChange={handleDraft2LiveChange}
-                disabled={!edit}
-              />
+              <div
+                className="draw-playoff-squads-button"
+                onClick={() => setShowDrawSemi(true)}
+              >
+                Draw Now
+              </div>
             </td>
             <td>
-              <input
-                type="checkbox"
-                id="draft3Live"
-                name="draft3Live"
-                defaultChecked={editedLeague.draft3Live}
-                onChange={handleDraft3LiveChange}
-                disabled={!edit}
-              />
+              <div
+                className="draw-playoff-squads-button"
+                onClick={() => setShowDrawFinal(true)}
+              >
+                Draw Now
+              </div>
             </td>
           </tr>
         </table>
-        <table>
-        </table>
+        <table></table>
         <table>
           <tr>
             <th>Round</th>
@@ -270,7 +243,7 @@ export default function League() {
             </td>
             <td>
               <input
-              className="shrinking-input"
+                className="shrinking-input"
                 type="number"
                 id="pickNumber"
                 name="pickNumber"
@@ -303,9 +276,8 @@ export default function League() {
         </table>
         <table>
           <tr>
-            <th>End of Stage 1</th>
-            <th>End of Stage 2</th>
-            <th>End of Stage 3</th>
+            <th>Start of Stage 2</th>
+            <th>Start of Stage 3</th>
           </tr>
           <tr>
             <td>
@@ -327,17 +299,6 @@ export default function League() {
                 name="stage2"
                 defaultValue={editedLeague.stage3Date}
                 onChange={handleStage3DateChange}
-                readOnly={!edit}
-              />
-            </td>
-            <td>
-              <input
-                className="shrinking-input"
-                type="datetime-local"
-                id="stage3"
-                name="stage3"
-                defaultValue={editedLeague.stage4Date}
-                onChange={handleStage4DateChange}
                 readOnly={!edit}
               />
             </td>
@@ -370,6 +331,12 @@ export default function League() {
         )}
         {showRandomise && (
           <RandomisePicksModal hide={resetModals} from="All Managers" />
+        )}
+        {showDrawSemi && (
+          <DrawStageSquadsModal hide={resetModals} from="semi" />
+        )}
+        {showDrawFinal && (
+          <DrawStageSquadsModal hide={resetModals} from="final" />
         )}
       </div>
     </>

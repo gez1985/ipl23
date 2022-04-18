@@ -21,7 +21,6 @@ export default function TeamScores(props) {
     runsConceded: 0,
     wickets: 0,
     maidens: 0,
-    dotBalls: 0,
     out: true,
   };
 
@@ -127,12 +126,6 @@ export default function TeamScores(props) {
   function handleMaidensChange(e) {
     let updatedScore = score;
     updatedScore.maidens = e.target.value;
-    setScore(updatedScore);
-  }
-
-  function handleDotBallsChange(e) {
-    let updatedScore = score;
-    updatedScore.dotBalls = e.target.value;
     setScore(updatedScore);
   }
 
@@ -355,18 +348,6 @@ export default function TeamScores(props) {
                     ></Form.Control>
                   </Form.Group>
                 </Col>
-                <Col>
-                  <Form.Group
-                    controlId="dot-balls"
-                    onChange={handleDotBallsChange}
-                  >
-                    <Form.Label>Dot Balls:</Form.Label>
-                    <Form.Control
-                      type="number"
-                      defaultValue={score.dotBalls}
-                    ></Form.Control>
-                  </Form.Group>
-                </Col>
               </Form.Row>
               <Form.Row>
                 <Col>
@@ -562,18 +543,6 @@ export default function TeamScores(props) {
                     ></Form.Control>
                   </Form.Group>
                 </Col>
-                <Col>
-                  <Form.Group
-                    controlId="dot-balls"
-                    onChange={handleDotBallsChange}
-                  >
-                    <Form.Label>Dot Balls:</Form.Label>
-                    <Form.Control
-                      type="number"
-                      defaultValue={score.dotBalls}
-                    ></Form.Control>
-                  </Form.Group>
-                </Col>
               </Form.Row>
               <Form.Row>
                 <Col>
@@ -645,7 +614,6 @@ export default function TeamScores(props) {
         <td>{score.runsConceded}</td>
         <td>{score.wickets}</td>
         <td>{score.maidens}</td>
-        <td>{score.dotBalls}</td>
         <td>{Scores.getScorePoints(player, score)}</td>
         <td>
           <div className="edit-button">
@@ -692,7 +660,6 @@ export default function TeamScores(props) {
             <th>Runs Conceded</th>
             <th>Wickets</th>
             <th>Maidens</th>
-            <th>Dot Balls</th>
             <th>Total Points</th>
             <th>Edit</th>
             <th>Delete</th>

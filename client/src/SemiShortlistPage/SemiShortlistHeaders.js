@@ -1,17 +1,15 @@
 import ComponentNav from "../ComponentNav";
 import MobileComponentNav from "../MobileComponentNav";
-import PlayersHeaders from "./PlayersHeaders";
-import PlayersTitle from "./PlayersTitle";
+import SemiShortlistTitle from "./SemiShortlistTitle";
 
-export default function PlayersPageHeader() {
+export default function SemiShortlistHeaders() {
   return (
     <>
       <ComponentNav />
       <MobileComponentNav />
       <div className="title-container">
-        <PlayersTitle title="Players" />
+        <SemiShortlistTitle title="My Semi Shortlist" />
       </div>
-      <PlayersHeaders />
     </>
   );
 }

@@ -29,6 +29,9 @@
   font-weight: 600;
   min-height: 30px;
 }
+.main-body .shortlist-page-input-container {
+  width: 300px;
+}
 .main-body .squads-table th {
   padding: 8px 0;
 }
@@ -704,6 +707,22 @@
 
 .admin-body .App {
   text-align: center;
+}
+.admin-body .draw-playoff-squads-button {
+  margin: 0 auto;
+  background-color: green;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 10px 20px;
+  width: 150px;
+  color: #fff;
+  font-weight: 700;
+  border: 2px solid #fff;
+}
+.admin-body .draw-playoff-squads-button:hover {
+  background-color: #fff;
+  border: 2px solid green;
+  color: green;
 }
 .admin-body .header {
   padding-top: 10px;

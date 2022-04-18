@@ -144,19 +144,6 @@ export default function DraftTable({ updateLeague, updateVidiprinter }) {
     } catch (err) {
       console.log(err);
     }
-    // try {
-    //   const response = await axios.put("/api/draft/pick", {
-    //     playerId: selectedPlayer.id,
-    //     manager: managerCopy,
-    //     league: league,
-    //     managers: managers,
-    //     players: players,
-    //   });
-    //   console.log(response);
-    // } catch (err) {
-    //   console.log(err);
-    //   alert('an error occurred');
-    // }
     handleCancel();
     updateLeague();
     updateVidiprinter(league.id, manager.id, selectedPlayer.id);

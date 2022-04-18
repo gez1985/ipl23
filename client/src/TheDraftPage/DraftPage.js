@@ -16,8 +16,9 @@ import SkippedModal from "./SkippedModal";
 import autoPick from "./AutoPick";
 
 export default function DraftPage() {
+
   const [players] = useContext(PlayersContext);
-  const [manager] = useContext(ManagerContext);
+  const [manager, setManager] = useContext(ManagerContext);
   const [managers, setManagers] = useContext(ManagersContext);
   const [league, setLeague] = useContext(LeagueContext);
   const [, setVidiprinter] = useContext(VidiprinterContext);
@@ -44,6 +45,14 @@ export default function DraftPage() {
     const dataInterval = setInterval(() => getDraftData(), 10000);
     return () => clearInterval(dataInterval);
   }, []);
+
+  useEffect(() => {
+    const checkManager = Helpers.getObjectById(managers, manager.id);
+    if (checkManager.stage1Squad.length > manager.stage1Squad.length) {
+      console.log('manager data conflict');
+      setManager(checkManager);
+    }
+  }, [managers]);
 
   useEffect(() => {
     if (manager.id === league.adminManagerId) {
@@ -125,16 +134,6 @@ export default function DraftPage() {
   }
 
   const skipPick = async () => {
-    // try {
-    //   const response = await axios.put("/api/draft/skip", {
-    //     league: league,
-    //     managers: managers,
-    //     players: players,
-    //   });
-    //   console.log(response);
-    // } catch (err) {
-    //   console.log(err);
-    // }
     setShowSkipped(true);
     updateLeague();
   };

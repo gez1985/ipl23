@@ -46,7 +46,10 @@ CREATE TABLE managers (
   pick_number SMALLINT DEFAULT 0,
   stage_1_squad SMALLINT[] DEFAULT '{}',
   stage_2_squad SMALLINT[] DEFAULT '{}',
-  stage_3_squad SMALLINT[] DEFAULT '{}'
+  stage_3_squad SMALLINT[] DEFAULT '{}',
+  shortlist SMALLINT[] DEFAULT '{}',
+  stage_2_shortlist SMALLINT[] DEFAULT '{}',
+  stage_3_shortlist SMALLINT[] DEFAULT '{}'
 );
 
 CREATE TABLE vidiprinter (

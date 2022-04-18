@@ -3,6 +3,23 @@
     text-align: center;
   }
 
+  .draw-playoff-squads-button {
+    margin: 0 auto;
+    background-color: green;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 10px 20px;
+    width: 150px;
+    color: #fff;
+    font-weight: 700;
+    border: 2px solid #fff;
+    &:hover {
+      background-color: #fff;
+      border: 2px solid green;
+      color: green;
+    }
+  }
+
   .header {
     padding-top: 10px;
     width: fit-content;
