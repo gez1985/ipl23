@@ -3,6 +3,7 @@
 @use './ChampionsComponent/Champions';
 @use './ModalTemplate';
 @use './PlayersPage/ShortlistModal';
+@use './SemiShortlistPage/SemiShortlistPage';
 
 .overflow-hidden {
   height: 100vh;

@@ -26,8 +26,6 @@ export default function ShortlistModal({ player, closeModal }) {
     }
   }, []);
 
-  console.log(manager);
-
   const handleSaveClick = async () => {
     setLoading(true);
     try {

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
+import LogOutButton from './LogOut';
 
 export default function LoadingSpinner(props) {
 
@@ -17,6 +18,7 @@ export default function LoadingSpinner(props) {
         width={50}
       />
       {props.loading ? <p>Loading data</p> : <p>Logging in</p>}
+      <LogOutButton />
     </div>
   );
 }

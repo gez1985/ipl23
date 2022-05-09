@@ -21,8 +21,6 @@ export default function Players({ handleShortlistClick }) {
   const [showPlayer, setShowPlayer] = useState(false);
   const [player, setPlayer] = useState();
 
-  console.log(league);
-
   useEffect(() => {
     window.scrollTo(0, 0);
     Helpers.getPlayersManager(players, managers);
@@ -31,7 +29,9 @@ export default function Players({ handleShortlistClick }) {
   const sortedPlayerArray = getSortedPlayerArray();
 
   function getSortedPlayerArray() {
-    const qualifiedPlayers = players.filter((player) => league.stage2Teams.includes(player.teamId));
+    const qualifiedPlayers = players.filter((player) =>
+      league.stage2Teams.includes(player.teamId)
+    );
     const namedPlayers = qualifiedPlayers.filter((player) =>
       player.name.toLowerCase().includes(searchName.toLowerCase())
     );
@@ -61,14 +61,6 @@ export default function Players({ handleShortlistClick }) {
     setPlayer();
   }
 
-  function getDraftStatus() {
-    if (league.draft1Live || league.draft2Live || league.draft3Live) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
   function renderTableRows(player) {
     return (
       <tr key={player.id} className="table-row">
@@ -83,24 +75,20 @@ export default function Players({ handleShortlistClick }) {
         <td className="disappear-mobile">{player.runs}</td>
         <td className="disappear-mobile">{player.wickets}</td>
         <td>{player.totalPoints}</td>
-        {getDraftStatus() && (
-          <>
-            <td className="disappear-mobile">
-              <div className="shortlist-icon-container">
-                <IconContext.Provider
-                  value={{ size: "1.3rem", color: "#666", cursor: "pointer" }}
-                >
-                  <div
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleShortlistClick(player)}
-                  >
-                    <IoPersonAdd />
-                  </div>
-                </IconContext.Provider>
+        <td className="disappear-mobile">
+          <div className="shortlist-icon-container">
+            <IconContext.Provider
+              value={{ size: "1.3rem", color: "#666", cursor: "pointer" }}
+            >
+              <div
+                style={{ cursor: "pointer" }}
+                onClick={() => handleShortlistClick(player)}
+              >
+                <IoPersonAdd />
               </div>
-            </td>
-          </>
-        )}
+            </IconContext.Provider>
+          </div>
+        </td>
       </tr>
     );
   }
