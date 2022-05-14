@@ -28,13 +28,13 @@ export default function Landing() {
       </div>
       <div className="flex-container">
         {league.draft1Live && <DraftNavIcon />}
-        {stage2Managers.includes(manager.id) && !manager.stage2Squad.length && (
+        {stage2Managers.includes(manager.id) && manager.stage2Squad.length < 13 && (
           <StageShortlistIcon
             label="My Semi Shortlist"
             link="/semi-shortlist"
           />
         )}
-        {stage3Managers.includes(manager.id) && !manager.stage3Squad.length && (
+        {stage3Managers.includes(manager.id) && manager.stage3Squad.length < 13 && (
           <StageShortlistIcon
             label="My Final Shortlist"
             link="/final-shortlist"

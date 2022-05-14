@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import AvailablePlayers from "./AvailablePlayers";
 import MyPlayers from "./MyPlayers";
-import Players from "./Players";
+import MyShortlist from "./MyShortlist";
 import SemiShortlistHeaders from "./SemiShortlistHeaders";
 
 export default function SemiShortlistPage() {
@@ -8,21 +9,16 @@ export default function SemiShortlistPage() {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleShortlistClick = () => {
-    console.log("short list clicked");
-  };
-
   return (
     <>
       <SemiShortlistHeaders />
       <div className="standard-width-container">
         <div className="ss-main-container">
           <MyPlayers />
-          <div className="ss-my-shortlist"></div>
+          <MyShortlist />
         </div>
+        <AvailablePlayers />
       </div>
-
-      {/* <Players handleShortlistClick={handleShortlistClick} /> */}
     </>
   );
 }

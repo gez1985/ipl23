@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { ManagerContext, LeagueContext, PlayersContext } from "../Store";
-import MyPlayersButtons from './MyPlayersButtons';
+import MyPlayersButtons from "./MyPlayersButtons";
 import Helpers from "../utils/Helpers";
 import { IconContext } from "react-icons";
 import { TiTimes, TiTick } from "react-icons/ti";
 
 export default function MyPlayers() {
-  const [manager, setManager] = useContext(ManagerContext);
+  const [manager] = useContext(ManagerContext);
   const [league] = useContext(LeagueContext);
   const [players] = useContext(PlayersContext);
 
@@ -17,13 +17,11 @@ export default function MyPlayers() {
     }
   });
 
-  console.log('manager', manager);
-
   const renderPlayerEntry = (playerId, index) => {
     const player = Helpers.getObjectById(players, playerId);
     return (
       <div className="ss-my-players-list-entry" key={index}>
-        {manager.stage2Shortlist.includes(playerId) ? (
+        {manager.stage2Squad.includes(playerId) ? (
           <IconContext.Provider value={{ color: "green", size: "2em" }}>
             <TiTick />
           </IconContext.Provider>
@@ -32,22 +30,20 @@ export default function MyPlayers() {
             <TiTimes />
           </IconContext.Provider>
         )}
-        <div className="ss-my-players-player-name">{player.name}</div>
-          <MyPlayersButtons playerId={playerId}/>
+        <div className="ss-player-name">{player.name}</div>
+        <MyPlayersButtons playerId={playerId} />
       </div>
     );
   };
 
   return (
-    <>
-      <div className="ss-my-players-container">
-        <h1 className="ss-my-players-title">My Players</h1>
-        <div className="ss-my-players-list-container">
-          {myPlayerIds.map((playerId, index) =>
-            renderPlayerEntry(playerId, index)
-          )}
-        </div>
+    <div className="ss-my-players-container">
+      <h1 className="ss-title">My Players</h1>
+      <div className="ss-list-container">
+        {myPlayerIds.map((playerId, index) =>
+          renderPlayerEntry(playerId, index)
+        )}
       </div>
-    </>
+    </div>
   );
 }
