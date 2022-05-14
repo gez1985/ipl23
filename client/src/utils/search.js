@@ -90,11 +90,8 @@ Search.getLeagueById = async (leagueId) => {
 };
 
 Search.putManager = async (manager) => {
-  console.log(`put manager reached`);
-  console.log('manager', manager);
   try {
     const response = await axios.put('/api/managers', manager);
-    console.log('response', response);
     return camelCaseKeys(response.data);
   } catch (err) {
     console.error(err.message);

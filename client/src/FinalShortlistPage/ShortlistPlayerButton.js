@@ -19,12 +19,12 @@ export default function ShortlistPlayerButton({ playerId }) {
       setLoading(true);
       try {
         const managerCopy = JSON.parse(JSON.stringify(manager));
-        if (addPosition > manager.stage2Shortlist.length) {
-          managerCopy.stage2Shortlist.push(playerId);
+        if (addPosition > manager.stage3Shortlist.length) {
+          managerCopy.stage3Shortlist.push(playerId);
         } else if (addPosition === 1) {
-          managerCopy.stage2Shortlist.unshift(playerId);
+          managerCopy.stage3Shortlist.unshift(playerId);
         } else {
-          managerCopy.stage2Shortlist.splice(addPosition - 1, 0, playerId);
+          managerCopy.stage3Shortlist.splice(addPosition - 1, 0, playerId);
         }
         await Search.putManager(managerCopy);
         setManager(managerCopy);

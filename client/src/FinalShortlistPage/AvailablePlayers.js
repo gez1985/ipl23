@@ -9,8 +9,8 @@ export default function AvailablePlayers() {
 
   const qualifiedPlayers = players.filter(
     (player) =>
-      league.stage2Teams.includes(player.teamId) &&
-      !manager.stage2Shortlist.includes(player.id)
+      league.stage3Teams.includes(player.teamId) &&
+      !manager.stage3Shortlist.includes(player.id)
   );
 
   const getPlayerEntry = (player, index) => {
