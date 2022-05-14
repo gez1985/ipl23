@@ -19,8 +19,6 @@ export default function MyPlayers() {
     }
   });
 
-  console.log('manager', manager);
-
   const renderPlayerEntry = (playerId, index) => {
     const player = Helpers.getObjectById(players, playerId);
     return (
