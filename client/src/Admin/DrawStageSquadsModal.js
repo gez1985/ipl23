@@ -1,16 +1,75 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
+import {
+  LeagueManagersContext as ManagersContext,
+  LeagueContext,
+  PlayersContext,
+} from "../Store";
+import { Button, Modal } from "react-bootstrap";
+import sortObjectsArray from "sort-objects-array";
+import { pickSemiPlayer } from "./pickSemiPlayers";
 
 export default function DrawSemiSquadsModal({ hide, from }) {
+  const [league] = useContext(LeagueContext);
+  const [managers, setManagers] = useContext(ManagersContext);
+  const [players] = useContext(PlayersContext);
+
   const handleDrawSquads = () => {
     if (from === "semi") {
-      console.log("draw semi squads clicked");
+      drawSemiSquads();
     } else if (from === "final") {
       console.log("draw final squads clicked");
     } else {
       alert("error with from prop");
     }
     hide();
+  };
+
+  const drawSemiSquads = () => {
+    const semiManagers = managers.filter((manager) =>
+      league.stage2Managers.flat().includes(manager.id)
+    );
+    const validDraw = validateSemiDraw();
+    if (!validDraw) {
+      alert("please check managers and teams are entered");
+      return;
+    }
+    assignSemiPickNumbers(semiManagers);
+    pickSemiSquads(semiManagers);
+  };
+
+  const assignSemiPickNumbers = (semiManagers) => {
+    const sortedManagers = sortObjectsArray(
+      semiManagers,
+      "stage1Points",
+      "desc"
+    );
+    sortedManagers.forEach((manager, index) => {
+      manager.semiPickNumber = index + 1;
+    });
+  };
+
+  const pickSemiSquads = (semiManagers) => {
+    const copyOfManagers = JSON.parse(JSON.stringify(semiManagers));
+    const qualifiedPlayers = players.filter((player) =>
+      league.stage2Teams.includes(player.teamId)
+    );
+    for (let i = 0; i < 4; i++) {
+      const pickingNumber = (i % 4) + 1;
+      const pickingManager = copyOfManagers.find(
+        (manager) => manager.semiPickNumber === pickingNumber
+      );
+      pickSemiPlayer(pickingManager, copyOfManagers, qualifiedPlayers);
+    }
+  };
+
+  const validateSemiDraw = () => {
+    if (league.stage2Teams.length !== 4) {
+      return false;
+    }
+    if (league.stage2Managers.flat().length !== 4) {
+      return false;
+    }
+    return true;
   };
 
   return (

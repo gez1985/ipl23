@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import {
   LeagueContext,
   PlayersContext,
-  ManagersContext,
+  LeagueManagersContext as ManagersContext,
   SortContext,
   SearchNameContext,
   IncludeContext,
