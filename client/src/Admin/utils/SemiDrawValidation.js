@@ -29,17 +29,12 @@ PickValidation.minTeamRequirements = (player, players, manager) => {
   });
   const teamRoleArray = myTeam.map((player) => player.role);
   teamRoleArray.push(player.role);
-  let needed = 8;
+  let needed = 7;
   let picksLeft = 14 - teamRoleArray.length;
   var count = {};
   teamRoleArray.forEach(function (i) {
     count[i] = (count[i] || 0) + 1;
   });
-  if (count.WK < 1) {
-    needed = needed - count.WK;
-  } else {
-    needed = needed - 1;
-  }
   if (count.BT < 3) {
     needed = needed - count.BT;
   } else {
@@ -62,36 +57,21 @@ PickValidation.minTeamRequirements = (player, players, manager) => {
   }
 };
 
-PickValidation.roleValidation = (league, manager, players, player) => {
+PickValidation.roleValidation = (player, players, manager) => {
   let count = 0;
   let myTeam = [];
-  if (league.draft1Live) {
-    manager.stage1Squad.forEach((playerId) => {
-      myTeam.push(Helpers.getObjectById(players, playerId));
-    });
-  } else if (league.draft2Live) {
-    manager.stage2Squad.forEach((playerId) => {
-      myTeam.push(Helpers.getObjectById(players, playerId));
-    });
-  } else if (league.draft3Live) {
-    manager.stage3Squad.forEach((playerId) => {
-      myTeam.push(Helpers.getObjectById(players, playerId));
-    });
-  }
+  manager.stage2Squad.forEach((playerId) => {
+    myTeam.push(Helpers.getObjectById(players, playerId));
+  });
   const teamRoleArray = myTeam.map((player) => player.role);
   teamRoleArray.forEach((role) => {
     if (role === player.role) {
       count++;
     }
   });
-  let batBowMax = 5;
-  let arMax = 3;
-  let wkMax = 1;
-  if (league.draft1Live) {
-    batBowMax = 6;
-    arMax = 4;
-    wkMax = 2;
-  }
+  let batBowMax = 6;
+  let arMax = 4;
+  let wkMax = 2;
   if (player.role === "WK" && count >= wkMax) {
     return false;
   } else if (player.role === "BT" && count >= batBowMax) {

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import {
   LeagueManagersContext as ManagersContext,
   LeagueContext,
@@ -6,6 +6,7 @@ import {
 } from "../Store";
 import { Button, Modal } from "react-bootstrap";
 import sortObjectsArray from "sort-objects-array";
+import Search from "../utils/search";
 import { pickSemiPlayer } from "./pickSemiPlayers";
 
 export default function DrawSemiSquadsModal({ hide, from }) {
@@ -48,17 +49,28 @@ export default function DrawSemiSquadsModal({ hide, from }) {
     });
   };
 
-  const pickSemiSquads = (semiManagers) => {
+  const pickSemiSquads = async (semiManagers) => {
     const copyOfManagers = JSON.parse(JSON.stringify(semiManagers));
     const qualifiedPlayers = players.filter((player) =>
       league.stage2Teams.includes(player.teamId)
     );
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 56; i++) {
       const pickingNumber = (i % 4) + 1;
       const pickingManager = copyOfManagers.find(
         (manager) => manager.semiPickNumber === pickingNumber
       );
       pickSemiPlayer(pickingManager, copyOfManagers, qualifiedPlayers);
+    }
+    console.log("selected squads managers", copyOfManagers);
+    setManagers(copyOfManagers);
+    try {
+      await Promise.all(
+        copyOfManagers.map(async (manager) => {
+          await Search.putManager(manager);
+        })
+      );
+    } catch (error) {
+      console.error(error.message);
     }
   };
 
