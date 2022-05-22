@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { ManagerContext, PlayersContext, LeagueContext } from "../Store";
 import ShortlistPlayerButton from "./ShortlistPlayerButton";
 const sortObjectsArray = require("sort-objects-array");
@@ -10,21 +10,20 @@ export default function AvailablePlayers() {
   const [sortBy, setSortBy] = useState("totalPoints");
   const [order, setOrder] = useState("desc");
 
-  useEffect(() => {
-    if (sortBy === "name" || sortBy === "role" || sortBy === "team") {
-      setOrder("");
-    } else {
-      setOrder("desc");
-    }
-  }, [sortBy]);
-
   const qualifiedPlayers = players.filter(
     (player) =>
       league.stage2Teams.includes(player.teamId) &&
       !manager.stage2Shortlist.includes(player.id)
   );
 
-  console.log("order", order);
+  const handleSortClick = (newSort) => {
+    if (newSort === "name" || newSort === "role" || newSort === "team") {
+      setOrder("");
+    } else {
+      setOrder("desc");
+    }
+    setSortBy(newSort);
+  }
 
   const listedPlayers = sortObjectsArray(qualifiedPlayers, sortBy, order);
 
@@ -65,42 +64,42 @@ export default function AvailablePlayers() {
       <h1 className="ss-title">Qualified Players</h1>
       <div className="ss-list-container">
         <div className="ss-headers">
-          <div style={{ width: "170px" }} onClick={() => setSortBy("name")}>
+          <div style={{ width: "170px" }} onClick={() => handleSortClick("name")}>
             Name
           </div>
           <div
             style={{ width: "85px", textAlign: "center" }}
-            onClick={() => setSortBy("role")}
+            onClick={() => handleSortClick("role")}
           >
             Role
           </div>
           <div
             style={{ width: "85px", textAlign: "center" }}
-            onClick={() => setSortBy("team")}
+            onClick={() => handleSortClick("team")}
           >
             Team
           </div>
           <div
             style={{ width: "85px", textAlign: "center" }}
-            onClick={() => setSortBy("runs")}
+            onClick={() => handleSortClick("runs")}
           >
             Runs
           </div>
           <div
             style={{ width: "85px", textAlign: "center" }}
-            onClick={() => setSortBy("wickets")}
+            onClick={() => handleSortClick("wickets")}
           >
             Wickets
           </div>
           <div
             style={{ width: "85px", textAlign: "center" }}
-            onClick={() => setSortBy("catches")}
+            onClick={() => handleSortClick("catches")}
           >
             Catches
           </div>
           <div
             style={{ width: "85px", textAlign: "center" }}
-            onClick={() => setSortBy("totalPoints")}
+            onClick={() => handleSortClick("totalPoints")}
           >
             Total points
           </div>
