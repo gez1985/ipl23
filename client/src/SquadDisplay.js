@@ -27,14 +27,28 @@ export default function SquadDisplay(props) {
     border = "squads-row";
   }
   if (props.stage === 2) {
-    props.manager.stage2Squad.forEach((playerId) =>
+    const stage2Subs = props.manager.stage2Squad.filter(
+      (playerId) => !props.manager.stage2BestEleven.includes(playerId)
+    );
+    props.manager.stage2BestEleven.forEach((playerId) =>
       bestEleven.push(Helpers.getObjectById(players, playerId))
     );
+    stage2Subs.forEach((playerId) =>
+      subs.push(Helpers.getObjectById(players, playerId))
+    );
+    border = "squads-row";
   }
   if (props.stage === 3) {
-    props.manager.stage3Squad.forEach((playerId) =>
+    const stage3Subs = props.manager.stage3Squad.filter(
+      (playerId) => !props.manager.stage3BestEleven.includes(playerId)
+    );
+    props.manager.stage3BestEleven.forEach((playerId) =>
       bestEleven.push(Helpers.getObjectById(players, playerId))
     );
+    stage3Subs.forEach((playerId) =>
+      subs.push(Helpers.getObjectById(players, playerId))
+    );
+    border = "squads-row";
   }
 
   const batters = bestEleven.filter((player) => player.role === "BT");

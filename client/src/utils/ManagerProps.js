@@ -65,9 +65,9 @@ ManagerProps.getManagerProperties = (managers, players) => {
 ManagerProps.getStagePoints = (managers, players) => {
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
   managers.forEach((manager) => {
-    manager.stage1BestEleven = ManagerProps.getBestEleven(manager, players, 1);
-    // manager.stage2BestEleven = ManagerProps.getBestEleven(manager, players, 2);
-    // manager.stage3BestEleven = ManagerProps.getBestEleven(manager, players, 3);
+    manager.stage1BestEleven = ManagerProps.getStage1BestEleven(manager, players);
+    manager.stage2BestEleven = ManagerProps.getStage2BestEleven(manager, players);
+    manager.stage3BestEleven = ManagerProps.getStage3BestEleven(manager, players);
     const stage1TotalPointsArray = [];
     const stage2TotalPointsArray = [];
     const stage3TotalPointsArray = [];
@@ -77,14 +77,14 @@ ManagerProps.getStagePoints = (managers, players) => {
         stage1TotalPointsArray.push(player.totalPoints);
       });
     }
-    if (manager.stage2Squad) {
-      manager.stage2Squad.forEach((playerId) => {
+    if (manager.stage2BestEleven) {
+      manager.stage2BestEleven.forEach((playerId) => {
         const player = Helpers.getObjectById(players, playerId);
         stage2TotalPointsArray.push(player.stage2Points);
       });
     }
-    if (manager.stage3Squad) {
-      manager.stage3Squad.forEach((playerId) => {
+    if (manager.stage3BestEleven) {
+      manager.stage3BestEleven.forEach((playerId) => {
         const player = Helpers.getObjectById(players, playerId);
         stage3TotalPointsArray.push(player.stage3Points);
       });
@@ -95,22 +95,11 @@ ManagerProps.getStagePoints = (managers, players) => {
   });
 };
 
-ManagerProps.getBestEleven = (manager, players, stage) => {
-  let squad;
-  switch (stage) {
-    case 2:
-      squad = "stage2Squad";
-      break;
-    case 3:
-      squad = "stage3Squad";
-      break;
-    default:
-      squad = "stage1Squad";
-  }
-  if (manager[squad].length <= 14) {
-    return manager[squad];
+ManagerProps.getStage1BestEleven = (manager, players) => {
+  if (manager.stage1Squad.length <= 14) {
+    return manager.stage1Squad;
   } else {
-    const managerPlayers = manager[squad].map((playerId) =>
+    const managerPlayers = manager.stage1Squad.map((playerId) =>
       Helpers.getObjectById(players, playerId)
     );
     const bestEleven = [];
@@ -138,6 +127,114 @@ ManagerProps.getBestEleven = (manager, players, stage) => {
       (player) => !bestEleven.includes(player)
     );
     sortObjects(remainingPlayers, "totalPoints");
+    remainingPlayers.forEach((player) => {
+      if (bestEleven.length < 11) {
+        const teamRoleArray = bestEleven.map((player) => player.role);
+        teamRoleArray.push(player.role);
+        let count = {};
+        teamRoleArray.forEach(function (i) {
+          count[i] = (count[i] || 0) + 1;
+        });
+        if (player.role === "BT" && count.BT <= 5) {
+          bestEleven.push(player);
+        }
+        if (player.role === "AR" && count.AR <= 3) {
+          bestEleven.push(player);
+        }
+        if (player.role === "WK" && count.WK <= 2) {
+          bestEleven.push(player);
+        }
+        if (player.role === "BW" && count.BW <= 5) {
+          bestEleven.push(player);
+        }
+      }
+    });
+    const bestElevenIds = bestEleven.map((player) => player.id);
+    return bestElevenIds;
+  }
+};
+
+ManagerProps.getStage2BestEleven = (manager, players) => {
+  if (manager.stage2Squad.length <= 13) {
+    return manager.stage2Squad;
+  } else {
+    const managerPlayers = manager.stage2Squad.map((playerId) =>
+      Helpers.getObjectById(players, playerId)
+    );
+    const bestEleven = [];
+    const managerBatters = managerPlayers.filter(
+      (player) => player.role === "BT"
+    );
+    const managerAllRounders = managerPlayers.filter(
+      (player) => player.role === "AR"
+    );
+    const managerBowlers = managerPlayers.filter(
+      (player) => player.role === "BW"
+    );
+    sortObjects(managerBatters, "stage2Points");
+    sortObjects(managerAllRounders, "stage2Points");
+    sortObjects(managerBowlers, "stage2Points");
+    bestEleven.push(managerBatters[0], managerBatters[1], managerBatters[2]);
+    bestEleven.push(managerBowlers[0], managerBowlers[1], managerBowlers[2]);
+    bestEleven.push(managerAllRounders[0]);
+    const remainingPlayers = managerPlayers.filter(
+      (player) => !bestEleven.includes(player)
+    );
+    sortObjects(remainingPlayers, "stage2Points");
+    remainingPlayers.forEach((player) => {
+      if (bestEleven.length < 11) {
+        const teamRoleArray = bestEleven.map((player) => player.role);
+        teamRoleArray.push(player.role);
+        let count = {};
+        teamRoleArray.forEach(function (i) {
+          count[i] = (count[i] || 0) + 1;
+        });
+        if (player.role === "BT" && count.BT <= 5) {
+          bestEleven.push(player);
+        }
+        if (player.role === "AR" && count.AR <= 3) {
+          bestEleven.push(player);
+        }
+        if (player.role === "WK" && count.WK <= 2) {
+          bestEleven.push(player);
+        }
+        if (player.role === "BW" && count.BW <= 5) {
+          bestEleven.push(player);
+        }
+      }
+    });
+    const bestElevenIds = bestEleven.map((player) => player.id);
+    return bestElevenIds;
+  }
+};
+
+ManagerProps.getStage3BestEleven = (manager, players) => {
+  if (manager.stage3Squad.length <= 11) {
+    return manager.stage2Squad;
+  } else {
+    const managerPlayers = manager.stage3Squad.map((playerId) =>
+      Helpers.getObjectById(players, playerId)
+    );
+    const bestEleven = [];
+    const managerBatters = managerPlayers.filter(
+      (player) => player.role === "BT"
+    );
+    const managerAllRounders = managerPlayers.filter(
+      (player) => player.role === "AR"
+    );
+    const managerBowlers = managerPlayers.filter(
+      (player) => player.role === "BW"
+    );
+    sortObjects(managerBatters, "stage3Points");
+    sortObjects(managerAllRounders, "stage3Points");
+    sortObjects(managerBowlers, "stage3Points");
+    bestEleven.push(managerBatters[0], managerBatters[1], managerBatters[2]);
+    bestEleven.push(managerBowlers[0], managerBowlers[1], managerBowlers[2]);
+    bestEleven.push(managerAllRounders[0]);
+    const remainingPlayers = managerPlayers.filter(
+      (player) => !bestEleven.includes(player)
+    );
+    sortObjects(remainingPlayers, "stage3Points");
     remainingPlayers.forEach((player) => {
       if (bestEleven.length < 11) {
         const teamRoleArray = bestEleven.map((player) => player.role);
