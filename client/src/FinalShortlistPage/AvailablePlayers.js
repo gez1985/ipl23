@@ -1,17 +1,31 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ManagerContext, PlayersContext, LeagueContext } from "../Store";
 import ShortlistPlayerButton from "./ShortlistPlayerButton";
+const sortObjectsArray = require("sort-objects-array");
 
 export default function AvailablePlayers() {
   const [manager] = useContext(ManagerContext);
   const [players] = useContext(PlayersContext);
   const [league] = useContext(LeagueContext);
+  const [sortBy, setSortBy] = useState("totalPoints");
+  const [order, setOrder] = useState("desc");
 
   const qualifiedPlayers = players.filter(
     (player) =>
       league.stage3Teams.includes(player.teamId) &&
       !manager.stage3Shortlist.includes(player.id)
   );
+
+  const handleSortClick = (newSort) => {
+    if (newSort === "name" || newSort === "role" || newSort === "team") {
+      setOrder("");
+    } else {
+      setOrder("desc");
+    }
+    setSortBy(newSort);
+  };
+
+   const listedPlayers = sortObjectsArray(qualifiedPlayers, sortBy, order);
 
   const getPlayerEntry = (player, index) => {
     return (
@@ -50,18 +64,50 @@ export default function AvailablePlayers() {
       <h1 className="ss-title">Qualified Players</h1>
       <div className="ss-list-container">
         <div className="ss-headers">
-          <div style={{ width: "170px" }}>Name</div>
-          <div style={{ width: "85px", textAlign: "center" }}>Role</div>
-          <div style={{ width: "85px", textAlign: "center" }}>Team</div>
-          <div style={{ width: "85px", textAlign: "center" }}>Runs</div>
-          <div style={{ width: "85px", textAlign: "center" }}>Wickets</div>
-          <div style={{ width: "85px", textAlign: "center" }}>Catches</div>
-          <div style={{ width: "85px", textAlign: "center" }}>Total points</div>
+          <div style={{ width: "170px" }} onClick={() => handleSortClick("name")}>
+            Name
+          </div>
+          <div
+            style={{ width: "85px", textAlign: "center" }}
+            onClick={() => handleSortClick("role")}
+          >
+            Role
+          </div>
+          <div
+            style={{ width: "85px", textAlign: "center" }}
+            onClick={() => handleSortClick("team")}
+          >
+            Team
+          </div>
+          <div
+            style={{ width: "85px", textAlign: "center" }}
+            onClick={() => handleSortClick("runs")}
+          >
+            Runs
+          </div>
+          <div
+            style={{ width: "85px", textAlign: "center" }}
+            onClick={() => handleSortClick("wickets")}
+          >
+            Wickets
+          </div>
+          <div
+            style={{ width: "85px", textAlign: "center" }}
+            onClick={() => handleSortClick("catches")}
+          >
+            Catches
+          </div>
+          <div
+            style={{ width: "85px", textAlign: "center" }}
+            onClick={() => handleSortClick("totalPoints")}
+          >
+            Total points
+          </div>
           <div style={{ width: "150px", textAlign: "center" }}>
             Shortlist Position
           </div>
         </div>
-        {qualifiedPlayers.map((playerId, index) =>
+        {listedPlayers.map((playerId, index) =>
           getPlayerEntry(playerId, index)
         )}
       </div>
