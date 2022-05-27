@@ -45,6 +45,8 @@ function App() {
     return ref.current;
   }
 
+  console.log({ managers });
+
   useEffect(() => {
     if (!previousIsAuthenticated && isAuthenticated) {
       getData();

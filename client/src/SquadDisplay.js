@@ -84,6 +84,25 @@ export default function SquadDisplay(props) {
     );
   }
 
+  const getPlayers = () => {
+    const returnJsx = (
+      <>
+        {batters.map((player) => renderTableRows(player))}
+        {allRounders.map((player) => renderTableRows(player))}
+        {wicketkeepers.map((player) => renderTableRows(player))}
+        {bowlers.map((player) => renderTableRows(player))}
+        {subs.map((player) => renderTableRows(player))}
+      </>
+    );
+    if (props.stage === 1) {
+      return returnJsx;
+    } else if (props.stage === 2 && props.manager.stage2BestEleven.length > 0) {
+      return returnJsx;
+    } else if (props.stage === 3 && props.manager.stage3BestEleven.length > 0) {
+      return returnJsx;
+    }
+  };
+
   return (
     <>
       {showPlayer && <PlayerModal hide={handleHide} player={player} />}
@@ -110,11 +129,12 @@ export default function SquadDisplay(props) {
             </tr>
           </thead>
           <tbody>
-            {batters.map((player) => renderTableRows(player))}
+            {getPlayers()}
+            {/* {batters.map((player) => renderTableRows(player))}
             {allRounders.map((player) => renderTableRows(player))}
             {wicketkeepers.map((player) => renderTableRows(player))}
             {bowlers.map((player) => renderTableRows(player))}
-            {subs.map((player) => renderTableRows(player))}
+            {subs.map((player) => renderTableRows(player))} */}
           </tbody>
           <tfoot>
             <tr>

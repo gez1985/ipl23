@@ -156,7 +156,7 @@ ManagerProps.getStage1BestEleven = (manager, players) => {
 
 ManagerProps.getStage2BestEleven = (manager, players) => {
   if (manager.stage2Squad.length <= 13) {
-    return manager.stage2Squad;
+    return [];
   } else {
     const managerPlayers = manager.stage2Squad.map((playerId) =>
       Helpers.getObjectById(players, playerId)
@@ -210,7 +210,7 @@ ManagerProps.getStage2BestEleven = (manager, players) => {
 
 ManagerProps.getStage3BestEleven = (manager, players) => {
   if (manager.stage3Squad.length <= 11) {
-    return manager.stage2Squad;
+    return [];
   } else {
     const managerPlayers = manager.stage3Squad.map((playerId) =>
       Helpers.getObjectById(players, playerId)
