@@ -10,7 +10,7 @@ export default function MyPlayers() {
   const [league] = useContext(LeagueContext);
   const [players] = useContext(PlayersContext);
 
-  const myPlayerIds = manager.stage2Squad.filter((playerId) => {
+  const myPlayerIds = manager.stage1Squad.filter((playerId) => {
     const player = Helpers.getObjectById(players, playerId);
     if (league.stage3Teams.includes(player.teamId)) {
       return true;

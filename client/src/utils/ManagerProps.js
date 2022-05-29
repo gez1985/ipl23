@@ -65,9 +65,18 @@ ManagerProps.getManagerProperties = (managers, players) => {
 ManagerProps.getStagePoints = (managers, players) => {
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
   managers.forEach((manager) => {
-    manager.stage1BestEleven = ManagerProps.getStage1BestEleven(manager, players);
-    manager.stage2BestEleven = ManagerProps.getStage2BestEleven(manager, players);
-    manager.stage3BestEleven = ManagerProps.getStage3BestEleven(manager, players);
+    manager.stage1BestEleven = ManagerProps.getStage1BestEleven(
+      manager,
+      players
+    );
+    manager.stage2BestEleven = ManagerProps.getStage2BestEleven(
+      manager,
+      players
+    );
+    manager.stage3BestEleven = ManagerProps.getStage3BestEleven(
+      manager,
+      players
+    );
     const stage1TotalPointsArray = [];
     const stage2TotalPointsArray = [];
     const stage3TotalPointsArray = [];
@@ -216,47 +225,10 @@ ManagerProps.getStage3BestEleven = (manager, players) => {
       Helpers.getObjectById(players, playerId)
     );
     const bestEleven = [];
-    const managerBatters = managerPlayers.filter(
-      (player) => player.role === "BT"
-    );
-    const managerAllRounders = managerPlayers.filter(
-      (player) => player.role === "AR"
-    );
-    const managerBowlers = managerPlayers.filter(
-      (player) => player.role === "BW"
-    );
-    sortObjects(managerBatters, "stage3Points");
-    sortObjects(managerAllRounders, "stage3Points");
-    sortObjects(managerBowlers, "stage3Points");
-    bestEleven.push(managerBatters[0], managerBatters[1], managerBatters[2]);
-    bestEleven.push(managerBowlers[0], managerBowlers[1], managerBowlers[2]);
-    bestEleven.push(managerAllRounders[0]);
-    const remainingPlayers = managerPlayers.filter(
-      (player) => !bestEleven.includes(player)
-    );
-    sortObjects(remainingPlayers, "stage3Points");
-    remainingPlayers.forEach((player) => {
-      if (bestEleven.length < 11) {
-        const teamRoleArray = bestEleven.map((player) => player.role);
-        teamRoleArray.push(player.role);
-        let count = {};
-        teamRoleArray.forEach(function (i) {
-          count[i] = (count[i] || 0) + 1;
-        });
-        if (player.role === "BT" && count.BT <= 5) {
-          bestEleven.push(player);
-        }
-        if (player.role === "AR" && count.AR <= 3) {
-          bestEleven.push(player);
-        }
-        if (player.role === "WK" && count.WK <= 2) {
-          bestEleven.push(player);
-        }
-        if (player.role === "BW" && count.BW <= 5) {
-          bestEleven.push(player);
-        }
-      }
-    });
+    sortObjects(managerPlayers, "stage3Points");
+    for (let i = 0; i < 11; i++) {
+      bestEleven.push(managerPlayers[i])
+    }
     const bestElevenIds = bestEleven.map((player) => player.id);
     return bestElevenIds;
   }

@@ -20,6 +20,7 @@ export default function MyShortlist() {
           <>
             <div className="ss-index">{index + 1}</div>
             <div className="ss-shortlist-name">{player.name}</div>
+            <div className="ss-shortlist-detail">{player.role}</div>
             <div className="ss-shortlist-detail">{teamName}</div>
             <div className="ss-shortlist-detail">
               {player.totalPoints || "0"}
@@ -46,6 +47,7 @@ export default function MyShortlist() {
           >
             Name
           </div>
+          <div style={{ width: "85px", textAlign: "center" }}>Role</div>
           <div style={{ width: "85px", textAlign: "center" }}>Team</div>
           <div style={{ width: "85px", textAlign: "center" }}>Total Points</div>
           <div style={{ width: "85px" }}></div>

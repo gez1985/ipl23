@@ -8,6 +8,7 @@ import { Button, Modal } from "react-bootstrap";
 import sortObjectsArray from "sort-objects-array";
 import Search from "../utils/search";
 import { pickSemiPlayer } from "./pickSemiPlayers";
+import { pickFinalPlayer } from "./pickFinalPlayers";
 
 export default function DrawSemiSquadsModal({ hide, from }) {
   const [league] = useContext(LeagueContext);
@@ -19,6 +20,7 @@ export default function DrawSemiSquadsModal({ hide, from }) {
       drawSemiSquads();
     } else if (from === "final") {
       console.log("draw final squads clicked");
+      drawFinalSquads();
     } else {
       alert("error with from prop");
     }
@@ -49,6 +51,17 @@ export default function DrawSemiSquadsModal({ hide, from }) {
     });
   };
 
+  const assignFinalPickNumbers = (finalManagers) => {
+    const sortedManagers = sortObjectsArray(
+      finalManagers,
+      "stage1Points",
+      "desc"
+    );
+    sortedManagers.forEach((manager, index) => {
+      manager.finalPickNumber = index + 1;
+    });
+  };
+
   const pickSemiSquads = async (semiManagers) => {
     const copyOfManagers = JSON.parse(JSON.stringify(semiManagers));
     const qualifiedPlayers = players.filter((player) =>
@@ -61,7 +74,6 @@ export default function DrawSemiSquadsModal({ hide, from }) {
       );
       pickSemiPlayer(pickingManager, copyOfManagers, qualifiedPlayers);
     }
-    console.log("selected squads managers", copyOfManagers);
     setManagers(copyOfManagers);
     try {
       await Promise.all(
@@ -74,11 +86,58 @@ export default function DrawSemiSquadsModal({ hide, from }) {
     }
   };
 
+  const pickFinalSquads = async (finalManagers) => {
+    const copyOfManagers = JSON.parse(JSON.stringify(finalManagers));
+    const qualifiedPlayers = players.filter((player) =>
+      league.stage3Teams.includes(player.teamId)
+    );
+    for (let i = 0; i < 24; i++) {
+      const pickingNumber = (i % 2) + 1;
+      const pickingManager = copyOfManagers.find(
+        (manager) => manager.finalPickNumber === pickingNumber
+      );
+      pickFinalPlayer(pickingManager, copyOfManagers, qualifiedPlayers);
+    }
+    setManagers(copyOfManagers);
+    try {
+      await Promise.all(
+        copyOfManagers.map(async (manager) => {
+          await Search.putManager(manager);
+        })
+      );
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  const drawFinalSquads = () => {
+    const finalManagers = managers.filter((manager) =>
+      league.stage3Managers.flat().includes(manager.id)
+    );
+    const validDraw = validateFinalDraw();
+    if (!validDraw) {
+      alert("please check managers and teams are entered");
+      return;
+    }
+    assignFinalPickNumbers(finalManagers);
+    pickFinalSquads(finalManagers);
+  }
+
   const validateSemiDraw = () => {
     if (league.stage2Teams.length !== 4) {
       return false;
     }
     if (league.stage2Managers.flat().length !== 4) {
+      return false;
+    }
+    return true;
+  };
+
+    const validateFinalDraw = () => {
+    if (league.stage3Teams.length !== 2) {
+      return false;
+    }
+    if (league.stage3Managers.flat().length !== 2) {
       return false;
     }
     return true;
