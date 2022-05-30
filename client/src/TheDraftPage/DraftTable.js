@@ -33,50 +33,10 @@ export default function DraftTable({ updateLeague, updateVidiprinter }) {
   const sortedPlayerArray = getSortedPlayerArray();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-    if (league.draft2Live || league.draft3Live) {
-      const managerCopy = JSON.parse(JSON.stringify(manager));
-      if (league.draft2Live) {
-        Helpers.pushQualifiedPlayers(managerCopy, league, players);
-      }
-      if (league.draft3Live) {
-        Helpers.pushQualifiedPlayers(managerCopy, league, players);
-      }
-      setManager(managerCopy);
-      const newManagers = managers.filter((man) => man.id !== manager.id);
-      newManagers.push(managerCopy);
-      setManagers(newManagers);
-      updateManager(managerCopy);
-
-      async function updateManager(managerToUpdate) {
-        try {
-          await Search.putManager(managerToUpdate);
-        } catch (err) {
-          console.error(err.message);
-        }
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     if (
       league.draft1Live &&
       league.pickNumber === manager.stagePickNumber &&
       manager.stage1Squad.length >= 15
-    ) {
-      updateLeague();
-    }
-    if (
-      league.draft2Live &&
-      league.pickNumber === manager.stagePickNumber &&
-      manager.stage2Squad.length >= 11
-    ) {
-      updateLeague();
-    }
-    if (
-      league.draft3Live &&
-      league.pickNumber === manager.finalPickNumber &&
-      manager.stage3Squad.length >= 11
     ) {
       updateLeague();
     }
@@ -128,10 +88,6 @@ export default function DraftTable({ updateLeague, updateVidiprinter }) {
     const managerCopy = JSON.parse(JSON.stringify(manager));
     if (league.draft1Live) {
       managerCopy.stage1Squad.push(selectedPlayer.id);
-    } else if (league.draft2Live) {
-      managerCopy.stage2Squad.push(selectedPlayer.id);
-    } else if (league.draft3Live) {
-      managerCopy.stage3Squad.push(selectedPlayer.id);
     } else {
       console.log(`error no draft live found`);
     }
@@ -154,11 +110,6 @@ export default function DraftTable({ updateLeague, updateVidiprinter }) {
     let max = "three";
     if (league.draft1Live) {
       full = "fifteen";
-    }
-    if (league.draft2Live) {
-      max = "four";
-    } else if (league.draft3Live) {
-      max = "eleven";
     }
     const minTeamRequirements = DraftValidation.minTeamRequirements(
       league,

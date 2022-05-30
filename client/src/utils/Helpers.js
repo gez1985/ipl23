@@ -97,28 +97,6 @@ Helpers.getUnpickedPlayers = (managers, players, league) => {
     );
     return unpickedPlayers;
   }
-  if (league.draft2Live) {
-    const pickedPlayerIds = [];
-    const stage2Managers = league.stage2Managers.flat();
-    const qualifiedPlayers = players.filter(player => league.stage2Teams.includes(player.teamId));
-    const qualifiedManagers = managers.filter(manager => stage2Managers.includes(manager.id));
-    qualifiedManagers.forEach(manager => {
-      pickedPlayerIds.push(...manager.stage2Squad);
-    });
-    const availablePlayers = qualifiedPlayers.filter(player => !pickedPlayerIds.includes(player.id));
-    return availablePlayers;
-  }
-  if (league.draft3Live) {
-    const pickedPlayerIds = [];
-    const stage3Managers = league.stage3Managers.flat();
-    const qualifiedPlayers = players.filter(player => league.stage3Teams.includes(player.teamId));
-    const qualifiedManagers = managers.filter(manager => stage3Managers.includes(manager.id));
-    qualifiedManagers.forEach(manager => {
-      pickedPlayerIds.push(...manager.stage3Squad);
-    });
-    const availablePlayers = qualifiedPlayers.filter(player => !pickedPlayerIds.includes(player.id));
-    return availablePlayers;
-  }
 };
 
 Helpers.getManagerByPickNumber = (stage, managers, pickNumber) => {
@@ -147,35 +125,6 @@ Helpers.getManagerByPickNumber = (stage, managers, pickNumber) => {
     }
   }
   return;
-};
-
-Helpers.pushQualifiedPlayers = (manager, league, players) => {
-  const qualifiedPlayers = [];
-  if (league.draft2Live) {
-    manager.stage1Squad.forEach((playerId) => {
-      const player = Helpers.getObjectById(players, playerId);
-      league.stage2Teams.includes(player.teamId)
-        ? qualifiedPlayers.push(player.id)
-        : console.log("player not qualified");
-    });
-    qualifiedPlayers.forEach(playerId => {
-      if (!manager.stage2Squad.includes(playerId)) {
-        manager.stage2Squad.push(playerId);
-      }
-    });
-  } else if (league.draft3Live) {
-    manager.stage2Squad.forEach((playerId) => {
-      const player = Helpers.getObjectById(players, playerId);
-      league.stage3Teams.includes(player.teamId)
-        ? qualifiedPlayers.push(player.id)
-        : console.log("player not qualified");
-    });
-    qualifiedPlayers.forEach(playerId => {
-      if (!manager.stage3Squad.includes(playerId)) {
-        manager.stage3Squad.push(playerId);
-      }
-    });
-  }
 };
 
 Helpers.getStage2Managers = (league, managers) => {

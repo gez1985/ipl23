@@ -77,7 +77,7 @@ export default function Players({ handleShortlistClick }) {
   }
 
   function getDraftStatus() {
-    if (league.draft1Live || league.draft2Live || league.draft3Live) {
+    if (league.draft1Live) {
       return false;
     } else {
       return true;

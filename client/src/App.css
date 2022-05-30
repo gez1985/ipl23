@@ -29,6 +29,9 @@
   font-weight: 600;
   min-height: 30px;
 }
+.main-body .landing-page-container {
+  overflow-x: hidden;
+}
 .main-body .shortlist-page-input-container {
   width: 300px;
 }

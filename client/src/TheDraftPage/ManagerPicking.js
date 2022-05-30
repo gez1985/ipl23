@@ -16,7 +16,7 @@ export default function ManagerPicking() {
 
   let nextPickNumber;
 
-  if (league.draft1Live || league.draft2Live) {
+  if (league.draft1Live) {
     if (league.lastPick) {
       nextPickNumber = league.pickNumber;
     } else {
@@ -26,10 +26,6 @@ export default function ManagerPicking() {
         nextPickNumber = league.pickNumber - 1;
       }
     }
-  }
-
-  if (league.draft3Live) {
-    nextPickNumber = league.pickNumber === 1 ? 2 : 1;
   }
 
   useEffect(() => {
@@ -48,20 +44,6 @@ export default function ManagerPicking() {
         league.pickNumber === manager.pickNumber
           ? "Your Pick"
           : Helpers.getManagerByPickNumber(stage, managers, league.pickNumber);
-      return managerName;
-    }
-    if (league.draft2Live) {
-      const managerName =
-        league.pickNumber === manager.stagePickNumber
-          ? "Your Pick"
-          : Helpers.getManagerByPickNumber(stage, managers, league.pickNumber);
-      return managerName;
-    }
-    if (league.draft3Live) {
-      const managerName =
-        league.pickNumber === manager.finalPickNumber
-          ? "Your Pick"
-          : Helpers.getManagerByPickNumber(3, managers, league.pickNumber);
       return managerName;
     }
   }

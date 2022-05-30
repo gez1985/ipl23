@@ -20,30 +20,34 @@ export default function Landing() {
   const stage2Managers = league.stage2Managers.flat();
   const stage3Managers = league.stage3Managers.flat();
 
+  console.log({ league });
+
   return (
-    <>
+    <div className="landing-page-container">
       <NavBar />
       <div className="flex-container standard-width-container">
         <Logo />
       </div>
       <div className="flex-container">
         {league.draft1Live && <DraftNavIcon />}
-        {stage2Managers.includes(manager.id) && manager.stage2Squad.length < 13 && (
-          <StageShortlistIcon
-            label="My Semi Shortlist"
-            link="/semi-shortlist"
-          />
-        )}
-        {stage3Managers.includes(manager.id) && manager.stage3Squad.length < 13 && (
-          <StageShortlistIcon
-            label="My Final Shortlist"
-            link="/final-shortlist"
-          />
-        )}
-        {dateNow > league.stage2Date && <FinalsIcon />}
+        {stage2Managers.includes(manager.id) &&
+          manager.stage2Squad.length < 13 && (
+            <StageShortlistIcon
+              label="My Semi Shortlist"
+              link="/semi-shortlist"
+            />
+          )}
+        {stage3Managers.includes(manager.id) &&
+          manager.stage3Squad.length < 13 && (
+            <StageShortlistIcon
+              label="My Final Shortlist"
+              link="/final-shortlist"
+            />
+          )}
+        {league.stage2Date && dateNow > league.stage2Date && <FinalsIcon />}
       </div>
       <NavPanel />
       <Champions />
-    </>
+    </div>
   );
 }

@@ -56,10 +56,6 @@ const removePlayerIdFromShortlist = (manager, playerId) => {
 const checkSquadSpace = (league, manager) => {
   if (league.draft1Live && manager.stage1Squad.length >= 15) {
     return false;
-  } else if (league.draft2Live && manager.stage2Squad >= 11) {
-    return false;
-  } else if (league.draft3Live && manager.stage3Squad >= 11) {
-    return false;
   } else {
     return true;
   }
@@ -84,10 +80,6 @@ const checkPlayerValid = (league, manager, players, player) => {
 const updateAutoManager = (league, manager, playerId) => {
   if (league.draft1Live) {
     manager.stage1Squad.push(playerId);
-  } else if (league.draft2Live) {
-    manager.stage2Squad.push(playerId);
-  } else if (league.draft3Live) {
-    manager.stage3Squad.push(playerId);
   } else {
     return;
   }
@@ -117,16 +109,12 @@ const updateVidi = async (leagueId, managerId, playerId) => {
 }
 
 const updateLeague = async (league) => {
-  const stage2Managers = league.stage2Managers.flat();
   const leagueCopy = JSON.parse(JSON.stringify(league));
   let maxPickNumber = 0;
   if (league.draft1Live) {
     maxPickNumber = league.managerIds.length;
   }
-  if (league.draft2Live) {
-    maxPickNumber = stage2Managers.length;
-  }
-  if (league.draft1Live || league.draft2Live) {
+  if (league.draft1Live) {
     if (leagueCopy.lastPick) {
       leagueCopy.round++;
       leagueCopy.up = !league.up;
@@ -147,13 +135,6 @@ const updateLeague = async (league) => {
           leagueCopy.pickNumber--;
         }
       }
-    }
-  }
-  if (league.draft3Live) {
-    if (leagueCopy.pickNumber === 1) {
-      leagueCopy.pickNumber = 2;
-    } else {
-      leagueCopy.pickNumber = 1;
     }
   }
   try {

@@ -25,7 +25,7 @@ export default function MobileComponentNav() {
             </Link>
           </div>
           <div className="mobile-nav-icon flex-container">
-            {league.draft1Live || league.draft2Live || league.draft3Live ? (
+            {league.draft1Live ? (
               <Link to="/draft">
                 <img className="component-nav-icon" src={draft} alt="draft" />
               </Link>

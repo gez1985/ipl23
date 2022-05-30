@@ -18,7 +18,7 @@ export default function ComponentNav() {
   const dateNow = new Date().toISOString();
 
   useEffect(() => {
-    if (league.draft1Live || league.draft2Live || league.draft3Live) {
+    if (league.draft1Live) {
       setShowDraft(true);
     }
   }, [league]);

@@ -6,7 +6,7 @@ export default function PlayersHeaders() {
   const [league] = useContext(LeagueContext);
 
   const getDraftStatus = () => {
-    if (league.draft1Live || league.draft2Live || league.draft3Live) {
+    if (league.draft1Live) {
       return false;
     } else {
       return true;

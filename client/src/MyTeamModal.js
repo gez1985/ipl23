@@ -21,14 +21,6 @@ export default function MyTeamModal(props) {
       manager.stage1Squad.forEach((id) =>
         playersToSet.push(Helpers.getObjectById(players, id))
       );
-    } else if (league.draft2Live) {
-      manager.stage2Squad.forEach((id) =>
-        playersToSet.push(Helpers.getObjectById(players, id))
-      );
-    } else if (league.draft3Live) {
-      manager.stage3Squad.forEach((id) =>
-        playersToSet.push(Helpers.getObjectById(players, id))
-      );
     }
     setMyPlayers(playersToSet);
   }, []);

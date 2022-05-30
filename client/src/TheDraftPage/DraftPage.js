@@ -90,16 +90,12 @@ export default function DraftPage() {
   }
 
   async function updateLeague() {
-    const stage2Managers = league.stage2Managers.flat();
     const leagueCopy = JSON.parse(JSON.stringify(league));
     let maxPickNumber = 0;
     if (league.draft1Live) {
       maxPickNumber = league.managerIds.length;
     }
-    if (league.draft2Live) {
-      maxPickNumber = stage2Managers.length;
-    }
-    if (league.draft1Live || league.draft2Live) {
+    if (league.draft1Live) {
       if (leagueCopy.lastPick) {
         leagueCopy.round++;
         leagueCopy.up = !league.up;
@@ -151,15 +147,12 @@ export default function DraftPage() {
     }
   }
 
-  const stage2Managers = league.stage2Managers.flat();
-  const stage3Managers = league.stage3Managers.flat();
-
-  if (!league.draft1Live && !league.draft2Live && !league.draft3Live) {
+  if (!league.draft1Live) {
     return (
       <>
         <DraftPageHeader live={false} />
         <div className="flex-container standard-width-container">
-          No drafts are currently live.
+          The draft is not currently live.
         </div>
       </>
     );
@@ -171,44 +164,6 @@ export default function DraftPage() {
         <DraftPageHeader live={false} />
         <div className="flex-container standard-width-container">
           You are auto picking your players.
-        </div>
-      </>
-    );
-  }
-
-  if (league.draft2Live && !stage2Managers.includes(manager.id)) {
-    return (
-      <>
-        <DraftPageHeader live={false} />
-        <div className="flex-container standard-width-container">
-          You have not qualified for this draft.{" "}
-        </div>
-      </>
-    );
-  }
-
-  if (league.draft3Live && !stage3Managers.includes(manager.id)) {
-    return (
-      <>
-        <DraftPageHeader live={false} />
-        <div className="flex-container standard-width-container">
-          You have not qualified for this draft.{" "}
-        </div>
-      </>
-    );
-  }
-
-  if (
-    (league.draft1Live && league.draft2Live) ||
-    (league.draft1Live && league.draft3Live) ||
-    (league.draft2Live && league.draft3Live) ||
-    (league.draft1Live && league.draft2Live && league.draft3Live)
-  ) {
-    return (
-      <>
-        <DraftPageHeader live={false} />
-        <div className="flex-container standard-width-container">
-          You have more than one draft stage live. Contact league admin.{" "}
         </div>
       </>
     );
