@@ -52,32 +52,27 @@ leaguesRouter.put("/", async (req, res) => {
       adminManagerId,
       managerIds,
       draft1Live,
-      draft2Live,
-      draft3Live,
       round,
       pickNumber,
       up,
       lastPick,
-      timer,
       stage2Date,
       stage3Date,
       stage2Managers,
       stage2Teams,
       stage3Managers,
       stage3Teams,
+      draftDate,
     } = req.body;
     const sql =
-      "UPDATE leagues SET manager_ids = $1, draft_1_live = $2, draft_2_live = $3, draft_3_live = $4, round = $5, pick_number = $6, up = $7, last_pick = $8, timer = $9, stage_2_date = $10, stage_3_date = $11, stage_2_managers = $12, stage_2_teams = $13, stage_3_managers = $14, stage_3_teams = $15, admin_manager_id = $16 WHERE name = $17 RETURNING *";
+      "UPDATE leagues SET manager_ids = $1, draft_1_live = $2, round = $3, pick_number = $4, up = $5, last_pick = $6, stage_2_date = $7, stage_3_date = $8, stage_2_managers = $9, stage_2_teams = $10, stage_3_managers = $11, stage_3_teams = $12, admin_manager_id = $13, draft_date = $14 WHERE name = $15 RETURNING *";
     const values = [
       managerIds,
       draft1Live,
-      draft2Live,
-      draft3Live,
       round,
       pickNumber,
       up,
       lastPick,
-      timer,
       stage2Date,
       stage3Date,
       stage2Managers,
@@ -85,6 +80,7 @@ leaguesRouter.put("/", async (req, res) => {
       stage3Managers,
       stage3Teams,
       adminManagerId,
+      draftDate,
       name,
     ];
     const updatedLeague = await pool.query(sql, values);
