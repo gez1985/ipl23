@@ -6,6 +6,8 @@ const dbString =
     ? process.env.DATABASE_URL
     : process.env.DEV_DATABASE_URL;
 
+console.log(dbString);
+
 const ssl =
   process.env.NODE_ENV === "production"
     ? {
