@@ -13,7 +13,6 @@ import PickValidation from "../utils/PickValidation";
 import Search from "../utils/search";
 import select from "../img/Select.png";
 import { Button, Modal } from "react-bootstrap";
-import axios from "axios";
 import DraftValidation from "./DraftValidation";
 const sortObjectsArray = require("sort-objects-array");
 
@@ -22,7 +21,7 @@ export default function DraftTable({ updateLeague, updateVidiprinter }) {
   const [teams] = useContext(TeamsContext);
   const [manager, setManager] = useContext(ManagerContext);
   const [managers, setManagers] = useContext(ManagersContext);
-  const [league, setLeague] = useContext(LeagueContext);
+  const [league] = useContext(LeagueContext);
   const [sort] = useContext(SortContext);
   const [searchName] = useContext(SearchNameContext);
   const [selectedPlayer, setSelectedPlayer] = useState();

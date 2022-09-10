@@ -20,8 +20,6 @@ export default function Landing() {
   const stage2Managers = league.stage2Managers.flat();
   const stage3Managers = league.stage3Managers.flat();
 
-  console.log({ league });
-
   return (
     <div className="landing-page-container">
       <NavBar />

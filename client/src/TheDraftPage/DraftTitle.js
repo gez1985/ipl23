@@ -1,14 +1,23 @@
 import React, { useState, useContext } from "react";
-import { ManagerContext, SearchNameContext, LeagueContext } from "../Store";
+import {
+  ManagerContext,
+  SearchNameContext,
+  LeagueContext,
+  LeagueManagersContext as ManagersContext,
+  PlayersContext,
+} from "../Store";
 import myTeam from "../img/MyTeam.png";
 import MyTeamModal from "../MyTeamModal";
 import ManagerPicking from "./ManagerPicking";
 import CountdownTimer from "./CountdownTimer";
+import autoPick from "./AutoPick";
 
 export default function DraftTitle({ title, skipPick, live }) {
   const [searchName, setSearchName] = useContext(SearchNameContext);
   const [manager] = useContext(ManagerContext);
   const [league] = useContext(LeagueContext);
+  const [managers] = useContext(ManagersContext);
+  const [players] = useContext(PlayersContext);
   const [showMyTeam, setShowMyTeam] = useState(false);
 
   function hideModals() {
@@ -17,10 +26,45 @@ export default function DraftTitle({ title, skipPick, live }) {
 
   const getTimer = () => {
     if (live && league.pickNumber === manager.pickNumber) {
-      return <CountdownTimer skipPick={skipPick} live={live}/>;
+      return <CountdownTimer skipPick={skipPick} live={live} />;
     } else {
       return title;
     }
+  };
+
+  const handleShortlistPick = () => {
+    console.log("shortlist pick clicked");
+  };
+
+  const handleAutoPick = async () => {
+    const pickingManager = managers.find(
+      (manager) => manager.pickNumber === league.pickNumber
+    );
+    if (!pickingManager.autoPick) {
+      alert("manager does not have aut pick selected");
+      return;
+    } else {
+      console.log(`auto picking player for ${pickingManager.name}`);
+      const pickedPlayer = await autoPick(
+        league,
+        pickingManager,
+        managers,
+        players
+      );
+      console.log({ pickedPlayer });
+    }
+  };
+
+  const autoPickButtonLogic = () => {
+    if (manager.id === league.adminManagerId) {
+      const pickingManager = managers.find(
+        (manager) => manager.pickNumber === league.pickNumber
+      );
+      if (pickingManager.autoPick) {
+        return true;
+      }
+    }
+    return false;
   };
 
   return (
@@ -28,7 +72,27 @@ export default function DraftTitle({ title, skipPick, live }) {
       <div className="disappear-small">
         <div className="flex-container space-between">
           <div className="draft-title-container">
-            <ManagerPicking />
+            <div className="draft-desktop-left-container">
+              <div>
+                <ManagerPicking />
+              </div>
+              {league.pickNumber === manager.pickNumber && (
+                <button
+                  className="desktop-draft-shortlist-pick-button"
+                  onClick={handleShortlistPick}
+                >
+                  Shortlist Pick
+                </button>
+              )}
+              {autoPickButtonLogic() && (
+                <button
+                  className="desktop-draft-shortlist-pick-button auto-pick-button"
+                  onClick={handleAutoPick}
+                >
+                  Auto Pick
+                </button>
+              )}
+            </div>
           </div>
           <div className="draft-title-container">
             <div className="page-title">{getTimer()}</div>

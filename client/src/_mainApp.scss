@@ -296,6 +296,31 @@
     padding: 5px 0;
   }
 
+  .draft-desktop-left-container {
+    display: flex;
+  }
+
+  .desktop-draft-shortlist-pick-button {
+    text-transform: uppercase;
+    border-radius: 4px;
+    margin-left: 15px;
+    border: none;
+    background-color: #dd6d1f;
+    font-family: "Oswald", sans-serif;
+    padding: 0 10px;
+    font-size: 18px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    &:hover {
+      transform: scale(1.05);
+    }
+ }
+
+ .auto-pick-button {
+   background-color: red;
+ }
+
   .include-button {
     font-family: "Oswald", sans-serif;
     font-size: 18px;

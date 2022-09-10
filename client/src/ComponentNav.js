@@ -38,7 +38,7 @@ export default function ComponentNav() {
           <Link to="/my-team">
             <img className="component-nav-icon" src={myTeam} alt="my-team" />
           </Link>
-          {dateNow > league.stage2Date ? (
+          {league.stage2Date && dateNow > league.stage2Date ? (
             <Link to="/finals">
               <img
                 className="component-nav-icon"

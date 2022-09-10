@@ -30,7 +30,7 @@ export default function SquadsPage() {
   return (
     <>
       <ComponentHeader from="squads" title="Squads" />
-      {dateNow > league.stage3Date && (
+      {league.stage3Date && dateNow > league.stage3Date && (
         <>
           <div className="standard-width-container flex-container stage-heading">
             Final Squads
@@ -42,7 +42,7 @@ export default function SquadsPage() {
           </div>
         </>
       )}
-      {dateNow > league.stage2Date && (
+      {league.stage2Date && dateNow > league.stage2Date && (
         <>
           <div className="standard-width-container flex-container stage-heading">
             Semi Final Squads
@@ -54,7 +54,7 @@ export default function SquadsPage() {
           </div>
         </>
       )}
-      {dateNow > league.stage2Date && (
+      {league.stage2Date&& dateNow > league.stage2Date && (
         <>
           <div className="standard-width-container flex-container stage-heading">
             League Squads

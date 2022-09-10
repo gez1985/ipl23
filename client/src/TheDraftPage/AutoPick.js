@@ -3,7 +3,7 @@ import Helpers from "../utils/Helpers";
 import DraftValidation from "./DraftValidation";
 
 const autoPick = async (league, manager, managers, players) => {
-  console.log("Auto picking player...");
+  let chosenPlayer;
   if (checkSquadSpace(league, manager)) {
     const managerCopy = JSON.parse(JSON.stringify(manager));
     const availablePlayers = Helpers.getUnpickedPlayers(
@@ -12,7 +12,6 @@ const autoPick = async (league, manager, managers, players) => {
       league
     );
     const availablePlayerIds = availablePlayers.map((player) => player.id);
-    let chosenPlayer;
     for (let i = 0; i < manager.shortlist.length; i++) {
       const player = players.find(
         (player) => manager.shortlist[i] === player.id
@@ -32,10 +31,15 @@ const autoPick = async (league, manager, managers, players) => {
       }
     }
     while (!chosenPlayer) {
-      chosenPlayer = getRandomPlayer(league, manager, players, availablePlayers);
-    } 
+      chosenPlayer = getRandomPlayer(
+        league,
+        manager,
+        players,
+        availablePlayers
+      );
+    }
     console.log(`the chosen player is ${chosenPlayer.name}`);
-    updateAutoManager(league, managerCopy, chosenPlayer.id);
+    managerCopy.stage1Squad.push(chosenPlayer.id);
     try {
       await Search.putManager(managerCopy);
       await updateVidi(league.id, manager.id, chosenPlayer.id);
@@ -44,6 +48,7 @@ const autoPick = async (league, manager, managers, players) => {
     }
   }
   await updateLeague(league);
+  return chosenPlayer;
 };
 
 const removePlayerIdFromShortlist = (manager, playerId) => {
@@ -77,23 +82,20 @@ const checkPlayerValid = (league, manager, players, player) => {
   }
 };
 
-const updateAutoManager = (league, manager, playerId) => {
-  if (league.draft1Live) {
-    manager.stage1Squad.push(playerId);
-  } else {
-    return;
-  }
-}
-
 const getRandomPlayer = (league, manager, players, availablePlayers) => {
-  console.log('choosing random player...');
+  console.log("choosing random player...");
   const randomIndex = Math.floor(Math.random() * availablePlayers.length);
   const selectedPlayer = availablePlayers[randomIndex];
-  const playerValid = checkPlayerValid(league, manager, players, selectedPlayer);
+  const playerValid = checkPlayerValid(
+    league,
+    manager,
+    players,
+    selectedPlayer
+  );
   if (playerValid) {
     return selectedPlayer;
   }
-}
+};
 
 const updateVidi = async (leagueId, managerId, playerId) => {
   const vidiEntry = {
@@ -106,7 +108,7 @@ const updateVidi = async (leagueId, managerId, playerId) => {
   } catch (err) {
     console.log(err.message);
   }
-}
+};
 
 const updateLeague = async (league) => {
   const leagueCopy = JSON.parse(JSON.stringify(league));

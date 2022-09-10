@@ -33,7 +33,7 @@ INSERT INTO players (name, team_id, role) VALUES ('Jimmy Neesham', 4, 'AR');
 INSERT INTO fixtures (home_team_id, away_team_id, date) VALUES (1, 2, '2020-11-29T20:37:30+0000');
 INSERT INTO fixtures (home_team_id, away_team_id, date) VALUES (3, 4, '2021-10-16T15:00:00+0000');
 INSERT INTO fixtures (home_team_id, away_team_id, date) VALUES (1, 4, '2022-11-29T20:37:30+0000');
-INSERT INTO fixtures (home_team_id, away_team_id, date) VALUES (2, 5, '2023-10-16T15:00:00+0000');
+INSERT INTO fixtures (home_team_id, away_team_id, date) VALUES (2, 3, '2023-10-16T15:00:00+0000');
 INSERT INTO fixtures (home_team_id, away_team_id, date) VALUES (1, 3, '2024-11-29T20:37:30+0000');
 INSERT INTO fixtures (home_team_id, away_team_id, date) VALUES (4, 2, '2025-10-16T15:00:00+0000');
 

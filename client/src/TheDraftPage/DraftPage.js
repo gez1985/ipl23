@@ -50,28 +50,29 @@ export default function DraftPage() {
     const checkManager = Helpers.getObjectById(managers, manager.id);
     if (checkManager.stage1Squad.length > manager.stage1Squad.length) {
       console.log('manager data conflict');
+      alert('make sure you only have one draft page tab open');
       setManager(checkManager);
     }
   }, [managers]);
 
-  useEffect(() => {
-    if (manager.id === league.adminManagerId) {
-      if (
-        previousPickNumber !== league.pickNumber ||
-        previousRound !== league.round
-      ) {
-        console.log("Auto pick checking...");
-        const pickingManager = managers.find(
-          (manager) => manager.pickNumber === league.pickNumber
-        );
-        if (pickingManager.autoPick) {
-          autoPick(league, pickingManager, managers, players);
-        } else {
-          console.log("auto pick NOT required");
-        }
-      }
-    }
-  }, [league]);
+  // useEffect(() => {
+  //   if (manager.id === league.adminManagerId) {
+  //     if (
+  //       previousPickNumber !== league.pickNumber ||
+  //       previousRound !== league.round
+  //     ) {
+  //       console.log("Auto pick checking...");
+  //       const pickingManager = managers.find(
+  //         (manager) => manager.pickNumber === league.pickNumber
+  //       );
+  //       if (pickingManager.autoPick) {
+  //         autoPick(league, pickingManager, managers, players);
+  //       } else {
+  //         console.log("auto pick NOT required");
+  //       }
+  //     }
+  //   }
+  // }, [league]);
 
   async function getDraftData() {
     try {
