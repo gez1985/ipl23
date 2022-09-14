@@ -75,6 +75,12 @@ export default function League() {
     setShowDrawFinal(false);
   }
 
+  function handleDraftDateChange(e) {
+    let updatedLeague = editedLeague;
+    updatedLeague.draftDate = e.target.value;
+    setEditedLeague(updatedLeague);
+  }
+
   function handleDraft1LiveChange() {
     let updatedLeague = editedLeague;
     updatedLeague.draft1Live = !updatedLeague.draft1Live;
@@ -188,11 +194,22 @@ export default function League() {
       <div className="tables-container">
         <table>
           <tr>
+            <th>Draft Date</th>
             <th>Draft 1 Live</th>
             <th>Draw Semi Squads</th>
             <th>Draw Final Squads</th>
           </tr>
           <tr>
+            <td>
+              <input
+                type="datetime-local"
+                id="draftDate"
+                name="draftDate"
+                onChange={handleDraftDateChange}
+                defaultValue={editedLeague.draftDate}
+                disabled={!edit}
+              />
+            </td>
             <td>
               <input
                 type="checkbox"
@@ -239,6 +256,7 @@ export default function League() {
                 defaultValue={editedLeague.round}
                 onChange={handleRoundChange}
                 readOnly={!edit}
+                disabled={!edit}
               />
             </td>
             <td>
@@ -250,6 +268,7 @@ export default function League() {
                 defaultValue={editedLeague.pickNumber}
                 onChange={handlePickNumberChange}
                 readOnly={!edit}
+                disabled={!edit}
               />
             </td>
             <td>
@@ -289,6 +308,7 @@ export default function League() {
                 defaultValue={editedLeague.stage2Date}
                 onChange={handleStage2DateChange}
                 readOnly={!edit}
+                disabled={!edit}
               />
             </td>
             <td>
@@ -300,13 +320,16 @@ export default function League() {
                 defaultValue={editedLeague.stage3Date}
                 onChange={handleStage3DateChange}
                 readOnly={!edit}
+                disabled={!edit}
               />
             </td>
           </tr>
         </table>
 
         <div className="bottom-button-container">
-          <button onClick={updateLeague}>Save Settings</button>
+          <button onClick={updateLeague} disabled={!edit}>
+            Save Settings
+          </button>
         </div>
         {showStage2Managers && (
           <StageManagers hide={resetModals} from="Stage 2 Managers" />

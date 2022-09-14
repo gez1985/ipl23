@@ -49,7 +49,9 @@ CREATE TABLE managers (
   stage_3_squad SMALLINT[] DEFAULT '{}',
   shortlist SMALLINT[] DEFAULT '{}',
   stage_2_shortlist SMALLINT[] DEFAULT '{}',
-  stage_3_shortlist SMALLINT[] DEFAULT '{}'
+  stage_3_shortlist SMALLINT[] DEFAULT '{}',
+  auto_pick BOOLEAN NOT NULL DEFAULT false,
+  min_req_first BOOLEAN NOT NULL DEFAULT false
 );
 
 CREATE TABLE vidiprinter (

@@ -26,6 +26,7 @@ import CountdownTimer from  "./TheDraftPage/CountdownTimer";
 import LogoutButton from "./LogOut";
 import SemiShortlistPage from "./SemiShortlistPage/SemiShortlistPage";
 import FinalShortlistPage from "./FinalShortlistPage/FinalShortlistPage";
+import ShortlistPage from "./ShortlistPage/ShortlistPage";
 
 export default function BrowserRouter() {
   const { isLoading, user, isAuthenticated } = useAuth0();
@@ -57,6 +58,11 @@ export default function BrowserRouter() {
         <Route exact path="/">
           <div className="main-body">
             <Landing />
+          </div>
+        </Route>
+        <Route exact path="/shortlist">
+          <div className="main-body">
+            <ShortlistPage />
           </div>
         </Route>
         <Route exact path="/my-team">

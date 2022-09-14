@@ -1595,6 +1595,96 @@
   justify-content: center;
 }
 
+.shortlist-checkbox-label {
+  margin: 0 0 0 5px;
+  font-family: "Oswald", sans-serif;
+}
+
+.shortlist-main-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.shortlist-players-container {
+  width: calc(50% - 10px);
+  height: 500px;
+  padding: 1rem 0 4px 0;
+  border: 2px solid #fabc91;
+  border-radius: 8px;
+  overflow: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.shortlist-named-players-headers-wrapper {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #fabc91;
+  background-color: #fff;
+}
+
+.shortlist-scrollable-content {
+  flex-grow: 2;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.shortlist-player-wrapper {
+  margin-top: 43px;
+  padding: 0.5rem 1rem;
+}
+
+.shortlist-page-player-entry {
+  text-align: center;
+  font-family: "Oswald", sans-serif;
+}
+
+/* CSS */
+.shortlist-add-button {
+  appearance: none;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 8px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.shortlist-keep {
+  background-color: #2ea44f;
+  margin-right: 10px;
+}
+
+.shortlist-keep:hover {
+  background-color: #2c974b;
+}
+
+.shortlist-remove {
+  background-color: #f01c15;
+  margin-right: 10px;
+}
+
+.shortlist-remove:hover {
+  background-color: #c52620;
+}
+
 .overflow-hidden {
   height: 100vh;
   overflow: hidden;
