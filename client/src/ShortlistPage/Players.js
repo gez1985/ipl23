@@ -1,27 +1,19 @@
 import React, { useContext, useState } from "react";
-import {
-  ManagerContext,
-  PlayersContext,
-  LeagueContext,
-  SearchNameContext,
-} from "../Store";
+import { ManagerContext, PlayersContext, SearchNameContext } from "../Store";
 import ShortlistPlayerButton from "./ShortlistPlayerButton";
-// import ShortlistPlayerButton from "./ShortlistPlayerButton";
 const sortObjectsArray = require("sort-objects-array");
 
 const Players = () => {
   const [manager] = useContext(ManagerContext);
   const [players] = useContext(PlayersContext);
-  const [league] = useContext(LeagueContext);
   const [searchName] = useContext(SearchNameContext);
   const [sortBy, setSortBy] = useState("name");
-  const [order, setOrder] = useState("");
 
   const availablePlayers = players.filter(
     (player) => !manager.shortlist.includes(player.id)
   );
 
-  const listedPlayers = sortObjectsArray(availablePlayers, sortBy, order);
+  const listedPlayers = sortObjectsArray(availablePlayers, sortBy, "");
   const namedPlayers = listedPlayers.filter((player) =>
     player.name.toLowerCase().includes(searchName.toLowerCase())
   );
@@ -29,13 +21,25 @@ const Players = () => {
   const getTableHeaders = () => {
     return (
       <div className="shortlist-named-players-headers-wrapper">
-        <div className="shortlist-page-player-entry" style={{ width: "30%" }}>
+        <div
+          className="shortlist-page-player-entry"
+          style={{ width: "30%", cursor: "pointer" }}
+          onClick={() => setSortBy("name")}
+        >
           Name
         </div>
-        <div className="shortlist-page-player-entry" style={{ width: "20%" }}>
+        <div
+          className="shortlist-page-player-entry"
+          style={{ width: "20%", cursor: "pointer" }}
+          onClick={() => setSortBy("role")}
+        >
           Role
         </div>
-        <div className="shortlist-page-player-entry" style={{ width: "20%" }}>
+        <div
+          className="shortlist-page-player-entry"
+          style={{ width: "20%", cursor: "pointer" }}
+          onClick={() => setSortBy("team")}
+        >
           Team
         </div>
         <div className="shortlist-page-player-entry" style={{ width: "30%" }}>
@@ -43,15 +47,6 @@ const Players = () => {
         </div>
       </div>
     );
-  };
-
-  const handleSortClick = (newSort) => {
-    if (newSort === "name" || newSort === "role" || newSort === "team") {
-      setOrder("");
-    } else {
-      setOrder("desc");
-    }
-    setSortBy(newSort);
   };
 
   const getPlayerRow = (player, index) => {

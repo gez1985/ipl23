@@ -17,7 +17,7 @@ const Shortlist = () => {
         <div
           className="shortlist-page-player-entry"
           style={{ width: "5%" }}
-        ></div>
+        >No.</div>
         <div className="shortlist-page-player-entry" style={{ width: "35%" }}>
           Name
         </div>
