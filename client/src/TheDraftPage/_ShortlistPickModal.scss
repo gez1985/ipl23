@@ -1,0 +1,14 @@
+.spm-container {
+  width: 100%;
+  height: 300px;
+  background-color: red;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.spm-inner-container {
+  width: 100%;
+  height: 800px;
+  background-color: green;
+}

@@ -14,9 +14,9 @@ import {
 } from "../Store";
 import SkippedModal from "./SkippedModal";
 import autoPick from "./AutoPick";
+import ShortlistPickModal from "./ShortlistPickModal";
 
 export default function DraftPage() {
-
   const [players] = useContext(PlayersContext);
   const [manager, setManager] = useContext(ManagerContext);
   const [managers, setManagers] = useContext(ManagersContext);
@@ -24,6 +24,7 @@ export default function DraftPage() {
   const [, setVidiprinter] = useContext(VidiprinterContext);
 
   const [showSkipped, setShowSkipped] = useState(false);
+  const [showShortlistPick, setShowShortlistPick] = useState(false);
 
   function usePrevious(value) {
     const ref = useRef();
@@ -49,8 +50,8 @@ export default function DraftPage() {
   useEffect(() => {
     const checkManager = Helpers.getObjectById(managers, manager.id);
     if (checkManager.stage1Squad.length > manager.stage1Squad.length) {
-      console.log('manager data conflict');
-      alert('make sure you only have one draft page tab open');
+      console.log("manager data conflict");
+      alert("make sure you only have one draft page tab open");
       setManager(checkManager);
     }
   }, [managers]);
@@ -173,7 +174,14 @@ export default function DraftPage() {
   return (
     <>
       {showSkipped && <SkippedModal closeModal={() => setShowSkipped(false)} />}
-      <DraftPageHeader skipPick={skipPick} live={true} />
+      {showShortlistPick && (
+        <ShortlistPickModal closeModal={() => setShowShortlistPick(false)} />
+      )}
+      <DraftPageHeader
+        skipPick={skipPick}
+        live={true}
+        showShortlistModal={() => setShowShortlistPick(true)}
+      />
       <div className="standard-width-container">
         <DraftTable
           updateLeague={updateLeague}

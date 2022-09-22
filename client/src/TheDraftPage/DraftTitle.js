@@ -12,7 +12,7 @@ import ManagerPicking from "./ManagerPicking";
 import CountdownTimer from "./CountdownTimer";
 import autoPick from "./AutoPick";
 
-export default function DraftTitle({ title, skipPick, live }) {
+export default function DraftTitle({ title, skipPick, live, showShortlistModal }) {
   const [searchName, setSearchName] = useContext(SearchNameContext);
   const [manager] = useContext(ManagerContext);
   const [league] = useContext(LeagueContext);
@@ -30,10 +30,6 @@ export default function DraftTitle({ title, skipPick, live }) {
     } else {
       return title;
     }
-  };
-
-  const handleShortlistPick = () => {
-    console.log("shortlist pick clicked");
   };
 
   const handleAutoPick = async () => {
@@ -79,9 +75,9 @@ export default function DraftTitle({ title, skipPick, live }) {
               {league.pickNumber === manager.pickNumber && (
                 <button
                   className="desktop-draft-shortlist-pick-button"
-                  onClick={handleShortlistPick}
+                  onClick={showShortlistModal}
                 >
-                  Shortlist Pick
+                  Shortlist
                 </button>
               )}
               {autoPickButtonLogic() && (

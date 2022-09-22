@@ -12,7 +12,7 @@
 
 .shortlist-players-container {
   width: calc(50% - 10px);
-  height: 500px;
+  height: calc(100vh - 250px);
   padding: 1rem 0 4px 0;
   border: 2px solid #fabc91;
   border-radius: 8px;
@@ -80,10 +80,10 @@
 }
 
 .shortlist-remove {
-    background-color: #f01c15;
-    margin-right: 10px;
-  }
-  
-  .shortlist-remove:hover {
-    background-color: #c52620;
-  }
+  background-color: #f01c15;
+  margin-right: 10px;
+}
+
+.shortlist-remove:hover {
+  background-color: #c52620;
+}

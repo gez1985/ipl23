@@ -1609,7 +1609,7 @@
 
 .shortlist-players-container {
   width: calc(50% - 10px);
-  height: 500px;
+  height: calc(100vh - 250px);
   padding: 1rem 0 4px 0;
   border: 2px solid #fabc91;
   border-radius: 8px;
@@ -1683,6 +1683,21 @@
 
 .shortlist-remove:hover {
   background-color: #c52620;
+}
+
+.spm-container {
+  width: 100%;
+  height: 300px;
+  background-color: red;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.spm-inner-container {
+  width: 100%;
+  height: 800px;
+  background-color: green;
 }
 
 .overflow-hidden {
