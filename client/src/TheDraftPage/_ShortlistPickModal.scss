@@ -1,14 +1,27 @@
 .spm-container {
   width: 100%;
   height: 300px;
-  background-color: red;
   overflow-x: hidden;
   overflow-y: auto;
   padding: 1rem;
 }
 
-.spm-inner-container {
-  width: 100%;
-  height: 800px;
-  background-color: green;
+.spm-headers-wrapper {
+  display: flex;
+  padding: 0 1rem;
+}
+
+.spm-header {
+  font-family: "Oswald", sans-serif;
+  font-size: 1.125rem;
+  color: #dd6d1f;
+  text-align: center;
+}
+
+.spm-player-row {
+  display: flex;
+}
+
+.spm-player-detail {
+  text-align: center;
 }

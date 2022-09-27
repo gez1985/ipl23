@@ -18,6 +18,15 @@ export default function ShortlistTitle(props) {
     setLoading(false);
   };
 
+  const handleAutoPickChange = async () => {
+    const managerCopy = JSON.parse(JSON.stringify(manager));
+    managerCopy.autoPick = !managerCopy.autoPick;
+    setLoading(true);
+    await Search.putManager(managerCopy);
+    setManager(managerCopy);
+    setLoading(false);
+  };
+
   return (
     <div className="players-header">
       <div className="flex-container space-between">
@@ -35,14 +44,31 @@ export default function ShortlistTitle(props) {
         </div>
         <div className="players-title-container-end align-items-end disappear-small">
           {!loading && (
-            <>
-              <input
-                type="checkbox"
-                checked={manager.minReqFirst}
-                onChange={handleMinReqChange}
-              />
-              <label className="shortlist-checkbox-label">Min req first?</label>
-            </>
+            <div className="sp-settings-wrapper">
+              <div className="sp-checkbox-wrapper">
+                <input
+                  className="sp-input-box"
+                  type="checkbox"
+                  checked={manager.autoPick}
+                  onChange={handleAutoPickChange}
+                />
+                <label className="shortlist-checkbox-label">Auto pick?</label>
+              </div>
+              <div className="sp-checkbox-wrapper">
+                <input
+                  type="checkbox"
+                  checked={manager.autoPick ? manager.minReqFirst : false}
+                  onChange={handleMinReqChange}
+                  disabled={!manager.autoPick}
+                />
+                <label
+                  className="shortlist-checkbox-label"
+                  style={{ color: manager.autoPick ? "black" : "#ccc" }}
+                >
+                  Min req first?
+                </label>
+              </div>
+            </div>
           )}
           {loading && (
             <Loader type="TailSpin" color="#dd6d1f" height={30} width={30} />
