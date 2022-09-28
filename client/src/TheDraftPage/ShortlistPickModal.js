@@ -1,14 +1,36 @@
 import React, { useContext } from "react";
 import ModalTemplate from "../ModalTemplate";
-import { ManagerContext, PlayersContext } from "../Store";
+import {
+  PlayersContext,
+  TeamsContext,
+  ManagerContext,
+  LeagueManagersContext as ManagersContext,
+  SortContext,
+  SearchNameContext,
+  LeagueContext,
+} from "../Store";
+import select from "../img/Select.png";
+import Helpers from "../utils/Helpers";
 
 const ShortlistPickModal = ({ closeModal }) => {
   const [players] = useContext(PlayersContext);
+  const [teams] = useContext(TeamsContext);
   const [manager, setManager] = useContext(ManagerContext);
+  const [managers, setManagers] = useContext(ManagersContext);
+  const [league] = useContext(LeagueContext);
 
   console.log({ manager });
 
-  const availablePlayers = players.filter((player) => player);
+  const unpickedPlayers = Helpers.getUnpickedPlayers(managers, players, league);
+  console.log({ unpickedPlayers });
+
+  const availablePlayers = unpickedPlayers.filter((player) =>
+    manager.shortlist.includes(player.id)
+  );
+
+  const handleSelectPlayer = (player) => {
+    console.log(`${player.name} picked`);
+  };
 
   const TableHeaders = () => {
     return (
@@ -30,7 +52,6 @@ const ShortlistPickModal = ({ closeModal }) => {
   };
 
   const getPlayerRow = (player, idx) => {
-    console.log({ player });
     const { name, role, team } = player;
     if (!player) {
       return <></>;
@@ -48,7 +69,12 @@ const ShortlistPickModal = ({ closeModal }) => {
           {team}
         </div>
         <div className="spm-player-detail" style={{ width: "30%" }}>
-          Pick player
+          <img
+            className="spm-select-icon"
+            src={select}
+            alt="home"
+            onClick={() => handleSelectPlayer(player)}
+          />
         </div>
       </div>
     );
