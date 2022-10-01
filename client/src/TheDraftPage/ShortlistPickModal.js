@@ -5,31 +5,33 @@ import {
   TeamsContext,
   ManagerContext,
   LeagueManagersContext as ManagersContext,
-  SortContext,
-  SearchNameContext,
   LeagueContext,
 } from "../Store";
 import select from "../img/Select.png";
+import selectAlt from "../img/SelectGrey.png";
 import Helpers from "../utils/Helpers";
+import DraftValidation from "./DraftValidation";
 
-const ShortlistPickModal = ({ closeModal }) => {
+const ShortlistPickModal = ({ closeModal, selectPlayer }) => {
   const [players] = useContext(PlayersContext);
   const [teams] = useContext(TeamsContext);
   const [manager, setManager] = useContext(ManagerContext);
   const [managers, setManagers] = useContext(ManagersContext);
   const [league] = useContext(LeagueContext);
 
-  console.log({ manager });
-
   const unpickedPlayers = Helpers.getUnpickedPlayers(managers, players, league);
-  console.log({ unpickedPlayers });
 
   const availablePlayers = unpickedPlayers.filter((player) =>
     manager.shortlist.includes(player.id)
   );
 
-  const handleSelectPlayer = (player) => {
-    console.log(`${player.name} picked`);
+  const myPick = DraftValidation.myPick(manager, league);
+
+  const getTitle = () => {
+    if (myPick) {
+      return <div style={{ color: "green" }}>My shortlist - My Pick</div>;
+    }
+    return "my shortlist";
   };
 
   const TableHeaders = () => {
@@ -71,9 +73,10 @@ const ShortlistPickModal = ({ closeModal }) => {
         <div className="spm-player-detail" style={{ width: "30%" }}>
           <img
             className="spm-select-icon"
-            src={select}
+            src={myPick ? select : selectAlt}
             alt="home"
-            onClick={() => handleSelectPlayer(player)}
+            onClick={myPick ? () => selectPlayer(player) : null}
+            style={{ cursor: myPick ? "pointer" : null }}
           />
         </div>
       </div>
@@ -81,7 +84,7 @@ const ShortlistPickModal = ({ closeModal }) => {
   };
 
   return (
-    <ModalTemplate closeModal={closeModal} title="MY SHORTLIST">
+    <ModalTemplate closeModal={closeModal} title={getTitle()}>
       <TableHeaders />
 
       <div className="spm-container">

@@ -227,7 +227,7 @@
     th {
       text-align: right;
     }
-  }  
+  }
 
   .modal-table {
     td {
@@ -315,11 +315,22 @@
     &:hover {
       transform: scale(1.05);
     }
- }
+  }
 
- .auto-pick-button {
-   background-color: red;
- }
+  .auto-pick-button {
+    border: 3px solid red;
+    background-color: red;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  .auto-pick-button2 {
+    color: red;
+    background-color: #fff;
+    border: 3px solid red;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
 
   .include-button {
     font-family: "Oswald", sans-serif;
@@ -846,5 +857,4 @@
       margin: 10px 0;
     }
   }
-
 }

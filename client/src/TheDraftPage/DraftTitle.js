@@ -12,7 +12,13 @@ import ManagerPicking from "./ManagerPicking";
 import CountdownTimer from "./CountdownTimer";
 import autoPick from "./AutoPick";
 
-export default function DraftTitle({ title, skipPick, live, showShortlistModal }) {
+export default function DraftTitle({
+  title,
+  skipPick,
+  live,
+  showShortlistModal,
+  showAutoPickModal,
+}) {
   const [searchName, setSearchName] = useContext(SearchNameContext);
   const [manager] = useContext(ManagerContext);
   const [league] = useContext(LeagueContext);
@@ -27,40 +33,53 @@ export default function DraftTitle({ title, skipPick, live, showShortlistModal }
   const getTimer = () => {
     if (live && league.pickNumber === manager.pickNumber) {
       return <CountdownTimer skipPick={skipPick} live={live} />;
+    }
+    if (live && manager.id === league.adminManagerId) {
+      const pickingManager = managers.find(
+        (manager) => manager.pickNumber === league.pickNumber
+      );
+      if (pickingManager.autoPick) {
+        return (
+          <button
+            className="desktop-draft-shortlist-pick-button auto-pick-button"
+            onClick={handleAutoPick}
+          >
+            Auto Pick
+          </button>
+        );
+      }
+      return (
+        <button
+          className="desktop-draft-shortlist-pick-button auto-pick-button2"
+          onClick={handleAutoPick}
+        >
+          Auto Pick
+        </button>
+      );
     } else {
       return title;
     }
   };
 
   const handleAutoPick = async () => {
-    const pickingManager = managers.find(
-      (manager) => manager.pickNumber === league.pickNumber
-    );
-    if (!pickingManager.autoPick) {
-      alert("manager does not have aut pick selected");
-      return;
-    } else {
-      console.log(`auto picking player for ${pickingManager.name}`);
-      const pickedPlayer = await autoPick(
-        league,
-        pickingManager,
-        managers,
-        players
-      );
-      console.log({ pickedPlayer });
-    }
-  };
-
-  const autoPickButtonLogic = () => {
-    if (manager.id === league.adminManagerId) {
-      const pickingManager = managers.find(
-        (manager) => manager.pickNumber === league.pickNumber
-      );
-      if (pickingManager.autoPick) {
-        return true;
-      }
-    }
-    return false;
+    console.log("auto pick clicked");
+    showAutoPickModal();
+    // const pickingManager = managers.find(
+    //   (manager) => manager.pickNumber === league.pickNumber
+    // );
+    // if (!pickingManager.autoPick) {
+    //   alert("manager does not have aut pick selected");
+    //   return;
+    // } else {
+    //   console.log(`auto picking player for ${pickingManager.name}`);
+    //   const pickedPlayer = await autoPick(
+    //     league,
+    //     pickingManager,
+    //     managers,
+    //     players
+    //   );
+    //   console.log({ pickedPlayer });
+    // }
   };
 
   return (
@@ -72,22 +91,12 @@ export default function DraftTitle({ title, skipPick, live, showShortlistModal }
               <div>
                 <ManagerPicking />
               </div>
-              {league.pickNumber === manager.pickNumber && (
-                <button
-                  className="desktop-draft-shortlist-pick-button"
-                  onClick={showShortlistModal}
-                >
-                  Shortlist
-                </button>
-              )}
-              {autoPickButtonLogic() && (
-                <button
-                  className="desktop-draft-shortlist-pick-button auto-pick-button"
-                  onClick={handleAutoPick}
-                >
-                  Auto Pick
-                </button>
-              )}
+              <button
+                className="desktop-draft-shortlist-pick-button"
+                onClick={showShortlistModal}
+              >
+                Shortlist
+              </button>
             </div>
           </div>
           <div className="draft-title-container">

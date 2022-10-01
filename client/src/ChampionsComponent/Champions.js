@@ -17,6 +17,12 @@ export default function Champions() {
   ];
   const wcChampions = [
     {
+      year: 2022,
+      champion: "?",
+      runnerUp: "?",
+      woodenSpoon: "?",
+    },
+    {
       year: 2021,
       champion: "Can Ogan",
       runnerUp: "Kimberley Kings",

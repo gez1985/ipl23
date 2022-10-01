@@ -6,6 +6,7 @@
 @use './SemiShortlistPage/SemiShortlistPage';
 @use './ShortlistPage/ShortlistPage';
 @use './TheDraftPage/ShortlistPickModal';
+@use './TheDraftPage/AutoPickModal';
 
 .overflow-hidden {
   height: 100vh;

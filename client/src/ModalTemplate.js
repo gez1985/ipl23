@@ -13,7 +13,12 @@ export default function ModalTemplate({
         <OutsideClickHandler onOutsideClick={closeModal}>
           <div className="modal-template-box">
             <div className="modal-template-logo-container">
-              <div className="modal-template-title">{title}</div>
+              <div
+                className="modal-template-title"
+                style={{ textTransform: "uppercase" }}
+              >
+                {title}
+              </div>
               <MdClose
                 className="modal-template-close-icon"
                 onClick={closeModal}

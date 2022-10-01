@@ -2,10 +2,10 @@ import Search from "../utils/search";
 import Helpers from "../utils/Helpers";
 import DraftValidation from "./DraftValidation";
 
-const autoPick = async (league, manager, managers, players) => {
+const autoPick = (league, manager, managers, players) => {
   let chosenPlayer;
+  const managerCopy = JSON.parse(JSON.stringify(manager));
   if (checkSquadSpace(league, manager)) {
-    const managerCopy = JSON.parse(JSON.stringify(manager));
     const availablePlayers = Helpers.getUnpickedPlayers(
       managers,
       players,
@@ -21,9 +21,12 @@ const autoPick = async (league, manager, managers, players) => {
       } else {
         const playerValid = checkPlayerValid(league, manager, players, player);
         if (playerValid) {
-          if (!chosenPlayer) {
-            chosenPlayer = player;
-            removePlayerIdFromShortlist(managerCopy, manager.shortlist[i]);
+          const minReqCheck = checkMinReq(manager, players, player);
+          if (minReqCheck) {
+            if (!chosenPlayer) {
+              chosenPlayer = player;
+              removePlayerIdFromShortlist(managerCopy, manager.shortlist[i]);
+            }
           }
         } else {
           removePlayerIdFromShortlist(managerCopy, manager.shortlist[i]);
@@ -40,15 +43,46 @@ const autoPick = async (league, manager, managers, players) => {
     }
     console.log(`the chosen player is ${chosenPlayer.name}`);
     managerCopy.stage1Squad.push(chosenPlayer.id);
-    try {
-      await Search.putManager(managerCopy);
-      await updateVidi(league.id, manager.id, chosenPlayer.id);
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   await Search.putManager(managerCopy);
+    //   await updateVidi(league.id, manager.id, chosenPlayer.id);
+    // } catch (err) {
+    //   console.log(err);
+    // }
   }
-  await updateLeague(league);
-  return chosenPlayer;
+  // await updateLeague(league);
+  return { player: chosenPlayer, managerCopy };
+};
+
+const checkMinReq = (manager, players, player) => {
+  if (!manager.minReqFirst) {
+    return true;
+  } else {
+    let count = 0;
+    let myTeam = [];
+    manager.stage1Squad.forEach((playerId) => {
+      myTeam.push(Helpers.getObjectById(players, playerId));
+    });
+    const teamRoleArray = myTeam.map((player) => player.role);
+    teamRoleArray.forEach((role) => {
+      if (role === player.role) {
+        count++;
+      }
+    });
+    if (player.role === "WK" && count === 0) {
+      return true;
+    } else if (player.role === "AR" && count === 0) {
+      return true;
+    } else if (player.role === "BT" && count < 3) {
+      return true;
+    } else if (player.role === "BW" && count < 3) {
+      return true;
+    } else {
+      
+    }
+    console.log(`checking ${player.name} for min req with role ${player.role}`);
+    return true;
+  }
 };
 
 const removePlayerIdFromShortlist = (manager, playerId) => {

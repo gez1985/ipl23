@@ -15,6 +15,10 @@ import {
 import SkippedModal from "./SkippedModal";
 import autoPick from "./AutoPick";
 import ShortlistPickModal from "./ShortlistPickModal";
+import { Button, Modal } from "react-bootstrap";
+import PickValidation from "../utils/PickValidation";
+import DraftValidation from "./DraftValidation";
+import AutoPickModal from "./AutoPickModal";
 
 export default function DraftPage() {
   const [players] = useContext(PlayersContext);
@@ -25,6 +29,11 @@ export default function DraftPage() {
 
   const [showSkipped, setShowSkipped] = useState(false);
   const [showShortlistPick, setShowShortlistPick] = useState(false);
+  const [showConfirmPick, setShowConfirmPick] = useState(false);
+  const [selectedPlayer, setSelectedPlayer] = useState();
+  const [errorMessage, setErrorMessage] = useState();
+  const [showError, setShowError] = useState(false);
+  const [showAutoPick, setShowAutoPick] = useState(false);
 
   function usePrevious(value) {
     const ref = useRef();
@@ -55,6 +64,22 @@ export default function DraftPage() {
       setManager(checkManager);
     }
   }, [managers]);
+
+  useEffect(() => {
+    if (manager.id === league.adminManagerId) {
+      const pickingManager = managers.find(
+        (manager) => manager.pickNumber === league.pickNumber
+      );
+      if (pickingManager.autoPick) {
+        if (pickingManager.stage1Squad.length >= 15) {
+          console.log(
+            `autopick manager ${pickingManager.name} has a full squad`
+          );
+          updateLeague();
+        }
+      }
+    }
+  }, [league]);
 
   // useEffect(() => {
   //   if (manager.id === league.adminManagerId) {
@@ -149,6 +174,176 @@ export default function DraftPage() {
     }
   }
 
+  function handleCancel() {
+    setShowError(false);
+    setShowConfirmPick(false);
+    setSelectedPlayer();
+  }
+
+  function handleSelectPlayer(player) {
+    const validPickMessage = pickValidation(player);
+    setErrorMessage(validPickMessage);
+    setSelectedPlayer(player);
+    setShowShortlistPick(false);
+    if (validPickMessage === "pass") {
+      setShowConfirmPick(true);
+    } else {
+      setShowError(true);
+    }
+  }
+
+  async function selectPlayer() {
+    const validPick = PickValidation(league, manager, selectedPlayer);
+    if (!validPick) {
+      handleCancel();
+      alert("an error occurred");
+      return;
+    }
+    const managerCopy = JSON.parse(JSON.stringify(manager));
+    if (league.draft1Live) {
+      managerCopy.stage1Squad.push(selectedPlayer.id);
+    } else {
+      console.log(`error no draft live found`);
+    }
+    setManager(managerCopy);
+    const newManagers = managers.filter((man) => man.id !== manager.id);
+    newManagers.push(managerCopy);
+    setManagers(newManagers);
+    try {
+      await Search.putManager(managerCopy);
+    } catch (err) {
+      console.log(err);
+    }
+    handleCancel();
+    updateLeague();
+    updateVidiprinter(league.id, manager.id, selectedPlayer.id);
+  }
+
+  function pickValidation(player) {
+    let full = "eleven";
+    let max = "three";
+    if (league.draft1Live) {
+      full = "fifteen";
+    }
+    const minTeamRequirements = DraftValidation.minTeamRequirements(
+      league,
+      manager,
+      players,
+      player
+    );
+    const myPick = DraftValidation.myPick(manager, league);
+    const fullTeam = DraftValidation.fullTeam(league, manager);
+    const maxPerTeam = DraftValidation.maxFromEachTeam(
+      league,
+      manager,
+      players,
+      player
+    );
+    const roleValidation = DraftValidation.roleValidation(
+      league,
+      manager,
+      players,
+      player
+    );
+    let batBowMax = "five";
+    let arMax = "three";
+    let wkMax = "one";
+
+    //check this bit
+    if (league.draft1Live) {
+      batBowMax = "six";
+      arMax = "four";
+      wkMax = "two";
+    }
+    if (!fullTeam) {
+      return `You already have ${full} players`;
+    }
+    if (!myPick) {
+      return "Sorry, it is not your pick";
+    }
+    if (!roleValidation) {
+      switch (player.role) {
+        case "WK":
+          return `You can only have a maximum ${wkMax} wicketkeepers.`;
+        case "BT":
+          return `You can only have a maximum ${batBowMax} batters`;
+        case "BW":
+          return `You can only have a maximum ${batBowMax} bowlers`;
+        case "AR":
+          return `You can only have a maximum ${arMax} all rounders`;
+        default:
+          return;
+      }
+    }
+    if (!minTeamRequirements) {
+      if (league.draft1Live) {
+        return "You must pick a minimum of 4 batters, 4 bowlers, 2 all-rounders and 1 wicketkeeper";
+      } else {
+        return "You must pick a minimum of 3 batters, 3 bowlers, 1 all-rounders and 1 wicketkeeper";
+      }
+    }
+    if (!maxPerTeam) {
+      return `You can only pick ${max} players from each team`;
+    }
+    return "pass";
+  }
+
+  const getErrorModal = () => {
+    if (selectedPlayer) {
+      return (
+        <>
+          <Modal
+            show
+            onHide={handleCancel}
+            backdrop="static"
+            keyboard={false}
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Error:</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>{errorMessage}</Modal.Body>
+            <Modal.Footer>
+              <Button variant="danger" onClick={handleCancel}>
+                OK
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      );
+    } else {
+      return;
+    }
+  };
+
+  const getConfirmPick = () => {
+    return (
+      <>
+        <Modal
+          show
+          onHide={handleCancel}
+          backdrop="static"
+          keyboard={false}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>
+              Pick {selectedPlayer.name} for {manager.teamName}?
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={selectPlayer}>
+              Pick Player
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    );
+  };
+
   if (!league.draft1Live) {
     return (
       <>
@@ -173,19 +368,28 @@ export default function DraftPage() {
 
   return (
     <>
+      {showAutoPick && (
+        <AutoPickModal closeModal={() => setShowAutoPick(false)} />
+      )}
       {showSkipped && <SkippedModal closeModal={() => setShowSkipped(false)} />}
       {showShortlistPick && (
-        <ShortlistPickModal closeModal={() => setShowShortlistPick(false)} />
+        <ShortlistPickModal
+          closeModal={() => setShowShortlistPick(false)}
+          selectPlayer={handleSelectPlayer}
+        />
       )}
+      {showConfirmPick && getConfirmPick()}
+      {showError && getErrorModal()}
       <DraftPageHeader
         skipPick={skipPick}
         live={true}
         showShortlistModal={() => setShowShortlistPick(true)}
+        showAutoPickModal={() => setShowAutoPick(true)}
       />
       <div className="standard-width-container">
         <DraftTable
           updateLeague={updateLeague}
-          updateVidiprinter={updateVidiprinter}
+          selectPlayer={handleSelectPlayer}
         />
         <DraftFooter />
       </div>

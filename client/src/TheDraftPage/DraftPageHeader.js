@@ -7,6 +7,7 @@ export default function DraftPageHeader({
   skipPick,
   live,
   showShortlistModal,
+  showAutoPickModal,
 }) {
   return (
     <>
@@ -18,6 +19,7 @@ export default function DraftPageHeader({
           skipPick={skipPick}
           live={live}
           showShortlistModal={showShortlistModal}
+          showAutoPickModal={showAutoPickModal}
         />
       </div>
       <DraftTableHeaders />
