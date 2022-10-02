@@ -145,13 +145,6 @@ export default function DraftPage() {
         }
       }
     }
-    if (league.draft3Live) {
-      if (leagueCopy.pickNumber === 1) {
-        leagueCopy.pickNumber = 2;
-      } else {
-        leagueCopy.pickNumber = 1;
-      }
-    }
     const updatedLeague = await Search.putLeague(leagueCopy);
     setLeague(updatedLeague);
   }
@@ -234,7 +227,6 @@ export default function DraftPage() {
     const myPick = DraftValidation.myPick(manager, league);
     const fullTeam = DraftValidation.fullTeam(league, manager);
     const maxPerTeam = DraftValidation.maxFromEachTeam(
-      league,
       manager,
       players,
       player
@@ -369,7 +361,11 @@ export default function DraftPage() {
   return (
     <>
       {showAutoPick && (
-        <AutoPickModal closeModal={() => setShowAutoPick(false)} />
+        <AutoPickModal
+          closeModal={() => setShowAutoPick(false)}
+          updateVidi={updateVidiprinter}
+          updateLeague={updateLeague}
+        />
       )}
       {showSkipped && <SkippedModal closeModal={() => setShowSkipped(false)} />}
       {showShortlistPick && (

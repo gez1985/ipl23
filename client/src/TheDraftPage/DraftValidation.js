@@ -2,7 +2,30 @@ import Helpers from "../utils/Helpers";
 
 const DraftValidation = {};
 
-DraftValidation.maxFromEachTeam = (league, manager, players, player) => {
+DraftValidation.playerValid = (league, manager, players, player) => {
+  const maxValid = DraftValidation.maxFromEachTeam(manager, players, player);
+  const minValid = DraftValidation.minTeamRequirements(
+    league,
+    manager,
+    players,
+    player
+  );
+  const roleValid = DraftValidation.roleValidation(
+    league,
+    manager,
+    players,
+    player
+  );
+  console.log(
+    `${player.name}: max valid: ${maxValid}, min valid: ${minValid}, role valid: ${roleValid}`
+  );
+  if (maxValid && minValid && roleValid) {
+    return true;
+  }
+  return false;
+};
+
+DraftValidation.maxFromEachTeam = (manager, players, player) => {
   const max = 3;
   let count = 0;
   const myTeam = [];
@@ -30,7 +53,7 @@ DraftValidation.minTeamRequirements = (league, manager, players, player) => {
     manager.stage1Squad.forEach((playerId) => {
       myTeam.push(Helpers.getObjectById(players, playerId));
     });
-  } 
+  }
   let needed = 8;
   let roundsLeft = 11 - length;
   if (league.draft1Live) {
@@ -62,7 +85,7 @@ DraftValidation.minTeamRequirements = (league, manager, players, player) => {
     } else if (count.BW >= 4) {
       needed = needed - 4;
     }
-  } 
+  }
   if (needed > roundsLeft) {
     return false;
   } else {
@@ -77,7 +100,7 @@ DraftValidation.roleValidation = (league, manager, players, player) => {
     manager.stage1Squad.forEach((playerId) => {
       myTeam.push(Helpers.getObjectById(players, playerId));
     });
-  } 
+  }
   const teamRoleArray = myTeam.map((player) => player.role);
   teamRoleArray.forEach((role) => {
     if (role === player.role) {
@@ -110,7 +133,7 @@ DraftValidation.fullTeam = (league, manager) => {
     if (manager.stage1Squad.length >= 15) {
       return false;
     }
-  } 
+  }
   return true;
 };
 

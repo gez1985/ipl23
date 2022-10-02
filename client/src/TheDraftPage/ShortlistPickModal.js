@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import ModalTemplate from "../ModalTemplate";
 import {
   PlayersContext,
-  TeamsContext,
   ManagerContext,
   LeagueManagersContext as ManagersContext,
   LeagueContext,
@@ -14,9 +13,8 @@ import DraftValidation from "./DraftValidation";
 
 const ShortlistPickModal = ({ closeModal, selectPlayer }) => {
   const [players] = useContext(PlayersContext);
-  const [teams] = useContext(TeamsContext);
-  const [manager, setManager] = useContext(ManagerContext);
-  const [managers, setManagers] = useContext(ManagersContext);
+  const [manager] = useContext(ManagerContext);
+  const [managers] = useContext(ManagersContext);
   const [league] = useContext(LeagueContext);
 
   const unpickedPlayers = Helpers.getUnpickedPlayers(managers, players, league);
@@ -24,6 +22,16 @@ const ShortlistPickModal = ({ closeModal, selectPlayer }) => {
   const availablePlayers = unpickedPlayers.filter((player) =>
     manager.shortlist.includes(player.id)
   );
+
+  const validPlayers = availablePlayers.filter((player) =>
+    DraftValidation.playerValid(league, manager, players, player)
+  );
+
+  console.log({ unpickedPlayers });
+
+  console.log({ availablePlayers });
+
+  console.log({ validPlayers });
 
   const myPick = DraftValidation.myPick(manager, league);
 
@@ -88,7 +96,7 @@ const ShortlistPickModal = ({ closeModal, selectPlayer }) => {
       <TableHeaders />
 
       <div className="spm-container">
-        {availablePlayers.map((player, idx) => getPlayerRow(player, idx))}
+        {validPlayers.map((player, idx) => getPlayerRow(player, idx))}
       </div>
     </ModalTemplate>
   );

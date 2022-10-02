@@ -77,12 +77,25 @@ const checkMinReq = (manager, players, player) => {
       return true;
     } else if (player.role === "BW" && count < 3) {
       return true;
-    } else {
-      
+    }
+    const minFilled = checkMinReqFilled(teamRoleArray);
+    if (minFilled) {
+      return true;
     }
     console.log(`checking ${player.name} for min req with role ${player.role}`);
+    return false;
+  }
+};
+
+const checkMinReqFilled = (teamRoleArray) => {
+  var count = {};
+  teamRoleArray.forEach(function (i) {
+    count[i] = (count[i] || 0) + 1;
+  });
+  if (count.WK >= 1 && count.AR >= 1 && count.BT >= 3 && count.BW >= 3) {
     return true;
   }
+  return false;
 };
 
 const removePlayerIdFromShortlist = (manager, playerId) => {
@@ -104,7 +117,7 @@ const checkPlayerValid = (league, manager, players, player) => {
   if (!DraftValidation.minTeamRequirements(league, manager, players, player)) {
     return false;
   } else if (
-    !DraftValidation.maxFromEachTeam(league, manager, players, player)
+    !DraftValidation.maxFromEachTeam(manager, players, player)
   ) {
     return false;
   } else if (

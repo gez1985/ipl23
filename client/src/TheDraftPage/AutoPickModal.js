@@ -1,20 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import ModalTemplate from "../ModalTemplate";
 import {
   LeagueContext,
   LeagueManagersContext as ManagersContext,
   PlayersContext,
-  VidiprinterContext,
-  ManagerContext,
 } from "../Store";
 import autoPick from "./AutoPick";
+import Search from "../utils/search";
 
-const AutoPickModal = ({ closeModal }) => {
+const AutoPickModal = ({ closeModal, updateVidi, updateLeague }) => {
   const [players] = useContext(PlayersContext);
-  const [manager, setManager] = useContext(ManagerContext);
-  const [managers, setManagers] = useContext(ManagersContext);
-  const [league, setLeague] = useContext(LeagueContext);
-  const [, setVidiprinter] = useContext(VidiprinterContext);
+  const [managers] = useContext(ManagersContext);
+  const [league] = useContext(LeagueContext);
 
   const pickingManager = managers.find(
     (manager) => manager.pickNumber === league.pickNumber
@@ -23,9 +20,16 @@ const AutoPickModal = ({ closeModal }) => {
   const pickedPlayerObj = autoPick(league, pickingManager, managers, players);
   const { player, managerCopy } = pickedPlayerObj;
 
-  console.log({ managerCopy });
-
-  console.log({ pickingManager });
+  const pickPlayer = async () => {
+    try {
+      await Search.putManager(managerCopy);
+      await updateVidi(league.id, pickingManager.id, player.id);
+      await updateLeague();
+      closeModal();
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   return (
     <>
@@ -49,8 +53,7 @@ const AutoPickModal = ({ closeModal }) => {
               <div>{pickingManager.name} has a full squad.</div>
             ) : (
               <div className="apm-pick-caption">
-                Pick {player.name} ({player.role}) for{" "}
-                {pickingManager.teamName}
+                Pick {player.name} ({player.role}) for {pickingManager.teamName}
               </div>
             )}
           </div>
@@ -59,7 +62,9 @@ const AutoPickModal = ({ closeModal }) => {
               Cancel
             </button>
             {pickingManager.stage1Squad >= 15 ? null : (
-              <button className="apm-pick-btn">Pick Player</button>
+              <button onClick={pickPlayer} className="apm-pick-btn">
+                Pick Player
+              </button>
             )}
           </div>
         </div>

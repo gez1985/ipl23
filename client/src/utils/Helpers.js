@@ -46,13 +46,17 @@ Helpers.setManagersByLeague = (league, managers) => {
     );
     manager.pickNumber = pickIndex + 1;
   });
-  const sortedManagers = sortObjectsArray(leagueManagers, "totalPoints", "desc");
+  const sortedManagers = sortObjectsArray(
+    leagueManagers,
+    "totalPoints",
+    "desc"
+  );
   sortedManagers.forEach((manager, managerIndex) => {
     manager.stagePickNumber = managerIndex + 1;
   });
   const stage3Managers = league.stage3Managers.flat();
   const finalManagers = [];
-  stage3Managers.forEach(managerId => {
+  stage3Managers.forEach((managerId) => {
     finalManagers.push(Helpers.getObjectById(leagueManagers, managerId));
   });
   if (finalManagers.length === 2) {
@@ -130,19 +134,19 @@ Helpers.getManagerByPickNumber = (stage, managers, pickNumber) => {
 Helpers.getStage2Managers = (league, managers) => {
   const stage2Managers = [];
   const stage2ManagerIds = league.stage2Managers.flat();
-  stage2ManagerIds.forEach(managerId => {
+  stage2ManagerIds.forEach((managerId) => {
     stage2Managers.push(Helpers.getObjectById(managers, managerId));
   });
   return stage2Managers;
-}
+};
 
 Helpers.getStage3Managers = (league, managers) => {
   const stage3Managers = [];
   const stage3ManagerIds = league.stage3Managers.flat();
-  stage3ManagerIds.forEach(managerId => {
+  stage3ManagerIds.forEach((managerId) => {
     stage3Managers.push(Helpers.getObjectById(managers, managerId));
   });
   return stage3Managers;
-}
+};
 
 export default Helpers;
