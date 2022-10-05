@@ -18,20 +18,20 @@ const ShortlistPickModal = ({ closeModal, selectPlayer }) => {
   const [league] = useContext(LeagueContext);
 
   const unpickedPlayers = Helpers.getUnpickedPlayers(managers, players, league);
+  const unpickedPlayersIds = unpickedPlayers.map((player) => player.id);
 
-  const availablePlayers = unpickedPlayers.filter((player) =>
-    manager.shortlist.includes(player.id)
+  const shortlistPlayers = [];
+  manager.shortlist.forEach((playerId) => {
+    shortlistPlayers.push(Helpers.getObjectById(players, playerId));
+  });
+
+  const availablePlayers = shortlistPlayers.filter((player) =>
+    unpickedPlayersIds.includes(player.id)
   );
 
   const validPlayers = availablePlayers.filter((player) =>
     DraftValidation.playerValid(league, manager, players, player)
   );
-
-  console.log({ unpickedPlayers });
-
-  console.log({ availablePlayers });
-
-  console.log({ validPlayers });
 
   const myPick = DraftValidation.myPick(manager, league);
 
@@ -94,7 +94,6 @@ const ShortlistPickModal = ({ closeModal, selectPlayer }) => {
   return (
     <ModalTemplate closeModal={closeModal} title={getTitle()}>
       <TableHeaders />
-
       <div className="spm-container">
         {validPlayers.map((player, idx) => getPlayerRow(player, idx))}
       </div>

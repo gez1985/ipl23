@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import ModalTemplate from "../ModalTemplate";
 import {
   LeagueContext,
@@ -12,19 +12,35 @@ const AutoPickModal = ({ closeModal, updateVidi, updateLeague }) => {
   const [players] = useContext(PlayersContext);
   const [managers] = useContext(ManagersContext);
   const [league] = useContext(LeagueContext);
+  const [loading, setLoading] = useState(false);
+  const playerRef = useRef({ name: "no player found", role: "..." });
+  const managerRef = useRef();
+
+  useEffect(() => {
+    console.log(playerRef);
+    if (playerRef.current.role === "...") {
+      const pickedPlayerObj = autoPick(
+        league,
+        pickingManager,
+        managers,
+        players
+      );
+      playerRef.current = pickedPlayerObj.player;
+      managerRef.current = pickedPlayerObj.managerCopy;
+    }
+  });
 
   const pickingManager = managers.find(
     (manager) => manager.pickNumber === league.pickNumber
   );
 
-  const pickedPlayerObj = autoPick(league, pickingManager, managers, players);
-  const { player, managerCopy } = pickedPlayerObj;
-
   const pickPlayer = async () => {
     try {
-      await Search.putManager(managerCopy);
-      await updateVidi(league.id, pickingManager.id, player.id);
+      setLoading(true);
+      await Search.putManager(managerRef.current);
+      await updateVidi(league.id, pickingManager.id, playerRef.current.id);
       await updateLeague();
+      setLoading(false);
       closeModal();
     } catch (err) {
       console.log(err.message);
@@ -53,19 +69,31 @@ const AutoPickModal = ({ closeModal, updateVidi, updateLeague }) => {
               <div>{pickingManager.name} has a full squad.</div>
             ) : (
               <div className="apm-pick-caption">
-                Pick {player.name} ({player.role}) for {pickingManager.teamName}
+                {playerRef.current.role === "..." ? (
+                  <div>Finding player...</div>
+                ) : (
+                  <div>
+                    Pick {playerRef.current.name} ({playerRef.current.role}) for{" "}
+                    {pickingManager.teamName}
+                  </div>
+                )}
               </div>
             )}
           </div>
           <div className="apm-button-wrapper">
-            <button onClick={closeModal} className="apm-cancel-btn">
-              Cancel
-            </button>
-            {pickingManager.stage1Squad >= 15 ? null : (
-              <button onClick={pickPlayer} className="apm-pick-btn">
-                Pick Player
-              </button>
+            {!loading && (
+              <>
+                <button onClick={closeModal} className="apm-cancel-btn">
+                  Cancel
+                </button>
+                {pickingManager.stage1Squad >= 15 ? null : (
+                  <button onClick={pickPlayer} className="apm-pick-btn">
+                    Pick Player
+                  </button>
+                )}
+              </>
             )}
+            {loading && <div>Loading...</div>}
           </div>
         </div>
       </ModalTemplate>

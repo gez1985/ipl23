@@ -79,7 +79,7 @@ export default function DraftTable({ updateLeague, selectPlayer }) {
   return (
     <div className="draft-container">
       <table className="fixed-table">
-        <tbody>
+        <tbody className="draft-players-container">
           {sortedPlayerArray.map((player) => renderTableRows(player))}
         </tbody>
       </table>
