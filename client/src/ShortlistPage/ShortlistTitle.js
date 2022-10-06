@@ -24,7 +24,11 @@ export default function ShortlistTitle(props) {
     const managerCopy = JSON.parse(JSON.stringify(manager));
     managerCopy.autoPick = !managerCopy.autoPick;
     setLoading(true);
-    await Search.putManager(managerCopy);
+    try {
+      await Search.putManager(managerCopy);
+    } catch (err) {
+      console.log(err.message);
+    }
     setManager(managerCopy);
     setLoading(false);
   };
@@ -34,13 +38,19 @@ export default function ShortlistTitle(props) {
     setShowConfirmClear(true);
   };
 
-  const handleClearShortlist = () => {
+  const handleClearShortlist = async () => {
     console.log("confirm clear clicked");
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setShowConfirmClear(false);
-    }, 1000);
+    const managerCopy = JSON.parse(JSON.stringify(manager));
+    managerCopy.shortlist = [];
+    try {
+      await Search.putManager(managerCopy);
+    } catch (err) {
+      console.log(err.message);
+    }
+    setManager(managerCopy);
+    setLoading(false);
+    setShowConfirmClear(false);
   };
 
   const getConfirmClearModal = () => {
