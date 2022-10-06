@@ -29,6 +29,10 @@
   font-weight: 600;
   min-height: 30px;
 }
+.main-body .auto-pick-button-wrapper {
+  display: flex;
+  justify-content: center;
+}
 .main-body .draft-players-container {
   max-height: calc(100vh - 270px);
   overflow-x: hidden;

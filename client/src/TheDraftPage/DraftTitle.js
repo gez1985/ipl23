@@ -40,21 +40,25 @@ export default function DraftTitle({
       );
       if (pickingManager.autoPick) {
         return (
+          <div className="auto-pick-button-wrapper">
+            <button
+              className="desktop-draft-shortlist-pick-button auto-pick-button"
+              onClick={handleAutoPick}
+            >
+              Auto Pick
+            </button>
+          </div>
+        );
+      }
+      return (
+        <div className="auto-pick-button-wrapper">
           <button
-            className="desktop-draft-shortlist-pick-button auto-pick-button"
+            className="desktop-draft-shortlist-pick-button auto-pick-button2"
             onClick={handleAutoPick}
           >
             Auto Pick
           </button>
-        );
-      }
-      return (
-        <button
-          className="desktop-draft-shortlist-pick-button auto-pick-button2"
-          onClick={handleAutoPick}
-        >
-          Auto Pick
-        </button>
+        </div>
       );
     } else {
       return title;
