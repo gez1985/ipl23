@@ -27,11 +27,8 @@ export default function Landing() {
         <Logo />
       </div>
       <div className="flex-container">
-        {dateNow < league.draftDate && (
-          <StageShortlistIcon
-            label="My Shortlist"
-            link="/shortlist"
-          />
+        {dateNow < league.draftDate && !league.draft1Live && (
+          <StageShortlistIcon label="My Shortlist" link="/shortlist" />
         )}
         {league.draft1Live && <DraftNavIcon />}
         {stage2Managers.includes(manager.id) &&

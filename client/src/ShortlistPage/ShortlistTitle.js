@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
-import { SearchNameContext } from "../Store";
-import { ManagerContext } from "../Store";
+import { SearchNameContext, ManagerContext, LeagueContext } from "../Store";
 import Loader from "react-loader-spinner";
 import Search from "../utils/search";
 import ModalTemplate from "../ModalTemplate";
@@ -8,6 +7,7 @@ import ModalTemplate from "../ModalTemplate";
 export default function ShortlistTitle(props) {
   const [loading, setLoading] = useState(false);
   const [manager, setManager] = useContext(ManagerContext);
+  const [league] = useContext(LeagueContext);
   const [searchName, setSearchName] = useContext(SearchNameContext);
   const [showConfirmClear, setShowConfirmClear] = useState(false);
 
@@ -34,12 +34,10 @@ export default function ShortlistTitle(props) {
   };
 
   const handleClearClick = () => {
-    console.log("clear button clicked");
     setShowConfirmClear(true);
   };
 
   const handleClearShortlist = async () => {
-    console.log("confirm clear clicked");
     setLoading(true);
     const managerCopy = JSON.parse(JSON.stringify(manager));
     managerCopy.shortlist = [];
@@ -100,16 +98,18 @@ export default function ShortlistTitle(props) {
                 onChange={(e) => setSearchName(e.target.value)}
                 defaultValue={searchName}
               ></input>
-              <button className="slp-clear-btn" onClick={handleClearClick}>
-                Clear shortlist
-              </button>
+              {!league.draft1Live && (
+                <button className="slp-clear-btn" onClick={handleClearClick}>
+                  Clear shortlist
+                </button>
+              )}
             </div>
           </div>
           <div className="players-title-container-middle disappear-small">
             <div className="page-title">{props.title}</div>
           </div>
           <div className="players-title-container-end align-items-end disappear-small">
-            {!loading && (
+            {!loading && !league.draft1Live && (
               <div className="sp-settings-wrapper">
                 <div className="sp-checkbox-wrapper">
                   <input
