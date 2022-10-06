@@ -47,6 +47,8 @@ const AutoPickModal = ({ closeModal, updateVidi, updateLeague }) => {
     }
   };
 
+  console.log({ pickingManager });
+
   return (
     <>
       <ModalTemplate
@@ -65,7 +67,7 @@ const AutoPickModal = ({ closeModal, updateVidi, updateLeague }) => {
         )}
         <div className="apm-container">
           <div className="apm-player-wrapper">
-            {pickingManager.stage1Squad >= 15 ? (
+            {pickingManager.stage1Squad.length >= 15 ? (
               <div>{pickingManager.name} has a full squad.</div>
             ) : (
               <div className="apm-pick-caption">
@@ -86,7 +88,7 @@ const AutoPickModal = ({ closeModal, updateVidi, updateLeague }) => {
                 <button onClick={closeModal} className="apm-cancel-btn">
                   Cancel
                 </button>
-                {pickingManager.stage1Squad >= 15 ? null : (
+                {pickingManager.stage1Squad.length >= 15 ? null : (
                   <button onClick={pickPlayer} className="apm-pick-btn">
                     Pick Player
                   </button>
