@@ -100,7 +100,7 @@ export default function Players({ handleShortlistClick }) {
         <td className="disappear-mobile">{player.wickets}</td>
         <td className="disappear-mobile">{player.catches}</td>
         <td>{player.totalPoints}</td>
-        {getDraftStatus() && (
+        {/* {getDraftStatus() && (
           <>
             <td className="disappear-mobile">
               <div className="shortlist-icon-container">
@@ -117,7 +117,7 @@ export default function Players({ handleShortlistClick }) {
               </div>
             </td>
           </>
-        )}
+        )} */}
       </tr>
     );
   }

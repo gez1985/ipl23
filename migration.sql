@@ -79,9 +79,12 @@ CREATE TABLE leagues (
   pick_number SMALLINT NOT NULL DEFAULT 1,
   up BOOLEAN NOT NULL DEFAULT true,
   last_pick BOOLEAN NOT NULL DEFAULT false,
+  draft_date TEXT,
   stage_2_date TEXT,
+  stage_3_date TEXT,
   stage_2_managers SMALLINT[][2] DEFAULT '{}',
   stage_2_teams SMALLINT[] DEFAULT '{}',
   stage_3_managers SMALLINT[][2] DEFAULT '{}',
-  stage_3_teams SMALLINT[] DEFAULT '{}'
+  stage_3_teams SMALLINT[] DEFAULT '{}',
+  created_at TIMESTAMP DEFAULT NOW()
 );

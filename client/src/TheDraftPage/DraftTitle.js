@@ -4,13 +4,11 @@ import {
   SearchNameContext,
   LeagueContext,
   LeagueManagersContext as ManagersContext,
-  PlayersContext,
 } from "../Store";
 import myTeam from "../img/MyTeam.png";
 import MyTeamModal from "../MyTeamModal";
 import ManagerPicking from "./ManagerPicking";
 import CountdownTimer from "./CountdownTimer";
-import autoPick from "./AutoPick";
 
 export default function DraftTitle({
   title,
@@ -23,7 +21,6 @@ export default function DraftTitle({
   const [manager] = useContext(ManagerContext);
   const [league] = useContext(LeagueContext);
   const [managers] = useContext(ManagersContext);
-  const [players] = useContext(PlayersContext);
   const [showMyTeam, setShowMyTeam] = useState(false);
 
   function hideModals() {

@@ -45,8 +45,6 @@ function App() {
     return ref.current;
   }
 
-  console.log({ leagueManagers });
-
   useEffect(() => {
     if (!previousIsAuthenticated && isAuthenticated) {
       getData();

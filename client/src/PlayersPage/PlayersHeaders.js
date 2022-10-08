@@ -75,13 +75,13 @@ export default function PlayersHeaders() {
               >
                 Total Points
               </th>
-              {getDraftStatus() && (
+              {/* {getDraftStatus() && (
                 <>
                   <th scope="col" className="cursor-pointer disappear-mobile">
                     Shortlist
                   </th>
                 </>
-              )}
+              )} */}
             </tr>
           </thead>
         </table>
