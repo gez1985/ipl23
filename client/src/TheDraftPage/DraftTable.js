@@ -28,15 +28,15 @@ export default function DraftTable({ updateLeague, selectPlayer }) {
 
   const myPick = DraftValidation.myPick(manager, league);
 
-  useEffect(() => {
-    if (
-      league.draft1Live &&
-      league.pickNumber === manager.stagePickNumber &&
-      manager.stage1Squad.length >= 13
-    ) {
-      updateLeague();
-    }
-  });
+  // useEffect(() => {
+  //   if (
+  //     league.draft1Live &&
+  //     league.pickNumber === manager.stagePickNumber &&
+  //     manager.stage1Squad.length >= 13
+  //   ) {
+  //     updateLeague();
+  //   }
+  // });
 
   function getSortedPlayerArray() {
     const unpickedPlayers = Helpers.getUnpickedPlayers(

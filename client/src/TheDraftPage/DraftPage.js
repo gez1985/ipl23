@@ -70,13 +70,9 @@ export default function DraftPage() {
       const pickingManager = managers.find(
         (manager) => manager.pickNumber === league.pickNumber
       );
-      if (pickingManager.autoPick) {
-        if (pickingManager.stage1Squad.length >= 13) {
-          console.log(
-            `autopick manager ${pickingManager.name} has a full squad`
-          );
-          updateLeague();
-        }
+      if (pickingManager.stage1Squad.length >= 13) {
+        console.log(`manager ${pickingManager.name} has a full squad`);
+        updateLeague();
       }
     }
   }, [league]);
