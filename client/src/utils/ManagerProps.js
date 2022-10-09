@@ -105,7 +105,7 @@ ManagerProps.getStagePoints = (managers, players) => {
 };
 
 ManagerProps.getStage1BestEleven = (manager, players) => {
-  if (manager.stage1Squad.length <= 14) {
+  if (manager.stage1Squad.length <= 12) {
     return manager.stage1Squad;
   } else {
     const managerPlayers = manager.stage1Squad.map((playerId) =>
@@ -130,7 +130,7 @@ ManagerProps.getStage1BestEleven = (manager, players) => {
     sortObjects(managerBowlers, "totalPoints");
     bestEleven.push(managerBatters[0], managerBatters[1], managerBatters[2]);
     bestEleven.push(managerBowlers[0], managerBowlers[1], managerBowlers[2]);
-    bestEleven.push(managerAllRounders[0]);
+    bestEleven.push(managerAllRounders[0], managerAllRounders[1]);
     bestEleven.push(managerWicketkeepers[0]);
     const remainingPlayers = managerPlayers.filter(
       (player) => !bestEleven.includes(player)

@@ -92,7 +92,7 @@ const checkMinReqFilled = (teamRoleArray) => {
   teamRoleArray.forEach(function (i) {
     count[i] = (count[i] || 0) + 1;
   });
-  if (count.WK >= 1 && count.AR >= 1 && count.BT >= 3 && count.BW >= 3) {
+  if (count.WK >= 1 && count.AR >= 2 && count.BT >= 3 && count.BW >= 3) {
     return true;
   }
   return false;
@@ -106,7 +106,7 @@ const removePlayerIdFromShortlist = (manager, playerId) => {
 };
 
 const checkSquadSpace = (league, manager) => {
-  if (league.draft1Live && manager.stage1Squad.length >= 15) {
+  if (league.draft1Live && manager.stage1Squad.length >= 13) {
     return false;
   } else {
     return true;

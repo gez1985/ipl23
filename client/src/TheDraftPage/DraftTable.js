@@ -32,7 +32,7 @@ export default function DraftTable({ updateLeague, selectPlayer }) {
     if (
       league.draft1Live &&
       league.pickNumber === manager.stagePickNumber &&
-      manager.stage1Squad.length >= 15
+      manager.stage1Squad.length >= 13
     ) {
       updateLeague();
     }

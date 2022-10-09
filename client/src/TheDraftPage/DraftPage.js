@@ -71,7 +71,7 @@ export default function DraftPage() {
         (manager) => manager.pickNumber === league.pickNumber
       );
       if (pickingManager.autoPick) {
-        if (pickingManager.stage1Squad.length >= 15) {
+        if (pickingManager.stage1Squad.length >= 13) {
           console.log(
             `autopick manager ${pickingManager.name} has a full squad`
           );
