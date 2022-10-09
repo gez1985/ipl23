@@ -71,7 +71,7 @@ const checkMinReq = (manager, players, player) => {
     });
     if (player.role === "WK" && count === 0) {
       return true;
-    } else if (player.role === "AR" && count === 0) {
+    } else if (player.role === "AR" && count < 2) {
       return true;
     } else if (player.role === "BT" && count < 3) {
       return true;
