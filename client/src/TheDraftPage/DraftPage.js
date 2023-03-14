@@ -34,6 +34,7 @@ export default function DraftPage() {
   const [errorMessage, setErrorMessage] = useState();
   const [showError, setShowError] = useState(false);
   const [showAutoPick, setShowAutoPick] = useState(false);
+  const [resetTimer, setResetTimer] = useState(false);
 
   function usePrevious(value) {
     const ref = useRef();
@@ -206,6 +207,10 @@ export default function DraftPage() {
     handleCancel();
     updateLeague();
     updateVidiprinter(league.id, manager.id, selectedPlayer.id);
+    if (league.lastPick) {
+      console.log("timer needs resetting");
+      setResetTimer(!resetTimer);
+    }
   }
 
   function pickValidation(player) {
@@ -377,6 +382,7 @@ export default function DraftPage() {
         live={true}
         showShortlistModal={() => setShowShortlistPick(true)}
         showAutoPickModal={() => setShowAutoPick(true)}
+        resetTimer={resetTimer}
       />
       <div className="standard-width-container">
         <DraftTable

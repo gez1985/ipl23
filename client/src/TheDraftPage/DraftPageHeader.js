@@ -8,6 +8,7 @@ export default function DraftPageHeader({
   live,
   showShortlistModal,
   showAutoPickModal,
+  resetTimer,
 }) {
   return (
     <>
@@ -20,6 +21,7 @@ export default function DraftPageHeader({
           live={live}
           showShortlistModal={showShortlistModal}
           showAutoPickModal={showAutoPickModal}
+          resetTimer={resetTimer}
         />
       </div>
       <DraftTableHeaders />

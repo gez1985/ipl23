@@ -50,7 +50,7 @@ export default function SquadDisplay(props) {
     );
     border = "squads-row";
   }
-
+  
   const batters = bestEleven.filter((player) => player.role === "BT");
   const allRounders = bestEleven.filter((player) => player.role === "AR");
   const wicketkeepers = bestEleven.filter((player) => player.role === "WK");

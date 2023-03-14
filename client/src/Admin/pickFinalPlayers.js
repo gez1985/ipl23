@@ -61,21 +61,23 @@ const getRandomPlayer = (manager, availablePlayers, players) => {
   const playersCopy = JSON.parse(JSON.stringify(availablePlayers));
   let selectedPlayer;
   while (!selectedPlayer) {
-    const randomPlayer =
-      playersCopy[Math.floor(Math.random() * playersCopy.length)];
-      console.log(`random player is ${randomPlayer.name}`);
-    if (validPick(randomPlayer, players, manager)) {
-      console.log(`${randomPlayer.name} is a valid pick`);
-      selectedPlayer = randomPlayer;
+    if (!playersCopy.length) {
+      selectedPlayer = {};
+      selectedPlayer.id = 1;
     } else {
-      console.log(`${randomPlayer.name} is NOT a valid pick`);
-      const index = playersCopy.indexOf(randomPlayer);
-      if (index > -1) {
-        playersCopy.splice(index, 1);
+      const randomPlayer =
+        playersCopy[Math.floor(Math.random() * playersCopy.length)];
+      if (validPick(randomPlayer, players, manager)) {
+        selectedPlayer = randomPlayer;
+      } else {
+        const index = playersCopy.indexOf(randomPlayer);
+        if (index > -1) {
+          playersCopy.splice(index, 1);
+        }
       }
     }
   }
-  return selectedPlayer.id
+  return selectedPlayer.id;
 };
 
 export { pickFinalPlayer };

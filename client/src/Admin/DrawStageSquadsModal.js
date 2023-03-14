@@ -63,6 +63,7 @@ export default function DrawSemiSquadsModal({ hide, from }) {
   };
 
   const pickSemiSquads = async (semiManagers) => {
+    console.log('picking semi squads...')
     const copyOfManagers = JSON.parse(JSON.stringify(semiManagers));
     const qualifiedPlayers = players.filter((player) =>
       league.stage2Teams.includes(player.teamId)
@@ -121,7 +122,7 @@ export default function DrawSemiSquadsModal({ hide, from }) {
     }
     assignFinalPickNumbers(finalManagers);
     pickFinalSquads(finalManagers);
-  }
+  };
 
   const validateSemiDraw = () => {
     if (league.stage2Teams.length !== 4) {
@@ -133,7 +134,7 @@ export default function DrawSemiSquadsModal({ hide, from }) {
     return true;
   };
 
-    const validateFinalDraw = () => {
+  const validateFinalDraw = () => {
     if (league.stage3Teams.length !== 2) {
       return false;
     }

@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import ComponentHeader from "./ComponentHeader";
 import SquadDisplay from "./SquadDisplay";
-import { ManagersContext, LeagueManagersContext, LeagueContext, PlayersContext } from "./Store";
+import {
+  ManagersContext,
+  LeagueManagersContext,
+  LeagueContext,
+  PlayersContext,
+} from "./Store";
 import Helpers from "./utils/Helpers";
 import Search from "./utils/search";
 import ManagerProps from "./utils/ManagerProps";
@@ -39,7 +44,6 @@ export default function SquadsPage() {
       setLoading(false);
     }
   }, []);
-
 
   const dateNow = new Date().toISOString();
 

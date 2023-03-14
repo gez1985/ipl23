@@ -162,8 +162,6 @@ Scores.getFieldingPoints = (score) => {
   const stumpingsPoints = score.stumpings * 12;
   const fieldingPoints =
     catchesPoints + runOutPartPoints + runOutFullPoints + stumpingsPoints;
-    console.log(catchesPoints, runOutPartPoints, runOutFullPoints, stumpingsPoints);
-    console.log(`fielding points = ${fieldingPoints}`)
   return fieldingPoints;
 };
 

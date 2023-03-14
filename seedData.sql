@@ -39,7 +39,7 @@ INSERT INTO fixtures (home_team_id, away_team_id, date) VALUES (4, 2, '2025-10-1
 
 -- Seed managers:
 
-INSERT INTO managers (name, team_name, admin_level) VALUES ('Gerard Egan', 'Gerard fc', 4);
+INSERT INTO managers (name, team_name, user_id, admin_level) VALUES ('Gerard Egan', 'Gerard fc', 'auth0|5fea0bc079ac79006fa7ab11', 4);
 INSERT INTO managers (name, team_name, admin_level) VALUES ('Katie Egan', 'Katie fc', 4);
 INSERT INTO managers (name, team_name, admin_level) VALUES ('Charlotte Egan', 'Charlotte fc', 4);
 INSERT INTO managers (name, team_name, admin_level) VALUES ('Moira Egan', 'Moira fc', 4);
@@ -51,7 +51,7 @@ INSERT INTO managers (name, team_name, admin_level) VALUES ('Moira Egan', 'Moira
 
 -- Seed leagues:
 
-INSERT INTO leagues (name, admin_manager_id, manager_ids) VALUES ('Test League', 1, ARRAY[1, 2, 3, 4]);
+INSERT INTO leagues (name, admin_manager_id, manager_ids) VALUES ('Test League', 1, ARRAY[1]);
 
 -- Seed vidiprinter:
 

@@ -1,7 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import ComponentHeader from "./ComponentHeader";
 import MatchScore from "./MatchScore";
-import { LeagueContext, LeagueManagersContext as ManagersContext } from "./Store";
+import {
+  LeagueContext,
+  LeagueManagersContext as ManagersContext,
+} from "./Store";
 import Helpers from "./utils/Helpers";
 import SquadDisplay from "./SquadDisplay";
 import LeagueTable from "./LeagueTable";

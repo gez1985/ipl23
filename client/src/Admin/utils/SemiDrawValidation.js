@@ -23,6 +23,9 @@ PickValidation.maxFromEachTeam = (player, players, manager) => {
 };
 
 PickValidation.minTeamRequirements = (player, players, manager) => {
+  console.log(
+    `validaing min requirements with squad length ${manager.stage2Squad.length}`
+  );
   let myTeam = [];
   manager.stage2Squad.forEach((playerId) => {
     myTeam.push(Helpers.getObjectById(players, playerId));
@@ -30,25 +33,31 @@ PickValidation.minTeamRequirements = (player, players, manager) => {
   const teamRoleArray = myTeam.map((player) => player.role);
   teamRoleArray.push(player.role);
   let needed = 7;
-  let picksLeft = 14 - teamRoleArray.length;
+  let picksLeft = 12 - teamRoleArray.length;
   var count = {};
   teamRoleArray.forEach(function (i) {
     count[i] = (count[i] || 0) + 1;
   });
-  if (count.BT < 3) {
-    needed = needed - count.BT;
-  } else {
-    needed = needed - 3;
+  if (count.BT) {
+    if (count.BT < 3) {
+      needed = needed - count.BT;
+    } else {
+      needed = needed - 3;
+    }
   }
-  if (count.AR < 1) {
-    needed = needed - count.AR;
-  } else {
-    needed = needed - 1;
+  if (count.AR) {
+    if (count.AR < 1) {
+      needed = needed - count.AR;
+    } else {
+      needed = needed - 1;
+    }
   }
-  if (count.BW < 3) {
-    needed = needed - count.BW;
-  } else {
-    needed = needed - 3;
+  if (count.BW) {
+    if (count.BW < 3) {
+      needed = needed - count.BW;
+    } else {
+      needed = needed - 3;
+    }
   }
   if (needed > picksLeft) {
     return false;
@@ -69,7 +78,7 @@ PickValidation.roleValidation = (player, players, manager) => {
       count++;
     }
   });
-  let batBowMax = 6;
+  let batBowMax = 5;
   let arMax = 4;
   let wkMax = 2;
   if (player.role === "WK" && count >= wkMax) {

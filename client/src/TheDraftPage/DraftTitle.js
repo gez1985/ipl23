@@ -16,6 +16,7 @@ export default function DraftTitle({
   live,
   showShortlistModal,
   showAutoPickModal,
+  resetTimer,
 }) {
   const [searchName, setSearchName] = useContext(SearchNameContext);
   const [manager] = useContext(ManagerContext);
@@ -29,7 +30,13 @@ export default function DraftTitle({
 
   const getTimer = () => {
     if (live && league.pickNumber === manager.pickNumber) {
-      return <CountdownTimer skipPick={skipPick} live={live} />;
+      return (
+        <CountdownTimer
+          skipPick={skipPick}
+          live={live}
+          resetTimer={resetTimer}
+        />
+      );
     }
     if (live && manager.id === league.adminManagerId) {
       const pickingManager = managers.find(
