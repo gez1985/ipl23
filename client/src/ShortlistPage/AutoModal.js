@@ -2,15 +2,14 @@ import React, { useContext, useState } from "react";
 import { ManagerContext, PlayersContext } from "../Store";
 import ModalTemplate from "../ModalTemplate";
 import Search from "../utils/search";
+import AutoSortComponent from "./AutoSortComponent";
 
 const AutoModal = ({ close, title, player }) => {
   const [manager, setManager] = useContext(ManagerContext);
   const [players] = useContext(PlayersContext);
   const [loading, setLoading] = useState(false);
-  console.log({ manager });
 
   const handleAddInitialPlayerClick = async () => {
-    console.log(`handle add inital player clicked`);
     setLoading(true);
     try {
       const managerCopy = JSON.parse(JSON.stringify(manager));
@@ -21,7 +20,7 @@ const AutoModal = ({ close, title, player }) => {
       console.log(err.message);
     }
     setLoading(false);
-    close()
+    close();
   };
 
   const getEmptyShortlist = () => {
@@ -36,7 +35,10 @@ const AutoModal = ({ close, title, player }) => {
   };
 
   const getAutoSort = () => {
-    return <div>Sort content here</div>;
+    if (player) {
+      return <AutoSortComponent playerId={player.id} close={close} />;
+    }
+    return false;
   };
 
   return (
