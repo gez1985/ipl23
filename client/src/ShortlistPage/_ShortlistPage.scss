@@ -128,3 +128,90 @@
   display: flex;
   align-items: center;
 }
+
+.shortlist-page-auto-sort-names-wrapper {
+  margin-bottom: 2rem;
+}
+
+.shortlist-page-auto-sort-name {
+  width: 100%;
+  text-align: center;
+  font-family: "Oswald", sans-serif;
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid #fabc91;
+}
+
+.shortlist-page-auto-modal-select-caption {
+  font-family: "Oswald", sans-serif;
+  font-size: 1.25rem;
+  padding-bottom: 1rem;
+}
+
+.shortlist-page-confirm-player-display {
+  font-family: "Oswald", sans-serif;
+  font-size: 1.125rem;
+  display: flex;
+  margin-bottom: 0.25rem;
+}
+
+.shortlist-page-confirm-player-position {
+  width: 20px;
+  text-align: end;
+  margin-right: 1rem;
+}
+
+.shortlist-page-confirm-player-name {
+}
+
+.shortlist-page-auto-modal-confirm-names {
+  margin-bottom: 1rem;
+}
+
+.shortlist-page-confirm-player-sort-player {
+  color: #f01c15;
+}
+
+.shortlist-page-auto-modal-confirm-caption {
+  font-family: "Oswald", sans-serif;
+  font-size: 1.125rem;
+  margin-bottom: 1.5rem;
+}
+
+.slp-auto-modal-btn {
+  background-color: #f01c15;
+  margin-right: 1rem;
+  appearance: none;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 8px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.slp-auto-modal-btn:hover {
+  background-color: #c52620;
+}
+
+.slp-green {
+  background-color: #2ea44f;
+}
+
+.slp-green:hover {
+  background-color: #2c974b;
+}

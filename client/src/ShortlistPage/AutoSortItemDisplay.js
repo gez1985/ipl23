@@ -1,11 +1,15 @@
 import React from "react";
 
-const AutoSortItemDisplay = ({ player, chooseClick, listed }) => {
+const AutoSortItemDisplay = ({ player, chooseClick }) => {
   if (!player) {
     return null;
   }
 
-  return <div onClick={() => chooseClick(listed)}>{player.name}</div>;
+  return (
+    <div className="shortlist-page-auto-sort-name" onClick={chooseClick}>
+      {player.name}
+    </div>
+  );
 };
 
 export default AutoSortItemDisplay;
