@@ -26,10 +26,21 @@ const AutoModal = ({ close, title, player }) => {
   const getEmptyShortlist = () => {
     return (
       <div>
-        <p>Your shortlist is empty</p>
-        <p>Add {player.name} to your shortlist?</p>
-        <button onClick={handleAddInitialPlayerClick}>Yes</button>
-        <button onClick={close}>No</button>
+        <p className="shortlist-page-auto-modal-empty-caption">
+          Your shortlist is empty
+        </p>
+        <p className="shortlist-page-auto-modal-empty-caption">
+          Add {player.name} to your shortlist?
+        </p>
+        <button
+          className="slp-auto-modal-btn slp-green"
+          onClick={handleAddInitialPlayerClick}
+        >
+          Yes
+        </button>
+        <button className="slp-auto-modal-btn" onClick={close}>
+          No
+        </button>
       </div>
     );
   };
