@@ -27,6 +27,7 @@ import LogoutButton from "./LogOut";
 import SemiShortlistPage from "./SemiShortlistPage/SemiShortlistPage";
 import FinalShortlistPage from "./FinalShortlistPage/FinalShortlistPage";
 import ShortlistPage from "./ShortlistPage/ShortlistPage";
+import TransfersPage from "./TransfersPage/TransfersPage";
 
 export default function BrowserRouter() {
   const { isLoading, user, isAuthenticated } = useAuth0();
@@ -63,6 +64,11 @@ export default function BrowserRouter() {
         <Route exact path="/shortlist">
           <div className="main-body">
             <ShortlistPage />
+          </div>
+        </Route>
+        <Route exact path="/transfers">
+          <div className="main-body">
+            <TransfersPage />
           </div>
         </Route>
         <Route exact path="/my-team">

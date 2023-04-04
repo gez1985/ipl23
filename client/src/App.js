@@ -37,6 +37,8 @@ function App() {
   const previousManager = usePrevious(manager);
   const previousLeague = usePrevious(league);
 
+  console.log({ manager });
+
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {

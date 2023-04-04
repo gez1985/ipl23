@@ -103,6 +103,17 @@ Helpers.getUnpickedPlayers = (managers, players, league) => {
   }
 };
 
+Helpers.getTransferPlayers = (managers, players, league) => {
+  const pickedPlayerIds = [];
+  managers.forEach((manager) => {
+    pickedPlayerIds.push(...manager.stage1Squad);
+  });
+  const unpickedPlayers = players.filter(
+    (player) => !pickedPlayerIds.includes(player.id)
+  );
+  return unpickedPlayers;
+};
+
 Helpers.getManagerByPickNumber = (stage, managers, pickNumber) => {
   if (stage === 1) {
     const found = managers.find(

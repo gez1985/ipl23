@@ -44,12 +44,14 @@ CREATE TABLE managers (
   user_id text UNIQUE,
   admin_level SMALLINT NOT NULL DEFAULT 1,
   pick_number SMALLINT DEFAULT 0,
-  stage_1_squad SMALLINT[] DEFAULT '{}',
-  stage_2_squad SMALLINT[] DEFAULT '{}',
-  stage_3_squad SMALLINT[] DEFAULT '{}',
-  shortlist SMALLINT[] DEFAULT '{}',
-  stage_2_shortlist SMALLINT[] DEFAULT '{}',
-  stage_3_shortlist SMALLINT[] DEFAULT '{}',
+  stage_1_squad SMALLINT [] DEFAULT '{}',
+  stage_2_squad SMALLINT [] DEFAULT '{}',
+  stage_3_squad SMALLINT [] DEFAULT '{}',
+  transfers SMALLINT [] DEFAULT '{}',
+  transfer_out_id SMALLINT DEFAULT -1,
+  shortlist SMALLINT [] DEFAULT '{}',
+  stage_2_shortlist SMALLINT [] DEFAULT '{}',
+  stage_3_shortlist SMALLINT [] DEFAULT '{}',
   auto_pick BOOLEAN NOT NULL DEFAULT false,
   min_req_first BOOLEAN NOT NULL DEFAULT false
 );
@@ -58,14 +60,14 @@ CREATE TABLE vidiprinter (
   id SERIAL PRIMARY KEY,
   league_id SMALLINT NOT NULL,
   manager_id SMALLINT NOT NULL,
-  player_id SMALLINT NOT NULL, 
+  player_id SMALLINT NOT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE leagues (
   id SERIAL PRIMARY KEY,
   admin_manager_id SMALLINT NOT NULL REFERENCES managers,
-  manager_ids SMALLINT[] DEFAULT '{}',
+  manager_ids SMALLINT [] DEFAULT '{}',
   created_at TIMESTAMP DEFAULT NOW()
 );
 
@@ -73,7 +75,7 @@ CREATE TABLE leagues (
   id SERIAL PRIMARY KEY,
   name VARCHAR(50) NOT NULL UNIQUE,
   admin_manager_id SMALLINT NOT NULL,
-  manager_ids SMALLINT[] DEFAULT '{}',
+  manager_ids SMALLINT [] DEFAULT '{}',
   draft_1_live BOOLEAN NOT NULL DEFAULT false,
   round SMALLINT NOT NULL DEFAULT 1,
   pick_number SMALLINT NOT NULL DEFAULT 1,
@@ -82,9 +84,9 @@ CREATE TABLE leagues (
   draft_date TEXT,
   stage_2_date TEXT,
   stage_3_date TEXT,
-  stage_2_managers SMALLINT[][2] DEFAULT '{}',
-  stage_2_teams SMALLINT[] DEFAULT '{}',
-  stage_3_managers SMALLINT[][2] DEFAULT '{}',
-  stage_3_teams SMALLINT[] DEFAULT '{}',
+  stage_2_managers SMALLINT [] [2] DEFAULT '{}',
+  stage_2_teams SMALLINT [] DEFAULT '{}',
+  stage_3_managers SMALLINT [] [2] DEFAULT '{}',
+  stage_3_teams SMALLINT [] DEFAULT '{}',
   created_at TIMESTAMP DEFAULT NOW()
 );
