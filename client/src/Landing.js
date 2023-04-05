@@ -7,6 +7,7 @@ import FinalsIcon from "./FinalsIcon";
 import { LeagueContext, ManagerContext } from "./Store";
 import Champions from "./ChampionsComponent/Champions";
 import StageShortlistIcon from "./StageShortlistIcon";
+import TransferPageIcon from "./TransfersIcon";
 
 export default function Landing() {
   const [league] = useContext(LeagueContext);
@@ -27,6 +28,13 @@ export default function Landing() {
         <Logo />
       </div>
       <div className="flex-container">
+        {dateNow > league.draftDate &&
+          !league.draft1Live &&
+          dateNow < league.stage2Date && (
+            <div className="disappear-mobile">
+              <TransferPageIcon label="Transfers" link="/transfers"/>
+            </div>
+          )}
         {dateNow < league.draftDate && !league.draft1Live && (
           <div className="disappear-mobile">
             <StageShortlistIcon label="My Shortlist" link="/shortlist" />
