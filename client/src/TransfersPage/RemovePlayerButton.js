@@ -9,7 +9,7 @@ const RemovePlayerButton = ({ index }) => {
 
   const handleRemoveClick = async (index) => {
     const managerCopy = JSON.parse(JSON.stringify(manager));
-    managerCopy.shortlist.splice(index, 1);
+    managerCopy.transfers.splice(index, 1);
     setLoading(true);
     await Search.putManager(managerCopy);
     setManager(managerCopy);
