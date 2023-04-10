@@ -71,6 +71,14 @@ CREATE TABLE leagues (
   created_at TIMESTAMP DEFAULT NOW()
 );
 
+CREATE TABLE transfers (
+  id SERIAL PRIMARY KEY,
+  manager_id SMALLINT NOT NULL REFERENCES managers,
+  player_out_id SMALLINT NOT NULL REFERENCES players,
+  player_in_id SMALLINT NOT NULL REFERENCES players,
+  date TIMESTAMP DEFAULT NOW()
+);
+
 CREATE TABLE leagues (
   id SERIAL PRIMARY KEY,
   name VARCHAR(50) NOT NULL UNIQUE,

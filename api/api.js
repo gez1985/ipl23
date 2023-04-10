@@ -6,6 +6,7 @@ const fixturesRouter = require("./fixtures");
 const scoresRouter = require("./scores");
 const leaguesRouter = require("./leagues");
 const vidiprinterRouter = require("./vidiprinter");
+const transfersRouter = require("./transfers");
 
 const apiRouter = express.Router();
 
@@ -16,5 +17,6 @@ apiRouter.use("/fixtures", fixturesRouter);
 apiRouter.use("/scores", scoresRouter);
 apiRouter.use("/leagues", leaguesRouter);
 apiRouter.use("/vidiprinter", vidiprinterRouter);
+apiRouter.use("/transfers", transfersRouter);
 
 module.exports = apiRouter;

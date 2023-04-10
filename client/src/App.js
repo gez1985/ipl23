@@ -72,6 +72,8 @@ function App() {
     }
   });
 
+  console.log({ managers });
+
   async function getData() {
     try {
       const scoresData = await Search.getAllScores();
