@@ -23,9 +23,6 @@ PickValidation.maxFromEachTeam = (player, players, manager) => {
 };
 
 PickValidation.minTeamRequirements = (player, players, manager) => {
-  console.log(
-    `validaing min requirements with squad length ${manager.stage2Squad.length}`
-  );
   let myTeam = [];
   manager.stage2Squad.forEach((playerId) => {
     myTeam.push(Helpers.getObjectById(players, playerId));
