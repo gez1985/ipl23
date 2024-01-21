@@ -3,10 +3,16 @@ import RenderChampions from "./RenderChampions";
 export default function Champions() {
   const iplChampions = [
     {
-      year: 2023,
+      year: 2024,
       champion: "?",
       runnerUp: "?",
       woodenSpoon: "?",
+    },
+    {
+      year: 2023,
+      champion: "Jonathan Palmer",
+      runnerUp: "Gerard Egan",
+      woodenSpoon: "Phil Rogers",
     },
     {
       year: 2022,
